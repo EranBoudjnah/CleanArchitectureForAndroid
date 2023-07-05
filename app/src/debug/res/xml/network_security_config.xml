@@ -1,0 +1,9 @@
+<network-security-config>
+    <debug-overrides>
+        <trust-anchors>
+            <domain>localhost</domain>
+            <certificates src="system" />
+            <certificates src="@raw/teststore" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>

@@ -1,0 +1,11 @@
+{
+  "ip": "1.2.3.4",
+  "city": "Brentwood",
+  "region": "England",
+  "country": "GB",
+  "loc": "51.6213,0.3056",
+  "org": "TalkTalk Limited",
+  "postal": "CM14",
+  "timezone": "Europe/London",
+  "readme": "https://ipinfo.io/missingauth"
+}

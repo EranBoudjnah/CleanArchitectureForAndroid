@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Who Am I</string>
+
+    <string name="home_ip_description">This is the address from which you are sending network requests.</string>
+    <string name="home_disconnected_description">You seem to be disconnected. This means you have no IP address.</string>
+    <string name="home_error_unknown_description">Oh no! Something went wrong.</string>
+    <string name="home_details_title">Details</string>
+    <string name="home_city_label">City</string>
+    <string name="home_region_label">Region</string>
+    <string name="home_country_label">Country</string>
+    <string name="home_geolocation_label">Geolocation</string>
+    <string name="home_post_code_label">Post code</string>
+    <string name="home_time_zone_label">Time zone</string>
+    <string name="home_internet_service_provider_label">ISP</string>
+</resources>
