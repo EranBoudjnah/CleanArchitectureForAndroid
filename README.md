@@ -26,7 +26,7 @@ solutions.
 - Code quality checks using ktlint
 - Code quality checks using detekt
 
-###Links
+### Links
 
 [Clean Architecture for Android on Amazon](https://amzn.to/43cUuhb "Clean Architecture for Android")
 
