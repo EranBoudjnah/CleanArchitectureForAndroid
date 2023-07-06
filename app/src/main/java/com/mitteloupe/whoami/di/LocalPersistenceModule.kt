@@ -1,6 +1,7 @@
 package com.mitteloupe.whoami.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
