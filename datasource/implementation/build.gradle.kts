@@ -1,8 +1,6 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-//    kotlin("kapt")
-//    id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp") version "1.8.10-1.0.9"
     id("org.jlleitschuh.gradle.ktlint")
     id("io.gitlab.arturbosch.detekt")
@@ -43,10 +41,6 @@ android {
         }
     }
 }
-
-// kapt {
-//    correctErrorTypes = true
-// }
 
 ktlint {
     version.set("0.49.1")

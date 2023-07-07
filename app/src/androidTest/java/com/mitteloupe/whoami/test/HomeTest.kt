@@ -11,6 +11,7 @@ import com.mitteloupe.whoami.test.annotation.ServerRequestResponse
 import com.mitteloupe.whoami.test.test.BaseTest
 import com.mitteloupe.whoami.test.test.BaseTest.AppLauncher.FromComposable
 import com.mitteloupe.whoami.ui.main.AppNavHost
+import com.mitteloupe.whoami.ui.main.model.AppNavHostDependencies
 import com.mitteloupe.whoami.ui.theme.WhoAmITheme
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
@@ -24,10 +25,16 @@ class HomeTest : BaseTest() {
             composeTestRule
         ) {
             WhoAmITheme {
-                AppNavHost(homeViewModel, connectionDetailsToUiMapper, coroutineContextProvider)
+                AppNavHost(
+                    AppNavHostDependencies(
+                        homeViewModel,
+                        connectionDetailsToUiMapper,
+                        coroutineContextProvider
+                    )
+                )
             }
         }
-    } //        ActivityLauncher.FromClass(MainActivity::class.java)
+    }
 
     @Inject
     lateinit var homeViewModel: HomeViewModel
