@@ -26,6 +26,22 @@ solutions.
 - Code quality checks using ktlint
 - Code quality checks using detekt
 
+### Choices
+
+- **Mappers as classes** vs. **mapping extension functions**
+  When mapping between models, we have several options. The primary decision is between mapper classes and mapping extension functions.
+
+  While extension functions are more concise, using them for mapping limits our choices of testing frameworks (Mockito, for example, cannot stub static functions).
+
+  How about injecting the mapper extension functions? We could do that. However, this removes the benefits of conciseness almost entirely. It also makes navigation to the implementation harder.
+
+  And so, I opted for the slightly more verbose concrete mapper classes.
+
+- Mocking framework
+  I have used both [Mockito-Kotlin](https://github.com/mockito/mockito-kotlin) and [Mockk](https://mockk.io/) in this project to demonstrate how the use of each would look.
+
+  My personal preference remains **Mockito-Kotlin**. I find the code easier to read and follow when using it. At the time of writing, judging by the number of stars on each repository, the industry seems to lean towards Mockk.
+
 ### Links
 
 [Clean Architecture for Android on Amazon](https://amzn.to/43cUuhb "Clean Architecture for Android")

@@ -1,7 +1,7 @@
 <network-security-config>
     <domain-config>
+        <domain includeSubdomains="false">localhost</domain>
         <trust-anchors>
-            <domain includeSubdomains="false">localhost</domain>
             <certificates src="@raw/teststore" />
         </trust-anchors>
     </domain-config>
