@@ -11,9 +11,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -23,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mitteloupe.whoami.home.ui.R
 import com.mitteloupe.whoami.home.ui.model.ConnectionDetailsUiModel
+import com.mitteloupe.whoami.home.ui.model.IconLabelUiModel
 
 @Composable
 fun ConnectedContent(
@@ -84,15 +89,30 @@ fun ConnectedContent(
                 connectionDetails.internetServiceProviderName
         ).forEach { (labelResourceId, fieldValue) ->
             if (fieldValue != null) {
-                Row(modifier = Modifier.padding(start = 16.dp, bottom = 2.dp)) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(start = 16.dp, bottom = 2.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = fieldValue.iconResourceId),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(36.dp)
+                            .height(36.dp)
+                            .padding(0.dp, 0.dp, 8.dp, 0.dp),
+                        colorFilter = ColorFilter.tint(
+                            color = MaterialTheme.colorScheme.onSurface,
+                            blendMode = BlendMode.Modulate
+                        ),
+                        contentScale = ContentScale.Inside
+                    )
                     Text(
                         text = stringResource(labelResourceId),
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.width(148.dp)
+                        modifier = Modifier
+                            .width(108.dp),
                     )
-                    Text(
-                        text = fieldValue
-                    )
+                    Text(text = fieldValue.label)
                 }
             }
         }
@@ -110,13 +130,14 @@ private fun Preview() {
         ConnectedContent(
             ConnectionDetailsUiModel(
                 ipAddress = "0.0.0.0",
-                city = "Brentwood",
-                region = "England",
-                countryName = "GB",
-                geolocation = "0, 0",
-                postCode = "AB12 3CD",
-                timeZone = "Europe/London",
-                internetServiceProviderName = "TalkTalk"
+                city = IconLabelUiModel(R.drawable.icon_city, "Brentwood"),
+                region = IconLabelUiModel(R.drawable.icon_region, "England"),
+                countryName = IconLabelUiModel(R.drawable.icon_country, "GB"),
+                geolocation = IconLabelUiModel(R.drawable.icon_geolocation, "0, 0"),
+                postCode = IconLabelUiModel(R.drawable.icon_post_code, "AB12 3CD"),
+                timeZone = IconLabelUiModel(R.drawable.icon_time_zone, "Europe/London"),
+                internetServiceProviderName =
+                IconLabelUiModel(R.drawable.icon_internet_service_provider, "TalkTalk"),
             ),
             modifier = Modifier.fillMaxWidth()
         )

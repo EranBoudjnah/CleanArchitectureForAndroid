@@ -2,11 +2,11 @@ package com.mitteloupe.whoami.home.ui.model
 
 data class ConnectionDetailsUiModel(
     val ipAddress: String,
-    val city: String?,
-    val region: String?,
-    val countryName: String?,
-    val geolocation: String?,
-    val postCode: String?,
-    val timeZone: String?,
-    val internetServiceProviderName: String?
+    val city: IconLabelUiModel?,
+    val region: IconLabelUiModel?,
+    val countryName: IconLabelUiModel?,
+    val geolocation: IconLabelUiModel?,
+    val postCode: IconLabelUiModel?,
+    val timeZone: IconLabelUiModel?,
+    val internetServiceProviderName: IconLabelUiModel?
 )

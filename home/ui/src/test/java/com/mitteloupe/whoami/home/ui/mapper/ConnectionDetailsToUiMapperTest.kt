@@ -1,7 +1,9 @@
 package com.mitteloupe.whoami.home.ui.mapper
 
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
+import com.mitteloupe.whoami.home.ui.R
 import com.mitteloupe.whoami.home.ui.model.ConnectionDetailsUiModel
+import com.mitteloupe.whoami.home.ui.model.IconLabelUiModel
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -45,33 +47,21 @@ class ConnectionDetailsToUiMapperTest(
                 postCode = "AA11 2CC",
                 timeZone = "GMT"
             ),
-            testCase(
-                testTitle = "all nulls",
-                ipAddress = "4.3.2.1",
-                city = null,
-                region = null,
-                countryCode = null,
-                countryName = null,
-                geolocation = null,
-                formattedGeolocation = null,
-                internetServiceProviderName = null,
-                postCode = null,
-                timeZone = null
-            )
+            nullsTestCase(ipAddress = "4.3.2.1")
         )
 
         private fun testCase(
             testTitle: String,
             ipAddress: String,
-            city: String?,
-            region: String?,
-            countryCode: String?,
-            countryName: String?,
-            geolocation: String?,
-            formattedGeolocation: String?,
-            internetServiceProviderName: String?,
-            postCode: String?,
-            timeZone: String?
+            city: String,
+            region: String,
+            countryCode: String,
+            countryName: String,
+            geolocation: String,
+            formattedGeolocation: String,
+            internetServiceProviderName: String,
+            postCode: String,
+            timeZone: String
         ) = arrayOf(
             testTitle,
             HomeViewState.Connected(
@@ -86,13 +76,40 @@ class ConnectionDetailsToUiMapperTest(
             ),
             ConnectionDetailsUiModel(
                 ipAddress = ipAddress,
-                city = city,
-                region = region,
-                countryName = countryName,
-                geolocation = formattedGeolocation,
-                postCode = postCode,
-                timeZone = timeZone,
-                internetServiceProviderName = internetServiceProviderName
+                city = IconLabelUiModel(R.drawable.icon_city, city),
+                region = IconLabelUiModel(R.drawable.icon_region, region),
+                countryName = IconLabelUiModel(R.drawable.icon_country, countryName),
+                geolocation = IconLabelUiModel(R.drawable.icon_geolocation, formattedGeolocation),
+                postCode = IconLabelUiModel(R.drawable.icon_post_code, postCode),
+                timeZone = IconLabelUiModel(R.drawable.icon_time_zone, timeZone),
+                internetServiceProviderName = IconLabelUiModel(
+                    R.drawable.icon_internet_service_provider,
+                    internetServiceProviderName
+                ),
+            )
+        )
+
+        private fun nullsTestCase(ipAddress: String) = arrayOf(
+            "all nulls",
+            HomeViewState.Connected(
+                ipAddress = ipAddress,
+                city = null,
+                region = null,
+                countryCode = null,
+                geolocation = null,
+                internetServiceProviderName = null,
+                postCode = null,
+                timeZone = null
+            ),
+            ConnectionDetailsUiModel(
+                ipAddress = ipAddress,
+                city = null,
+                region = null,
+                countryName = null,
+                geolocation = null,
+                postCode = null,
+                timeZone = null,
+                internetServiceProviderName = null
             )
         )
     }
@@ -107,7 +124,7 @@ class ConnectionDetailsToUiMapperTest(
             assertEquals(this, presentationConnectionDetails.countryCode)
             val countryName = expectedUiConnectionDetails.countryName
             requireNotNull(countryName)
-            countryName
+            countryName.label
         }
         classUnderTest = ConnectionDetailsToUiMapper(toCountryName)
     }
