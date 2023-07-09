@@ -9,7 +9,10 @@ import com.mitteloupe.whoami.home.data.mapper.ConnectionDetailsToDomainResolver
 import com.mitteloupe.whoami.home.data.mapper.ThrowableToDomainMapper
 import com.mitteloupe.whoami.home.data.repository.ConnectionDetailsRepository
 import com.mitteloupe.whoami.home.domain.repository.GetConnectionDetailsRepository
+import com.mitteloupe.whoami.home.domain.repository.SaveConnectionDetailsRepository
+import com.mitteloupe.whoami.home.domain.repository.SaveConnectionDetailsRepository.FakeSaveConnectionDetailsRepository
 import com.mitteloupe.whoami.home.domain.usecase.GetConnectionDetailsUseCase
+import com.mitteloupe.whoami.home.domain.usecase.SaveConnectionDetailsUseCase
 import com.mitteloupe.whoami.home.presentation.mapper.ConnectionStateToPresentationMapper
 import com.mitteloupe.whoami.home.presentation.mapper.ExceptionToPresentationMapper
 import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
@@ -63,6 +66,16 @@ object HomeModule {
         getConnectionDetailsRepository: GetConnectionDetailsRepository,
         coroutineContextProvider: CoroutineContextProvider
     ) = GetConnectionDetailsUseCase(getConnectionDetailsRepository, coroutineContextProvider)
+
+    @Provides
+    fun providesSaveConnectionDetailsRepository(): SaveConnectionDetailsRepository =
+        FakeSaveConnectionDetailsRepository()
+
+    @Provides
+    fun providesSaveConnectionDetailsUseCase(
+        saveConnectionDetailsRepository: SaveConnectionDetailsRepository,
+        coroutineContextProvider: CoroutineContextProvider
+    ) = SaveConnectionDetailsUseCase(saveConnectionDetailsRepository, coroutineContextProvider)
 
     @Provides
     fun providesExceptionToPresentationMapper() = ExceptionToPresentationMapper()
