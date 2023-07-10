@@ -31,7 +31,7 @@ class ConnectionDetailsToDomainResolverTest(
                 testTitle = "no information",
                 city = null,
                 region = null,
-                country = null,
+                countryCode = null,
                 geolocation = null,
                 internetServiceProviderName = null,
                 postCode = null,
@@ -41,7 +41,7 @@ class ConnectionDetailsToDomainResolverTest(
                 testTitle = "information",
                 city = "London",
                 region = "Greater London",
-                country = "United Kingdom",
+                countryCode = "United Kingdom",
                 geolocation = "0.1,0.1",
                 internetServiceProviderName = "MegaFibre",
                 postCode = "E17 1CO",
@@ -78,7 +78,7 @@ class ConnectionDetailsToDomainResolverTest(
             testTitle: String,
             city: String?,
             region: String?,
-            country: String?,
+            countryCode: String?,
             geolocation: String?,
             internetServiceProviderName: String?,
             postCode: String?,
@@ -89,24 +89,24 @@ class ConnectionDetailsToDomainResolverTest(
             { ipAddress ->
                 assertEquals(IP_ADDRESS, ipAddress)
                 IpAddressInformationDataModel(
-                    city,
-                    region,
-                    country,
-                    geolocation,
-                    internetServiceProviderName,
-                    postCode,
-                    timeZone
+                    city = city,
+                    region = region,
+                    country = countryCode,
+                    geolocation = geolocation,
+                    internetServiceProviderName = internetServiceProviderName,
+                    postCode = postCode,
+                    timeZone = timeZone
                 )
             },
             ConnectionDetailsDomainModel.Connected(
-                IP_ADDRESS,
-                city,
-                region,
-                country,
-                geolocation,
-                internetServiceProviderName,
-                postCode,
-                timeZone
+                ipAddress = IP_ADDRESS,
+                city = city,
+                region = region,
+                countryCode = countryCode,
+                geolocation = geolocation,
+                internetServiceProviderName = internetServiceProviderName,
+                postCode = postCode,
+                timeZone = timeZone
             )
         )
 
