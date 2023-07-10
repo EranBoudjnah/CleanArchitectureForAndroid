@@ -4,7 +4,7 @@ data class NewIpAddressHistoryRecordDataModel(
     val ipAddress: String,
     val city: String?,
     val region: String?,
-    val country: String?,
+    val countryCode: String?,
     val geolocation: String?,
     val internetServiceProviderName: String?,
     val postCode: String?,
