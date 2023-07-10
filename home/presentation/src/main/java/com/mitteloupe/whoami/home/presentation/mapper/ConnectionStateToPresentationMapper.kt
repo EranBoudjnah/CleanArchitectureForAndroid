@@ -16,7 +16,7 @@ class ConnectionStateToPresentationMapper(
                 ipAddress = connectionDetails.ipAddress,
                 city = connectionDetails.city,
                 region = connectionDetails.region,
-                countryCode = connectionDetails.country,
+                countryCode = connectionDetails.countryCode,
                 geolocation = connectionDetails.geolocation,
                 internetServiceProviderName = connectionDetails.internetServiceProviderName,
                 postCode = connectionDetails.postCode,

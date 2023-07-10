@@ -55,7 +55,7 @@ class ConnectionDetailsToDomainResolverTest(
                     ipAddress = IP_ADDRESS,
                     city = null,
                     region = null,
-                    country = null,
+                    countryCode = null,
                     geolocation = null,
                     internetServiceProviderName = null,
                     postCode = null,

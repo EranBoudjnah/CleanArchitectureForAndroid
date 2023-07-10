@@ -33,7 +33,7 @@ class SaveConnectionDetailsUseCaseTest {
             ipAddress = "1.2.3.4",
             city = "Paris",
             region = "Paris",
-            country = "France",
+            countryCode = "France",
             geolocation = "0.0,0.0",
             internetServiceProviderName = "Le ISP",
             postCode = "12345",

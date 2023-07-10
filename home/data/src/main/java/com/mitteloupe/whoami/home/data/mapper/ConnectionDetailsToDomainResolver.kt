@@ -25,7 +25,7 @@ class ConnectionDetailsToDomainResolver {
                 ipAddress = ipAddress,
                 city = ipAddressInformation?.city,
                 region = ipAddressInformation?.region,
-                country = ipAddressInformation?.country,
+                countryCode = ipAddressInformation?.country,
                 geolocation = ipAddressInformation?.geolocation,
                 internetServiceProviderName = ipAddressInformation?.internetServiceProviderName,
                 postCode = ipAddressInformation?.postCode,
