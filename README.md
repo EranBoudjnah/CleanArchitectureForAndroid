@@ -42,6 +42,13 @@ solutions.
 
   My personal preference remains **Mockito-Kotlin**. I find the code easier to read and follow when using it. At the time of writing, judging by the number of stars on each repository, the industry seems to lean towards Mockk.
 
+- Dependency injection framework
+  A critical part of most modern apps, dependency injection (DI) helps us obtain the objects that build our app. It also helps manage their scope. The most popular choices in the Android world are [Hilt](https://dagger.dev/hilt/) (which is built on top of [Dagger](https://dagger.dev/)) and [Koin](https://insert-koin.io/).
+
+  I chose **Hilt** for two main reasons:
+  1. **Compile time safety** - having the confidence that all my dependencies are provided before the app starts is a huge time saver and helps maintain a stable app.
+  2. **Simplicity** - in my experience, setting up and using Hilt (unlike the underlying Dagger) is considerably easier than using Koin. Hilt also introduces fewer breaking changes over time.
+
 ### Links
 
 [Clean Architecture for Android on Amazon](https://amzn.to/43cUuhb "Clean Architecture for Android")
