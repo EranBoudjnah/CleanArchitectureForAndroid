@@ -55,6 +55,7 @@ dependencies {
     implementation(project(":datasource-architecture"))
     implementation(project(":datasource-source"))
     implementation(project(":coroutine"))
+    implementation(project(":time"))
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.moshi)

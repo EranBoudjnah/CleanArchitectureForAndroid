@@ -9,5 +9,5 @@ data class SavedIpAddressHistoryRecordDataModel(
     val internetServiceProviderName: String?,
     val postCode: String?,
     val timeZone: String?,
-    val savedAtTimestamp: Long
+    val savedAtTimestampMilliseconds: Long
 )
