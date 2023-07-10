@@ -3,10 +3,9 @@ package com.mitteloupe.whoami.datasource.history.mapper
 import com.mitteloupe.whoami.datasource.history.model.NewIpAddressHistoryRecordDataModel
 import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordDataModel
 import com.mitteloupe.whoami.time.NowProvider
-import com.mitteloupe.whoami.time.NowProvider.DefaultNowProvider
 
 class NewIpAddressRecordToSavedMapper(
-    private val nowProvider: NowProvider = DefaultNowProvider
+    private val nowProvider: NowProvider
 ) {
     fun toSaved(historyRecord: NewIpAddressHistoryRecordDataModel) =
         SavedIpAddressHistoryRecordDataModel(
