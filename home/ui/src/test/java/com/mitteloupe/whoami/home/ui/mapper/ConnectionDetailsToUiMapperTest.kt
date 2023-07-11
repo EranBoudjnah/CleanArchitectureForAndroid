@@ -85,7 +85,7 @@ class ConnectionDetailsToUiMapperTest(
                 internetServiceProviderName = IconLabelUiModel(
                     R.drawable.icon_internet_service_provider,
                     internetServiceProviderName
-                ),
+                )
             )
         )
 

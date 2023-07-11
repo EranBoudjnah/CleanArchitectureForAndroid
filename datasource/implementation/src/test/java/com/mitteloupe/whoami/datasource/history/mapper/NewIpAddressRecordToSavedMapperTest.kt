@@ -35,7 +35,7 @@ class NewIpAddressRecordToSavedMapperTest(
                 internetServiceProviderName = null,
                 postCode = null,
                 timeZone = null,
-                savedAtTimestampMilliseconds = 123L,
+                savedAtTimestampMilliseconds = 123L
             ),
             testCase(
                 testTitle = "all set",
@@ -47,7 +47,7 @@ class NewIpAddressRecordToSavedMapperTest(
                 internetServiceProviderName = "ISP",
                 postCode = "PS CD1",
                 timeZone = "GMT",
-                savedAtTimestampMilliseconds = 321L,
+                savedAtTimestampMilliseconds = 321L
             )
         )
 

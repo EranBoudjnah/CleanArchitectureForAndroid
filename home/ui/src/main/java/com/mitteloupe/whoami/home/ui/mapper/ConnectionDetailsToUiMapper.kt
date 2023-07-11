@@ -5,7 +5,7 @@ import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.ui.R
 import com.mitteloupe.whoami.home.ui.model.ConnectionDetailsUiModel
 import com.mitteloupe.whoami.home.ui.model.IconLabelUiModel
-import java.util.*
+import java.util.Locale
 
 class ConnectionDetailsToUiMapper(
     private val toCountryName: String.() -> String = {
@@ -24,7 +24,7 @@ class ConnectionDetailsToUiMapper(
         postCode = connectionDetails.postCode.labelAndIcon(R.drawable.icon_post_code),
         timeZone = connectionDetails.timeZone.labelAndIcon(R.drawable.icon_time_zone),
         internetServiceProviderName = connectionDetails.internetServiceProviderName
-            .labelAndIcon(R.drawable.icon_internet_service_provider),
+            .labelAndIcon(R.drawable.icon_internet_service_provider)
     )
 
     private fun String?.labelAndIcon(@DrawableRes iconResourceId: Int) = this?.let {

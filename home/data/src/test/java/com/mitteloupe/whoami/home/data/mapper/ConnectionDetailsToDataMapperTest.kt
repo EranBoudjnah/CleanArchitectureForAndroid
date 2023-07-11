@@ -40,7 +40,7 @@ class ConnectionDetailsToDataMapperTest(
                 internetServiceProviderName = "CzechNet",
                 postCode = "",
                 timeZone = ""
-            ),
+            )
         )
 
         private fun testCase(
