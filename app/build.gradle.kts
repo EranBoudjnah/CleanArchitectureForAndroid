@@ -89,6 +89,7 @@ dependencies {
     implementation(project(":home-data"))
 
     implementation(project(":history-domain"))
+    implementation(project(":history-data"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

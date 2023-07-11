@@ -4,10 +4,4 @@ import com.mitteloupe.whoami.history.domain.model.SavedIpAddressRecordDomainMode
 
 interface GetHistoryRepository {
     fun history(): Collection<SavedIpAddressRecordDomainModel>
-
-    class FakeGetHistoryRepository(
-        private val history: Collection<SavedIpAddressRecordDomainModel> = emptySet()
-    ) : GetHistoryRepository {
-        override fun history() = history
-    }
 }

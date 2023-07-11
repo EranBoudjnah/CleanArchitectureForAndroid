@@ -34,14 +34,13 @@ include(":architecture-presentation-test")
 project(":architecture-presentation-test").projectDir = File("architecture/presentation-test")
 include(":architecture-domain")
 project(":architecture-domain").projectDir = File("architecture/domain")
-include(":home-ui")
-project(":home-ui").projectDir = File("home/ui")
-include(":home-presentation")
-project(":home-presentation").projectDir = File("home/presentation")
-include(":home-domain")
-project(":home-domain").projectDir = File("home/domain")
-include(":home-data")
-project(":home-data").projectDir = File("home/data")
 
-include(":history-domain")
-project(":history-domain").projectDir = File("history/domain")
+setOf("ui", "presentation", "domain", "data").forEach { layer ->
+    include(":home-$layer")
+    project(":home-$layer").projectDir = File("home/$layer")
+}
+
+setOf("domain", "data").forEach { layer ->
+    include(":history-$layer")
+    project(":history-$layer").projectDir = File("history/$layer")
+}
