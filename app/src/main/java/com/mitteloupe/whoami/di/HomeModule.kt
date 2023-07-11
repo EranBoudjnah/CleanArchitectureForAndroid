@@ -3,14 +3,16 @@ package com.mitteloupe.whoami.di
 import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.datasource.connection.datasource.ConnectionDataSource
+import com.mitteloupe.whoami.datasource.history.datasource.IpAddressHistoryDataSource
 import com.mitteloupe.whoami.datasource.ipaddress.datasource.IpAddressDataSource
 import com.mitteloupe.whoami.datasource.ipaddressinformation.datasource.IpAddressInformationDataSource
+import com.mitteloupe.whoami.home.data.mapper.ConnectionDetailsToDataMapper
 import com.mitteloupe.whoami.home.data.mapper.ConnectionDetailsToDomainResolver
 import com.mitteloupe.whoami.home.data.mapper.ThrowableToDomainMapper
 import com.mitteloupe.whoami.home.data.repository.ConnectionDetailsRepository
+import com.mitteloupe.whoami.home.data.repository.ConnectionHistoryRepository
 import com.mitteloupe.whoami.home.domain.repository.GetConnectionDetailsRepository
 import com.mitteloupe.whoami.home.domain.repository.SaveConnectionDetailsRepository
-import com.mitteloupe.whoami.home.domain.repository.SaveConnectionDetailsRepository.FakeSaveConnectionDetailsRepository
 import com.mitteloupe.whoami.home.domain.usecase.GetConnectionDetailsUseCase
 import com.mitteloupe.whoami.home.domain.usecase.SaveConnectionDetailsUseCase
 import com.mitteloupe.whoami.home.presentation.mapper.ConnectionStateToPresentationMapper
@@ -68,8 +70,11 @@ object HomeModule {
     ) = GetConnectionDetailsUseCase(getConnectionDetailsRepository, coroutineContextProvider)
 
     @Provides
-    fun providesSaveConnectionDetailsRepository(): SaveConnectionDetailsRepository =
-        FakeSaveConnectionDetailsRepository()
+    fun providesSaveConnectionDetailsRepository(
+        ipAddressHistoryDataSource: IpAddressHistoryDataSource,
+        connectionDetailsToDataMapper: ConnectionDetailsToDataMapper
+    ): SaveConnectionDetailsRepository =
+        ConnectionHistoryRepository(ipAddressHistoryDataSource, connectionDetailsToDataMapper)
 
     @Provides
     fun providesSaveConnectionDetailsUseCase(

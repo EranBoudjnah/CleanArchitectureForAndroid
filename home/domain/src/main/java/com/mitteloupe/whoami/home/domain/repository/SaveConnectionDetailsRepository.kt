@@ -4,12 +4,4 @@ import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel.Conn
 
 interface SaveConnectionDetailsRepository {
     fun saveConnectionDetails(details: Connected)
-
-    class FakeSaveConnectionDetailsRepository(
-        private val onSave: (details: Connected) -> Unit = {}
-    ) : SaveConnectionDetailsRepository {
-        override fun saveConnectionDetails(details: Connected) {
-            onSave(details)
-        }
-    }
 }
