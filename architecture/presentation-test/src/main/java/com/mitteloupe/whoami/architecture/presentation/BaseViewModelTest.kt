@@ -96,7 +96,7 @@ abstract class BaseViewModelTest<
         result: RESULT
     ) {
         willAnswer { invocationOnMock ->
-            val onResult: (RESULT) -> Unit = invocationOnMock.getArgument(2)
+            val onResult: (RESULT) -> Unit = invocationOnMock.getArgument(1)
             onResult(result)
         }.given(useCaseExecutor).execute(
             useCase = eq(useCase),
