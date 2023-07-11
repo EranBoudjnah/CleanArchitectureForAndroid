@@ -88,6 +88,8 @@ dependencies {
     implementation(project(":home-domain"))
     implementation(project(":home-data"))
 
+    implementation(project(":history-domain"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))

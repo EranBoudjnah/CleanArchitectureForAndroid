@@ -42,3 +42,6 @@ include(":home-domain")
 project(":home-domain").projectDir = File("home/domain")
 include(":home-data")
 project(":home-data").projectDir = File("home/data")
+
+include(":history-domain")
+project(":history-domain").projectDir = File("history/domain")
