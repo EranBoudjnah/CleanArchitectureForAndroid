@@ -22,13 +22,13 @@ class HomeViewModelTest : BaseViewModelTest<HomeViewState, Any, HomeViewModel>()
     override val expectedInitialState: HomeViewState = Loading
 
     @Mock
-    lateinit var getConnectionDetailsUseCase: GetConnectionDetailsUseCase
+    private lateinit var getConnectionDetailsUseCase: GetConnectionDetailsUseCase
 
     @Mock
-    lateinit var connectionStateToPresentationMapper: ConnectionStateToPresentationMapper
+    private lateinit var connectionStateToPresentationMapper: ConnectionStateToPresentationMapper
 
     @Mock
-    lateinit var exceptionToPresentationMapper: ExceptionToPresentationMapper
+    private lateinit var exceptionToPresentationMapper: ExceptionToPresentationMapper
 
     @Before
     fun setUp() {
