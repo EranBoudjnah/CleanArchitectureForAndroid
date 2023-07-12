@@ -40,7 +40,7 @@ setOf("ui", "presentation", "domain", "data").forEach { layer ->
     project(":home-$layer").projectDir = File("home/$layer")
 }
 
-setOf("domain", "data").forEach { layer ->
+setOf("presentation", "domain", "data").forEach { layer ->
     include(":history-$layer")
     project(":history-$layer").projectDir = File("history/$layer")
 }

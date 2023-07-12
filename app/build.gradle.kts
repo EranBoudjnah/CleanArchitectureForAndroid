@@ -88,6 +88,7 @@ dependencies {
     implementation(project(":home-domain"))
     implementation(project(":home-data"))
 
+    implementation(project(":history-presentation"))
     implementation(project(":history-domain"))
     implementation(project(":history-data"))
 
