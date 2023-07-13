@@ -102,8 +102,8 @@ private fun saveScreenshotToStream(bitmap: Bitmap, outputStream: OutputStream) {
     outputStream.use {
         try {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, it)
-        } catch (e: IOException) {
-            println("Screenshot was not stored at this time")
+        } catch (ioException: IOException) {
+            println("Screenshot was not stored at this time: ${ioException.message}")
         }
     }
 }

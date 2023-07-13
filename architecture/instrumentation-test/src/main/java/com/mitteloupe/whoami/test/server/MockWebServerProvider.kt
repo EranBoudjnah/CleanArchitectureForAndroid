@@ -19,8 +19,13 @@ import okhttp3.mockwebserver.MockWebServer
  *
  * 2. Run the below commands on your terminal:
  *
- *   > keytool -genkey -v -alias localhost -ext SAN=dns:localhost -keypass 123456 -storepass 123456 -keyalg RSA -keysize 2048 -validity 10000 -storetype BKS -keystore teststore_keystore.bks -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath ~/Downloads/bcprov-jdk15on-1.69.jar
- *   > keytool -exportcert -alias localhost -keystore teststore_keystore.bks -file teststore.crt -storetype BKS -storepass 123456 -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath
+ *   > keytool -genkey -v -alias localhost -ext SAN=dns:localhost -keypass 123456 -storepass 123456
+ *       -keyalg RSA -keysize 2048 -validity 10000 -storetype BKS -keystore teststore_keystore.bks
+ *       -provider org.bouncycastle.jce.provider.BouncyCastleProvider
+ *       -providerpath ~/Downloads/bcprov-jdk15on-1.69.jar
+ *   > keytool -exportcert -alias localhost -keystore teststore_keystore.bks -file teststore.crt
+ *       -storetype BKS -storepass 123456
+ *       -provider org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath
  *   > openssl x509 -inform der -in teststore.crt -out teststore.pem
  *
  * 3. Place teststore_keystore.bks in the assets folder of the app being tested.

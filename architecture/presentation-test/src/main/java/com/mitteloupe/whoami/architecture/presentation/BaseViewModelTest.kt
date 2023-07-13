@@ -18,6 +18,8 @@ import org.mockito.Mock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
 
+private const val ON_EXCEPTION_ARGUMENT_INDEX = 3
+
 abstract class BaseViewModelTest<
     VIEW_STATE : Any,
     NOTIFICATION : Any,
@@ -56,7 +58,8 @@ abstract class BaseViewModelTest<
     ) {
         runBlocking {
             willAnswer { invocation ->
-                val onException: (DomainException) -> Unit = invocation.getArgument(3)
+                val onException: (DomainException) -> Unit =
+                    invocation.getArgument(ON_EXCEPTION_ARGUMENT_INDEX)
                 onException(domainException)
             }.given(useCaseExecutor)
                 .execute(
