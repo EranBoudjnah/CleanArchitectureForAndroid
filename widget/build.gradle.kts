@@ -53,7 +53,7 @@ ktlint {
 }
 
 detekt {
-    config.setFrom("$projectDir/detekt.yml")
+    config.setFrom("$projectDir/../detekt.yml")
 }
 
 dependencies {
