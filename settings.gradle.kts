@@ -26,21 +26,24 @@ include(":time")
 include(":coroutine")
 include(":coroutine-test")
 include(":widget")
-include(":architecture-instrumentation-test")
-project(":architecture-instrumentation-test").projectDir = File("architecture/instrumentation-test")
-include(":architecture-presentation")
-project(":architecture-presentation").projectDir = File("architecture/presentation")
-include(":architecture-presentation-test")
-project(":architecture-presentation-test").projectDir = File("architecture/presentation-test")
-include(":architecture-domain")
-project(":architecture-domain").projectDir = File("architecture/domain")
+
+setOf(
+    "ui",
+    "instrumentation-test",
+    "presentation",
+    "presentation-test",
+    "domain"
+).forEach { module ->
+    include(":architecture-$module")
+    project(":architecture-$module").projectDir = File("architecture/$module")
+}
 
 setOf("ui", "presentation", "domain", "data").forEach { layer ->
     include(":home-$layer")
     project(":home-$layer").projectDir = File("home/$layer")
 }
 
-setOf("presentation", "domain", "data").forEach { layer ->
+setOf("ui", "presentation", "domain", "data").forEach { layer ->
     include(":history-$layer")
     project(":history-$layer").projectDir = File("history/$layer")
 }

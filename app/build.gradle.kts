@@ -80,6 +80,7 @@ dependencies {
     implementation(project(":datasource-source"))
     implementation(project(":datasource-implementation"))
 
+    implementation(project(":architecture-ui"))
     implementation(project(":architecture-presentation"))
     implementation(project(":architecture-domain"))
 
@@ -88,6 +89,7 @@ dependencies {
     implementation(project(":home-domain"))
     implementation(project(":home-data"))
 
+    implementation(project(":history-ui"))
     implementation(project(":history-presentation"))
     implementation(project(":history-domain"))
     implementation(project(":history-data"))
