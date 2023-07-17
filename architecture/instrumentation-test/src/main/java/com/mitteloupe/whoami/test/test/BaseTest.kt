@@ -1,16 +1,18 @@
 package com.mitteloupe.whoami.test.test
 
+import androidx.compose.ui.test.IdlingResource as ComposeIdlingResource
+import androidx.test.espresso.IdlingResource as EspressoIdlingResource
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
+import android.view.ViewGroup
+import androidx.activity.ComponentActivity
 import androidx.annotation.CallSuper
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.test.IdlingResource as ComposeIdlingResource
+import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.IdlingResource as EspressoIdlingResource
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mitteloupe.whoami.test.rule.DisableAnimationsRule
 import com.mitteloupe.whoami.test.rule.HiltInjectorRule
@@ -21,9 +23,12 @@ import com.mitteloupe.whoami.test.server.MockWebServerProvider
 import com.mitteloupe.whoami.test.server.ResponseStore
 import dagger.hilt.android.testing.HiltAndroidRule
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.RuleChain
+import org.junit.rules.TestRule
 
 abstract class BaseTest {
     internal val targetContext
@@ -64,10 +69,10 @@ abstract class BaseTest {
             .around(HiltInjectorRule(hiltAndroidRule))
             .around(ScreenshotFailureRule())
             .around(webServerRule)
+            .around(composeTestRule)
     }
 
-    @get:Rule
-    val composeTestRule = createComposeRule()
+    abstract val composeTestRule: ComposeContentTestRule
 
     abstract val startActivityLauncher: AppLauncher
 
@@ -107,6 +112,15 @@ abstract class BaseTest {
             private val composable: @Composable () -> Unit
         ) : AppLauncher() {
             override fun launch() {
+                @Suppress("UNCHECKED_CAST") val androidComposeTestRule =
+                    composeContentTestRule as AndroidComposeTestRule<TestRule, ComponentActivity>
+                val activity = androidComposeTestRule.activity
+                val root = activity.findViewById<ViewGroup>(android.R.id.content)
+                if (root != null) {
+                    runBlocking(Dispatchers.Main) {
+                        root.removeAllViews()
+                    }
+                }
                 composeContentTestRule.setContent(composable)
             }
         }
