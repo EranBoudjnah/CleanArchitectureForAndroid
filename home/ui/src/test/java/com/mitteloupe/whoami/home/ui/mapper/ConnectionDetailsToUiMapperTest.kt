@@ -25,7 +25,7 @@ class ConnectionDetailsToUiMapperTest(
                 testTitle = "case 1",
                 ipAddress = "1.2.3.4",
                 city = "Tel Aviv",
-                region = "",
+                region = "HaMerkaz",
                 countryCode = "IL",
                 countryName = "Israel",
                 geolocation = "0.0,0.0",

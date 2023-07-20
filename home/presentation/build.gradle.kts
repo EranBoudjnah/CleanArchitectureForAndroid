@@ -29,6 +29,7 @@ dependencies {
     testImplementation(libs.test.junit)
     testImplementation(libs.test.mockito)
     testImplementation(libs.test.mockito.kotlin)
+    testImplementation(libs.test.kotlinx.coroutines)
     testImplementation(project(":architecture-presentation-test"))
     testImplementation(project(":coroutine-test"))
 }
