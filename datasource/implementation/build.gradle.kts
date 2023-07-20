@@ -66,7 +66,6 @@ dependencies {
 
     testImplementation(libs.test.junit)
     testImplementation(libs.test.hamcrest)
-    testImplementation(libs.test.mockito)
     testImplementation(libs.test.mockito.kotlin)
     testImplementation(libs.test.kotlinx.coroutines)
     testImplementation(project(":coroutine-test"))

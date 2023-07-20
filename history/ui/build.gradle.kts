@@ -5,6 +5,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("org.jlleitschuh.gradle.ktlint")
     id("io.gitlab.arturbosch.detekt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -64,6 +65,7 @@ dependencies {
     implementation(project(":coroutine"))
     implementation(project(":widget"))
 
+    implementation(libs.material)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.recyclerview)
 
@@ -72,7 +74,6 @@ dependencies {
 
     testImplementation(libs.test.junit)
     testImplementation(libs.test.hamcrest)
-    testImplementation(libs.test.mockito)
     testImplementation(libs.test.mockito.kotlin)
 
     androidTestImplementation(libs.androidx.junit)

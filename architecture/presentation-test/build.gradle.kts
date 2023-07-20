@@ -26,7 +26,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.test.junit)
-    implementation(libs.test.mockito)
     implementation(libs.test.mockito.kotlin)
     implementation(libs.test.kotlinx.coroutines)
     implementation(project(":coroutine-test"))

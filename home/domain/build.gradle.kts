@@ -28,6 +28,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.test.junit)
-    testImplementation(libs.test.mockito)
     testImplementation(libs.test.mockito.kotlin)
 }

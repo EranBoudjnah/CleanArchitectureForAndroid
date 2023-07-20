@@ -102,6 +102,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.fragment.ktx)
+
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.retrofit.interceptor.logging)
@@ -122,6 +125,11 @@ dependencies {
     androidTestImplementation(project(":architecture-instrumentation-test"))
     androidTestImplementation(libs.test.android.mockwebserver)
     kaptAndroidTest(libs.hilt.android.compiler)
+    androidTestImplementation(libs.test.mockito) {
+        exclude("net.bytebuddy")
+    }
+    androidTestImplementation(libs.test.mockito.kotlin)
+    androidTestImplementation(libs.test.mockito.android)
 
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
