@@ -1,14 +1,14 @@
 package com.mitteloupe.whoami.datasource.history.mapper
 
 import com.mitteloupe.whoami.datasource.history.model.NewIpAddressHistoryRecordDataModel
-import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordDataModel
+import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordLocalModel
 import com.mitteloupe.whoami.time.NowProvider
 
-class NewIpAddressRecordToSavedMapper(
+class NewIpAddressRecordToLocalMapper(
     private val nowProvider: NowProvider
 ) {
-    fun toSaved(historyRecord: NewIpAddressHistoryRecordDataModel) =
-        SavedIpAddressHistoryRecordDataModel(
+    fun toLocal(historyRecord: NewIpAddressHistoryRecordDataModel) =
+        SavedIpAddressHistoryRecordLocalModel(
             ipAddress = historyRecord.ipAddress,
             city = historyRecord.city,
             region = historyRecord.region,

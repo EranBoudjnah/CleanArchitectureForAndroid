@@ -1,7 +1,5 @@
 package com.mitteloupe.whoami.test.test
 
-import androidx.compose.ui.test.IdlingResource as ComposeIdlingResource
-import androidx.test.espresso.IdlingResource as EspressoIdlingResource
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,13 +7,17 @@ import android.view.ViewGroup
 import androidx.activity.ComponentActivity
 import androidx.annotation.CallSuper
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.test.IdlingResource as ComposeIdlingResource
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.IdlingResource as EspressoIdlingResource
 import androidx.test.platform.app.InstrumentationRegistry
+import com.mitteloupe.whoami.test.localstore.KeyValueStore
 import com.mitteloupe.whoami.test.rule.DisableAnimationsRule
 import com.mitteloupe.whoami.test.rule.HiltInjectorRule
+import com.mitteloupe.whoami.test.rule.LocalStoreRule
 import com.mitteloupe.whoami.test.rule.ScreenshotFailureRule
 import com.mitteloupe.whoami.test.rule.WebServerRule
 import com.mitteloupe.whoami.test.server.MockDispatcher
@@ -49,6 +51,9 @@ abstract class BaseTest {
     lateinit var responseStore: ResponseStore
 
     @Inject
+    lateinit var keyValueStore: KeyValueStore
+
+    @Inject
     lateinit var espressoIdlingResources: @JvmSuppressWildcards Collection<EspressoIdlingResource>
 
     @Inject
@@ -61,6 +66,13 @@ abstract class BaseTest {
         ) { mockWebServerProvider.serverUrl }
     }
 
+    private val localStoreRule by lazy {
+        LocalStoreRule(
+            lazy { sharedPreferences },
+            lazy { keyValueStore }
+        )
+    }
+
     @get:Rule
     open val testRules: RuleChain by lazy {
         RuleChain
@@ -69,6 +81,7 @@ abstract class BaseTest {
             .around(HiltInjectorRule(hiltAndroidRule))
             .around(ScreenshotFailureRule())
             .around(webServerRule)
+            .around(localStoreRule)
             .around(composeTestRule)
     }
 
@@ -112,7 +125,8 @@ abstract class BaseTest {
             private val composable: @Composable () -> Unit
         ) : AppLauncher() {
             override fun launch() {
-                @Suppress("UNCHECKED_CAST") val androidComposeTestRule =
+                @Suppress("UNCHECKED_CAST")
+                val androidComposeTestRule =
                     composeContentTestRule as AndroidComposeTestRule<TestRule, ComponentActivity>
                 val activity = androidComposeTestRule.activity
                 val root = activity.findViewById<ViewGroup>(android.R.id.content)

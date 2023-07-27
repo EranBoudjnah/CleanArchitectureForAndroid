@@ -8,7 +8,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
-import org.mockito.kotlin.mock
 
 @RunWith(Parameterized::class)
 class ConnectionDetailsToDomainMapperTest(

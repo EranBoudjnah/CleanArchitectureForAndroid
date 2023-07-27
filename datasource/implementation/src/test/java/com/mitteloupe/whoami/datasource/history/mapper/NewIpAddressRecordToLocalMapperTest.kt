@@ -2,6 +2,7 @@ package com.mitteloupe.whoami.datasource.history.mapper
 
 import com.mitteloupe.whoami.datasource.history.model.NewIpAddressHistoryRecordDataModel
 import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordDataModel
+import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordLocalModel
 import com.mitteloupe.whoami.time.NowProvider
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -16,7 +17,7 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnit
 
 @RunWith(Parameterized::class)
-class NewIpAddressRecordToSavedMapperTest(
+class NewIpAddressRecordToLocalMapperTest(
     @Suppress("unused") private val testTitle: String,
     private val givenHistoryRecord: NewIpAddressHistoryRecordDataModel,
     private val expectedSavedRecord: SavedIpAddressHistoryRecordDataModel
@@ -74,7 +75,7 @@ class NewIpAddressRecordToSavedMapperTest(
                 postCode = postCode,
                 timeZone = timeZone
             ),
-            SavedIpAddressHistoryRecordDataModel(
+            SavedIpAddressHistoryRecordLocalModel(
                 ipAddress = ipAddress,
                 city = city,
                 region = region,
@@ -91,14 +92,14 @@ class NewIpAddressRecordToSavedMapperTest(
     @get:Rule
     val mockitoRule: MethodRule = MockitoJUnit.rule()
 
-    private lateinit var classUnderTest: NewIpAddressRecordToSavedMapper
+    private lateinit var classUnderTest: NewIpAddressRecordToLocalMapper
 
     @Mock
     private lateinit var nowProvider: NowProvider
 
     @Before
     fun setUp() {
-        classUnderTest = NewIpAddressRecordToSavedMapper(nowProvider)
+        classUnderTest = NewIpAddressRecordToLocalMapper(nowProvider)
     }
 
     @Test
@@ -108,7 +109,7 @@ class NewIpAddressRecordToSavedMapperTest(
             .willReturn(expectedSavedRecord.savedAtTimestampMilliseconds)
 
         // When
-        val actualValue = classUnderTest.toSaved(givenHistoryRecord)
+        val actualValue = classUnderTest.toLocal(givenHistoryRecord)
 
         // Then
         assertEquals(expectedSavedRecord, actualValue)

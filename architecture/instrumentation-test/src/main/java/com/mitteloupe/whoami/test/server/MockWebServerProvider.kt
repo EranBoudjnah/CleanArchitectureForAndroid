@@ -1,5 +1,6 @@
 package com.mitteloupe.whoami.test.server
 
+import com.mitteloupe.whoami.test.asset.processAssetStream
 import java.lang.Thread.MAX_PRIORITY
 import java.security.KeyStore
 import java.util.logging.Level

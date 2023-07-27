@@ -76,4 +76,5 @@ dependencies {
     implementation(libs.test.android.uiautomator)
     implementation(libs.okhttp3)
     implementation(libs.test.android.mockwebserver)
+    implementation(libs.androidx.appcompat)
 }

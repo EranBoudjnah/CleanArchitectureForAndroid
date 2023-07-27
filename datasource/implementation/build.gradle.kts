@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.moshi.kotlin)
+    implementation(libs.androidx.core.ktx)
     ksp(libs.moshi.kotlin.codegen)
 
     implementation(libs.kotlinx.coroutines.core)

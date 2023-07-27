@@ -15,6 +15,7 @@ import com.mitteloupe.whoami.test.test.BaseTest.AppLauncher.FromComposable
 import com.mitteloupe.whoami.ui.main.AppNavHost
 import com.mitteloupe.whoami.ui.main.MainActivity
 import com.mitteloupe.whoami.ui.main.model.AppNavHostDependencies
+import com.mitteloupe.whoami.ui.navigation.mapper.HomeDestinationToUiMapper
 import com.mitteloupe.whoami.ui.theme.WhoAmITheme
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
@@ -34,6 +35,7 @@ class HomeTest : BaseTest() {
                 AppNavHost(
                     AppNavHostDependencies(
                         homeViewModel,
+                        homeDestinationToUiMapper,
                         connectionDetailsToUiMapper,
                         coroutineContextProvider
                     ),
@@ -48,6 +50,9 @@ class HomeTest : BaseTest() {
 
     @Inject
     lateinit var coroutineContextProvider: CoroutineContextProvider
+
+    @Inject
+    lateinit var homeDestinationToUiMapper: HomeDestinationToUiMapper
 
     @Inject
     lateinit var connectionDetailsToUiMapper: ConnectionDetailsToUiMapper

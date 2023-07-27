@@ -10,7 +10,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.mitteloupe.whoami.architecture.presentation.BaseViewModel
+import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
 import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
+import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
 import com.mitteloupe.whoami.architecture.ui.view.ViewsProvider
 import kotlinx.coroutines.launch
 
@@ -21,6 +23,8 @@ abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : Any> : Fragment, Vi
     protected abstract val viewModel: BaseViewModel<VIEW_STATE, NOTIFICATION>
 
     protected abstract val viewStateBinder: ViewStateBinder<VIEW_STATE, ViewsProvider>
+
+    protected abstract val destinationToUiMapper: DestinationToUiMapper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,11 +45,21 @@ abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : Any> : Fragment, Vi
                 viewModel.viewState.collect(::applyViewState)
             }
         }
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.destination.collect(::navigate)
+            }
+        }
     }
 
     private fun applyViewState(viewState: VIEW_STATE) {
         with(viewStateBinder) {
             bindState(viewState)
         }
+    }
+
+    private fun navigate(destination: PresentationDestination) {
+        val uiDestination = destinationToUiMapper.toUi(destination)
+        uiDestination.navigate()
     }
 }

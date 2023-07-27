@@ -20,20 +20,18 @@ import com.mitteloupe.whoami.home.presentation.mapper.ConnectionStateToPresentat
 import com.mitteloupe.whoami.home.presentation.mapper.ExceptionToPresentationMapper
 import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
 import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsToUiMapper
-import com.mitteloupe.whoami.navigation.Navigator
+import com.mitteloupe.whoami.ui.navigation.mapper.HomeDestinationToUiMapper
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object HomeModule {
-    @Singleton
     @Provides
-    fun providesNavigator() = Navigator()
+    fun providesHomeDestinationToUiMapper() = HomeDestinationToUiMapper()
 
     @Provides
     fun providesConnectionDetailsToDomainResolver() =

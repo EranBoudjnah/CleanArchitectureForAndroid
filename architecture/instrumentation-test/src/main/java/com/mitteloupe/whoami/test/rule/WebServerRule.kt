@@ -60,11 +60,9 @@ class WebServerRule(
             }.toSet()
 
             val unusedResponseKeys = stubbedResponseKeys - usedResponseKeys
-            if (unusedResponseKeys.isNotEmpty()) {
-                throw IllegalStateException(
-                    "${unusedResponseKeys.size} unused stubbed URLs:\n[" +
-                        unusedResponseKeys.joinToString("]\n[") + "]"
-                )
+            check(unusedResponseKeys.isEmpty()) {
+                "${unusedResponseKeys.size} unused stubbed URLs:\n[" +
+                    unusedResponseKeys.joinToString("]\n[") + "]"
             }
 
             mockDispatchers.forEach(ResponseDispatcher::reset)

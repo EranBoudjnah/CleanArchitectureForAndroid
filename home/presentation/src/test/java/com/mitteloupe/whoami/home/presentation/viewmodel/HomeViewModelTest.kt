@@ -13,7 +13,6 @@ import com.mitteloupe.whoami.home.presentation.model.HomeNotification
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Loading
 import com.mitteloupe.whoami.home.presentation.navigation.ViewHistoryPresentationDestination
-import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first

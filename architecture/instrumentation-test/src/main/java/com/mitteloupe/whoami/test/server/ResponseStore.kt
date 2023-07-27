@@ -13,11 +13,9 @@ abstract class ResponseStore {
 
     private fun MockRequestResponsePairList.toValidatedMap(): MockRequestResponseMap {
         val responses = toMap()
-        if (responses.size != size) {
-            throw IllegalStateException(
-                "Duplicate Request/Response key declared. " +
-                    "Make sure all Request/Response keys are unique."
-            )
+        check(responses.size == size) {
+            "Duplicate Request/Response key declared. " +
+                "Make sure all Request/Response keys are unique."
         }
         return responses
     }

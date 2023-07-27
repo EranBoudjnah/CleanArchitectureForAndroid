@@ -58,6 +58,8 @@ detekt {
 
 dependencies {
     implementation(project(":home-presentation"))
+
+    implementation(project(":architecture-ui"))
     implementation(project(":architecture-presentation"))
 
     implementation(project(":coroutine"))

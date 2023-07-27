@@ -1,10 +1,10 @@
-package com.mitteloupe.whoami.test.server
+package com.mitteloupe.whoami.test.asset
 
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.InputStream
 import java.io.InputStreamReader
 
-internal val assetReader = AssetReader()
+val assetReader = AssetReader()
 
 class AssetReader {
     fun getAssetAsString(name: String): String =

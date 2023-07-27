@@ -79,7 +79,7 @@ class SavedIpAddressRecordToDomainMapperTest(
                 postCode = postCode,
                 timeZone = timeZone,
                 savedAtTimestampMilliseconds = savedAtTimestampMilliseconds
-            ),
+            )
         )
     }
 

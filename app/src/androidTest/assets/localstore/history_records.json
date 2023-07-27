@@ -1,0 +1,24 @@
+{
+  "1.1.1.1": {
+    "ipAddress": "1.1.1.1",
+    "city": "Aberdeen",
+    "region": "Scotland",
+    "countryCode": "GB",
+    "geolocation": "0.1,-0.2",
+    "internetServiceProviderName": "ScotsNet",
+    "postCode": "AA11 2BB",
+    "timeZone": "GMT",
+    "savedAtTimestampMilliseconds": 0
+  },
+  "2.2.2.2": {
+    "ipAddress": "2.2.2.2",
+    "city": "Stockhold",
+    "region": "Sweden",
+    "countryCode": "SE",
+    "geolocation": "-0.01,0.02",
+    "internetServiceProviderName": "Scandiweb",
+    "postCode": "12345",
+    "timeZone": "GMT+2",
+    "savedAtTimestampMilliseconds": 10
+  }
+}

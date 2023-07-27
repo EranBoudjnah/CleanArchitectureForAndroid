@@ -111,6 +111,7 @@ dependencies {
     implementation(libs.moshi.kotlin)
 
     implementation(libs.hilt.android)
+    implementation(libs.androidx.navigation.fragment.ktx)
     kapt(libs.hilt.android.compiler)
 
     implementation(libs.compose.activity)

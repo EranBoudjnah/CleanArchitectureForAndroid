@@ -29,13 +29,13 @@ class HistoryViewModelTest : BaseViewModelTest<HistoryViewState, Any, HistoryVie
     private lateinit var getHistoryUseCase: GetHistoryUseCase
 
     @Mock
-    private lateinit var savedIpAddressRecordToPresentationMapper: SavedIpAddressRecordToPresentationMapper
+    private lateinit var ipRecordToPresentationMapper: SavedIpAddressRecordToPresentationMapper
 
     @Before
     fun setUp() {
         classUnderTest = HistoryViewModel(
             getHistoryUseCase,
-            savedIpAddressRecordToPresentationMapper,
+            ipRecordToPresentationMapper,
             useCaseExecutor
         )
     }
@@ -73,11 +73,11 @@ class HistoryViewModelTest : BaseViewModelTest<HistoryViewState, Any, HistoryVie
         givenIpAddressRecord2: SavedIpAddressRecordDomainModel
     ): Collection<SavedIpAddressRecordPresentationModel> {
         val expectedIpAddressRecord1 = presentationHistoryRecord("0_0_0_0")
-        given(savedIpAddressRecordToPresentationMapper.toPresentation(givenIpAddressRecord1))
+        given(ipRecordToPresentationMapper.toPresentation(givenIpAddressRecord1))
             .willReturn(expectedIpAddressRecord1)
 
         val expectedIpAddressRecord2 = presentationHistoryRecord("1-1-1-1")
-        given(savedIpAddressRecordToPresentationMapper.toPresentation(givenIpAddressRecord2))
+        given(ipRecordToPresentationMapper.toPresentation(givenIpAddressRecord2))
             .willReturn(expectedIpAddressRecord2)
 
         return setOf(expectedIpAddressRecord1, expectedIpAddressRecord2)

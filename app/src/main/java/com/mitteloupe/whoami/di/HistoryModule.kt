@@ -13,6 +13,7 @@ import com.mitteloupe.whoami.history.presentation.mapper.SavedIpAddressRecordToP
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
 import com.mitteloupe.whoami.history.presentation.viewmodel.HistoryViewModel
 import com.mitteloupe.whoami.history.ui.binder.HistoryViewStateBinder
+import com.mitteloupe.whoami.history.ui.mapper.HistoryRecordToUiMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -52,8 +53,14 @@ object HistoryModule {
         useCaseExecutor
     )
 
+    @Provides
+    fun providesHistoryRecordToUiMapper() = HistoryRecordToUiMapper()
+
     @Suppress("UNCHECKED_CAST")
     @Provides
-    fun providesHistoryViewStateBinder() =
-        HistoryViewStateBinder() as ViewStateBinder<HistoryViewState, ViewsProvider>
+    fun providesHistoryViewStateBinder(
+        historyRecordToUiMapper: HistoryRecordToUiMapper
+    ) = HistoryViewStateBinder(
+        historyRecordToUiMapper
+    ) as ViewStateBinder<HistoryViewState, ViewsProvider>
 }

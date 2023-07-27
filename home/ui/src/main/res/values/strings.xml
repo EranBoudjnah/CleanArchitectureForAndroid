@@ -12,4 +12,8 @@
     <string name="home_post_code_label">Post code</string>
     <string name="home_time_zone_label">Time zone</string>
     <string name="home_internet_service_provider_label">ISP</string>
+    <string name="home_history_button_label">View History</string>
+    <string name="home_save_details_button_label">Save Details</string>
+
+    <string name="home_details_saved_notification">%1$s saved.</string>
 </resources>

@@ -67,6 +67,7 @@ abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : Any>(
 
     private fun <T> mutableSharedFlow() = lazy { MutableSharedFlow<T>() }
 
-    private fun <T, FLOW : MutableSharedFlow<T>> immutableFlow(initializer: () -> FLOW): Lazy<Flow<T>> =
-        lazy { initializer() }
+    private fun <T, FLOW : MutableSharedFlow<T>> immutableFlow(
+        initializer: () -> FLOW
+    ): Lazy<Flow<T>> = lazy { initializer() }
 }
