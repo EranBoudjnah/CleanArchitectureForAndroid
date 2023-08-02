@@ -72,7 +72,7 @@ class SavedIpAddressRecordToDataMapperTest(
                 timeZone = timeZone,
                 savedAtTimestampMilliseconds = savedAtTimestampMilliseconds
             ),
-            SavedIpAddressHistoryRecordLocalModel(
+            SavedIpAddressHistoryRecordDataModel(
                 ipAddress = ipAddress,
                 city = city,
                 region = region,
