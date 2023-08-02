@@ -7,7 +7,26 @@ on:
     branches: [ "master" ]
 
 jobs:
+  setup:
+    runs-on: macos-latest
+
+    steps:
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Assemble with Gradle
+        run: ./gradlew assemble
+
   unit-tests:
+    needs: setup
+
     runs-on: macos-latest
 
     steps:
@@ -27,6 +46,8 @@ jobs:
       run: ./gradlew testDebugUnitTest
 
   connected-tests:
+    needs: setup
+
     runs-on: macos-latest
 
     steps:
