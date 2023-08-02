@@ -40,6 +40,9 @@ jobs:
           distribution: 'adopt'
           cache: 'gradle'
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
       - name: Run connected tests
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
