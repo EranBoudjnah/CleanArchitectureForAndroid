@@ -20,7 +20,7 @@ class HomeScreen {
     private val internetServiceProviderLabel = hasText("TalkTalk Limited")
 
     fun ComposeContentTestRule.seesIpAddressLabel() {
-        waitUntilAtLeastOneExists(ipAddressLabel)
+        waitUntilAtLeastOneExists(ipAddressLabel, timeoutMillis = 5_000L)
     }
 
     fun ComposeContentTestRule.seesIpAddressSubtitleLabel() {
