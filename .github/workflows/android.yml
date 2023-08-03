@@ -87,7 +87,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Save logcat output
-        run: adb logcat > logcat.txt
+        run: adb logcat > logcat.txt & echo $! > pid.txt
 
       - name: Run connected tests
         uses: ReactiveCircus/android-emulator-runner@v2
@@ -99,6 +99,9 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: ./gradlew connectedCheck
+
+      - name: Stop logcat capture
+        run: kill $(cat pid.txt)
 
       - name: Upload logcat output
         uses: actions/upload-artifact@v3
