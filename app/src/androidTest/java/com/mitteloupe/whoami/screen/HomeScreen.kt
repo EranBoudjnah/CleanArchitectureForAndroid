@@ -1,6 +1,8 @@
 package com.mitteloupe.whoami.screen
 
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
@@ -20,38 +22,45 @@ class HomeScreen {
     private val internetServiceProviderLabel = hasText("TalkTalk Limited")
 
     fun ComposeContentTestRule.seesIpAddressLabel() {
-        waitUntilAtLeastOneExists(ipAddressLabel, timeoutMillis = 5_000L)
+        assertIsDisplayed(ipAddressLabel)
     }
 
     fun ComposeContentTestRule.seesIpAddressSubtitleLabel() {
-        onNode(ipAddressSubtitleLabel).assertIsDisplayed()
+        assertIsDisplayed(ipAddressSubtitleLabel)
     }
 
     fun ComposeContentTestRule.seesCityLabel() {
-        onNode(cityLabel).assertIsDisplayed()
+        assertIsDisplayed(cityLabel)
     }
 
     fun ComposeContentTestRule.seesRegionLabel() {
-        onNode(regionLabel).assertIsDisplayed()
+        assertIsDisplayed(regionLabel)
     }
 
     fun ComposeContentTestRule.seesCountryLabel() {
-        onNode(countryLabel).assertIsDisplayed()
+        assertIsDisplayed(countryLabel)
     }
 
     fun ComposeContentTestRule.seesGeolocationLabel() {
-        onNode(geolocationLabel).assertIsDisplayed()
+        assertIsDisplayed(geolocationLabel)
     }
 
     fun ComposeContentTestRule.seesPostCodeLabel() {
-        onNode(postCodeLabel).assertIsDisplayed()
+        assertIsDisplayed(postCodeLabel)
     }
 
     fun ComposeContentTestRule.seesTimeZoneLabel() {
-        onNode(timeZoneLabel).assertIsDisplayed()
+        assertIsDisplayed(timeZoneLabel)
     }
 
     fun ComposeContentTestRule.seesInternetServiceProviderLabel() {
-        onNode(internetServiceProviderLabel).assertIsDisplayed()
+        assertIsDisplayed(internetServiceProviderLabel)
+    }
+
+    private fun ComposeContentTestRule.assertIsDisplayed(
+        matcher: SemanticsMatcher
+    ) : SemanticsNodeInteraction {
+        waitUntilAtLeastOneExists(matcher, timeoutMillis = 5_000L)
+        return onNode(matcher).assertIsDisplayed()
     }
 }

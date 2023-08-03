@@ -67,11 +67,25 @@ class HomeTest : BaseTest() {
             REQUEST_RESPONSE_GET_IP_DETAILS
         ]
     )
-    fun givenConnectedWhenStartingAppThenIpAddressAndDetailsPresented() {
+    fun givenConnectedWhenStartingAppThenIpAddressPresented() {
         with(composeTestRule) {
             with(homeScreen) {
                 seesIpAddressLabel()
                 seesIpAddressSubtitleLabel()
+            }
+        }
+    }
+
+    @Test
+    @ServerRequestResponse(
+        [
+            REQUEST_RESPONSE_GET_IP,
+            REQUEST_RESPONSE_GET_IP_DETAILS
+        ]
+    )
+    fun givenConnectedWhenStartingAppThenIpAddressDetailsPresented() {
+        with(composeTestRule) {
+            with(homeScreen) {
                 seesCityLabel()
                 seesRegionLabel()
                 seesCountryLabel()
