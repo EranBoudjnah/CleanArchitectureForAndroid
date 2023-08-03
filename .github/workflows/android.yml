@@ -33,7 +33,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Assemble with Gradle
-        run: ./gradlew jar
+        run: ./gradlew jar --no-daemon
 
   unit-tests:
     needs: setup
@@ -60,7 +60,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew testDebugUnitTest
+        run: ./gradlew testDebugUnitTest --no-daemon
 
   connected-tests:
     needs: setup
@@ -98,12 +98,14 @@ jobs:
           profile: Nexus 6
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          script: ./gradlew connectedCheck
+          script: ./gradlew connectedCheck --no-daemon
 
       - name: Stop logcat capture
+        if: always()
         run: kill $(cat pid.txt)
 
       - name: Upload logcat output
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: logcat
