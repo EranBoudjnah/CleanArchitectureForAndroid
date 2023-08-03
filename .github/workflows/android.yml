@@ -86,10 +86,22 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Save logcat output
+        run: adb logcat > logcat.txt
+
       - name: Run connected tests
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 31
           target: google_apis
           arch: x86_64
+          profile: Nexus 6
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
           script: ./gradlew connectedCheck
+
+      - name: Upload logcat output
+        uses: actions/upload-artifact@v3
+        with:
+          name: logcat
+          path: logcat.txt
