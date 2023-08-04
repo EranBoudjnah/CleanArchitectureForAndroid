@@ -58,8 +58,8 @@ test-mockito-android = { module = "com.linkedin.dexmaker:dexmaker-mockito-inline
 test-android-hilt = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
 test-android-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "uiautomator" }
 test-android-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "okhttp3" }
-test-androidx-rules = { module = "androidx.test:rules", version = "test-androidx-rules" }
-androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version = "androidx-navigation-fragment-ktx" }
+test-androidx-rules = { module = "androidx.test:rules", version.ref = "test-androidx-rules" }
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation-fragment-ktx" }
 
 [bundles]
 compose = ["compose-navigation"]
