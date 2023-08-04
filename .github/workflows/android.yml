@@ -98,19 +98,9 @@ jobs:
           profile: Nexus 6
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          script: >-
-            (
-              set +e;
-              ./gradlew connectedCheck --no-daemon;
-              GRADLE_EXIT_CODE=$?;
-              set -e;
-              if [ $GRADLE_EXIT_CODE -ne 0 ]; then
-                echo Pulling screenshots from the emulator...;
-                adb pull /storage/emulated/0/Pictures/ Screenshots;
-                echo Done.;
-              fi;
-              exit $GRADLE_EXIT_CODE
-            )
+          script: |
+            chmod +x script/run_test.sh
+            ./script/run_tests.sh
 
       - name: Upload failed tests screenshots
         if: failure()
