@@ -99,8 +99,8 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            chmod +x script/run_test.sh
-            ./script/run_tests.sh
+            chmod +x .github/workflows/script/run_tests.sh
+            .github/workflows/script/run_tests.sh
 
       - name: Upload failed tests screenshots
         if: failure()
