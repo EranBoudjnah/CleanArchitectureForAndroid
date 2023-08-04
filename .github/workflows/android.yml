@@ -98,11 +98,11 @@ jobs:
           profile: Nexus 6
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          script: ./gradlew connectedCheck --no-daemon
-
-      - name: Read failed tests screenshots from emulator
-        if: failure()
-        run: adb pull /storage/emulated/0/Pictures/ Screenshots
+          script: |
+            ./gradlew connectedCheck --no-daemon
+            if [ $? -ne 0 ]; then
+              adb pull /storage/emulated/0/Pictures/ Screenshots
+            fi
 
       - name: Upload failed tests screenshots
         if: failure()
