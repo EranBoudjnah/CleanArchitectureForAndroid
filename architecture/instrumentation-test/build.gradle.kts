@@ -77,4 +77,5 @@ dependencies {
     implementation(libs.okhttp3)
     implementation(libs.test.android.mockwebserver)
     implementation(libs.androidx.appcompat)
+    implementation(libs.test.androidx.rules)
 }
