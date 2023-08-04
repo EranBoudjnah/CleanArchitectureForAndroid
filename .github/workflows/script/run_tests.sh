@@ -8,6 +8,7 @@ set -e
 if [ $GRADLE_EXIT_CODE -ne 0 ]; then
   echo Pulling screenshots from the emulator...
   adb pull /storage/emulated/0/Pictures/ Screenshots
+  rm -rf Screenshots/.thumbnails
   echo Done.
 fi
 
