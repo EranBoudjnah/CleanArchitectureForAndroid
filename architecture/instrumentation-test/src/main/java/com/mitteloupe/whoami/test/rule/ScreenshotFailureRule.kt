@@ -114,4 +114,4 @@ private fun saveScreenshotToStream(bitmap: Bitmap, outputStream: OutputStream) {
 }
 
 private val String.jpg
-    get() = "$this.jpg"
+    get() = "${this.replace(":", "_")}.jpg"
