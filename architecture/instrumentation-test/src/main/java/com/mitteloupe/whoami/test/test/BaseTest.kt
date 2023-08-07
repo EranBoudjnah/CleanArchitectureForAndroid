@@ -1,10 +1,10 @@
 package com.mitteloupe.whoami.test.test
 
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.view.ViewGroup
 import androidx.activity.ComponentActivity
 import androidx.annotation.CallSuper
