@@ -14,7 +14,6 @@ hilt = "2.47"
 moshi = "1.14.0"
 retrofit = "2.9.0"
 retrofit-interceptor-logging = "4.11.0"
-org-jetbrains-kotlin-jvm = "1.8.22"
 kotlinx-coroutines = "1.7.1"
 test-junit = "4.13.2"
 test-hamcrest = "2.2"
@@ -25,6 +24,7 @@ test-mockito-android = "2.28.3"
 test-androidx-rules = "1.5.0"
 uiautomator = "2.2.0"
 okhttp3 = "4.11.0"
+jetbrains-kotlin = "1.8.22"
 
 [libraries]
 material = { module = "com.google.android.material:material", version.ref = "material" }
@@ -65,4 +65,6 @@ androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fr
 compose = ["compose-navigation"]
 
 [plugins]
-org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "jetbrains-kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrains-kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
