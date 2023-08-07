@@ -59,8 +59,7 @@ class HomeScreen {
 
     private fun ComposeContentTestRule.assertIsDisplayed(
         matcher: SemanticsMatcher
-    ) : SemanticsNodeInteraction {
-        waitUntilAtLeastOneExists(matcher, timeoutMillis = 5_000L)
-        return onNode(matcher).assertIsDisplayed()
+    ) {
+        waitUntilExactlyOneExists(matcher, timeoutMillis = 5_000L)
     }
 }
