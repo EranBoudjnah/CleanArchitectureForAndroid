@@ -1,0 +1,31 @@
+name: Kotlin-Linter
+
+on:
+  pull_request:
+
+jobs:
+  ktlint:
+    runs-on: macos-latest
+    steps:
+      - name: Get changed files
+        id: changes
+        run: |
+          URL="https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files"
+          RESPONSE=$(curl -s -X GET -G $URL --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}')
+          CHANGED_KOTLIN_FILES=$(echo $RESPONSE | jq -r '.[] | .filename' | grep -E "\.kt$" | tr \'\\n\' ' ' | sed 's/^[ \t]*//;s/[ \t]*$//')
+          echo "Changed Kotlin files: ${CHANGED_KOTLIN_FILES}"
+          echo "changed_kotlin_files=${CHANGED_KOTLIN_FILES}" >> $GITHUB_ENV
+
+      - name: "checkout"
+        if: env.changed_kotlin_files != ''
+        uses: actions/checkout@v2
+
+      - name: Install ktlint
+        if: env.changed_kotlin_files != ''
+        run: |
+          curl -sSLO https://github.com/pinterest/ktlint/releases/download/0.50.0/ktlint && chmod a+x ktlint && sudo mv ktlint /usr/local/bin/
+
+      - name: run ktlint
+        if: env.changed_kotlin_files != ''
+        run: |
+          ktlint . '!**/build/**'
