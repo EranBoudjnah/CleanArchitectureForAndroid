@@ -1,0 +1,32 @@
+name: 'Cache Build'
+description: 'Cache build paths'
+inputs:
+  key:
+    description: 'Cache key'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Cache build artifacts
+      uses: actions/cache@v2
+      with:
+        path: |
+          app/build
+          coroutine/build
+          coroutine-test/build
+          datasource/architecture/build
+          datasource/implementation/build
+          datasource/source/build
+          history/data/build
+          history/domain/build
+          history/presentation/build
+          history/ui/build
+          home/data/build
+          home/domain/build
+          home/presentation/build
+          home/ui/build
+          time/build
+          widget/build
+        key: ${{ inputs.key }}
+        restore-keys: |
+          ${{ inputs.key }}

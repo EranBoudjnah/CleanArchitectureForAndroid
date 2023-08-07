@@ -4,6 +4,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
 import android.net.NetworkRequest
+import android.os.Build
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataModel
 import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataModel.Connected
@@ -32,7 +33,24 @@ class ConnectionDataSourceImpl(
         }
 
         override fun onLost(network: Network) {
-            emitConnectionUpdate(Disconnected)
+            emitConnectionUpdate(
+                if (isConnected()) {
+                    Connected
+                } else {
+                    Disconnected
+                }
+            )
+        }
+
+        private fun isConnected() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val activeNetwork = connectivityManager.activeNetwork
+            connectivityManager.getNetworkCapabilities(activeNetwork)
+                ?.hasCapability(NET_CAPABILITY_INTERNET) == true
+        } else {
+            @Suppress("DEPRECATION")
+            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            @Suppress("DEPRECATION")
+            activeNetworkInfo?.isConnected == true
         }
     }
 

@@ -1,5 +1,8 @@
 name: Android CI
 
+env:
+  cache-name: android-gradle
+
 on:
   push:
     branches: [ "master" ]
@@ -7,26 +10,61 @@ on:
     branches: [ "master" ]
 
 jobs:
-  unit-tests:
-    runs-on: ubuntu-latest
+  setup:
+    runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'adopt'
-        cache: gradle
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: gradle
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      - name: Cache build artifacts
+        uses: ./.github/actions/cache-build-paths
+        with:
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
 
-    - name: Build with Gradle
-      run: ./gradlew testDebugUnitTest
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Assemble with Gradle
+        run: ./gradlew jar --no-daemon
+
+  unit-tests:
+    needs: setup
+
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: gradle
+
+      - name: Cache build artifacts
+        uses: ./.github/actions/cache-build-paths
+        with:
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew testDebugUnitTest --no-daemon
 
   connected-tests:
+    needs: setup
+
     runs-on: macos-latest
 
     steps:
@@ -40,10 +78,41 @@ jobs:
           distribution: 'adopt'
           cache: 'gradle'
 
+      - name: Cache build artifacts
+        uses: ./.github/actions/cache-build-paths
+        with:
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Save logcat output
+        run: adb logcat > logcat.txt &
+
       - name: Run connected tests
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
-          api-level: 33
+          api-level: 28
           target: google_apis
           arch: x86_64
-          script: ./gradlew connectedCheck
+          profile: Nexus 6
+          ram-size: 2048MB
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: |
+            chmod +x .github/workflows/script/run_tests.sh
+            .github/workflows/script/run_tests.sh
+
+      - name: Upload failed tests screenshots
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: screenshots
+          path: Screenshots
+
+      - name: Upload logcat output
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: logcat
+          path: logcat.txt

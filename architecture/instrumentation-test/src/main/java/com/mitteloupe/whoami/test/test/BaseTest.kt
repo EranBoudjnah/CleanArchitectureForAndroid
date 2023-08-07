@@ -3,6 +3,8 @@ package com.mitteloupe.whoami.test.test
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.view.ViewGroup
 import androidx.activity.ComponentActivity
 import androidx.annotation.CallSuper
@@ -14,6 +16,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource as EspressoIdlingResource
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.GrantPermissionRule
 import com.mitteloupe.whoami.test.localstore.KeyValueStore
 import com.mitteloupe.whoami.test.rule.DisableAnimationsRule
 import com.mitteloupe.whoami.test.rule.HiltInjectorRule
@@ -83,6 +86,7 @@ abstract class BaseTest {
             .around(webServerRule)
             .around(localStoreRule)
             .around(composeTestRule)
+            .around(GrantPermissionRule.grant(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE))
     }
 
     abstract val composeTestRule: ComposeContentTestRule

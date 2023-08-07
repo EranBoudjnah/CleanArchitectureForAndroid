@@ -20,7 +20,7 @@ import org.mockito.junit.MockitoJUnit
 class NewIpAddressRecordToLocalMapperTest(
     @Suppress("unused") private val testTitle: String,
     private val givenHistoryRecord: NewIpAddressHistoryRecordDataModel,
-    private val expectedSavedRecord: SavedIpAddressHistoryRecordDataModel
+    private val expectedSavedRecord: SavedIpAddressHistoryRecordLocalModel
 ) {
     companion object {
         @JvmStatic

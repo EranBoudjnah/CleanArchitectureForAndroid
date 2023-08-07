@@ -1,6 +1,6 @@
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.kotlin.android)
     id("org.jlleitschuh.gradle.ktlint")
     id("io.gitlab.arturbosch.detekt")
 }
@@ -77,4 +77,5 @@ dependencies {
     implementation(libs.okhttp3)
     implementation(libs.test.android.mockwebserver)
     implementation(libs.androidx.appcompat)
+    implementation(libs.test.androidx.rules)
 }
