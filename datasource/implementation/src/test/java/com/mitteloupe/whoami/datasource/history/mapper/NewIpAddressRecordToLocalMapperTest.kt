@@ -1,7 +1,6 @@
 package com.mitteloupe.whoami.datasource.history.mapper
 
 import com.mitteloupe.whoami.datasource.history.model.NewIpAddressHistoryRecordDataModel
-import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordDataModel
 import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordLocalModel
 import com.mitteloupe.whoami.time.NowProvider
 import org.junit.Assert.assertEquals
