@@ -1,0 +1,18 @@
+#!/bin/bash
+
+hash ktlint 2>/dev/null || {
+    echo "ktlint is required but is not installed."
+    exit 1
+}
+
+echo "Running ktlint..."
+
+ktlint . '!**/build/**'
+RESULT_KTLINT=$?
+
+if [[ $RESULT_KTLINT -ne 0 ]]; then
+  echo "Please fix all issues before committing again."
+  exit 1
+fi
+
+exit 0

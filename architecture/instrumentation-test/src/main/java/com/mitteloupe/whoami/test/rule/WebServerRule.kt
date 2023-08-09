@@ -47,10 +47,8 @@ class WebServerRule(
                     dispatcher.addResponse(requestResponse.request, requestResponse.response)
                 }
             }
-            val stubbedResponseKeys = mockDispatchers.flatMap { dispatcher ->
-                requestResponses.map { requestResponse ->
-                    requestResponse.request.url
-                }
+            val stubbedResponseKeys = requestResponses.map { requestResponse ->
+                requestResponse.request.url
             }.toSet()
 
             base.evaluate()
