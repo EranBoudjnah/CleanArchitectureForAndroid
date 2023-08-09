@@ -135,3 +135,11 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
+
+val installGitHook = tasks.register<Copy>("installGitHook") {
+    from(File(rootProject.rootDir, "automation/git/pre-commit"))
+    into(File(rootProject.rootDir, ".git/hooks"))
+    fileMode = 0b111111101
+}
+
+tasks.getByPath(":app:preBuild").dependsOn(installGitHook)
