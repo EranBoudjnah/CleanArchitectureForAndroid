@@ -33,7 +33,7 @@ party solutions.
 
 ### Choices
 
-- ** *Mappers as classes* vs. *mapping extension functions* **
+- ***Mappers as classes*** **vs.** ***mapping extension functions***
 
   When mapping between models, we have several options. The primary decision is
   between mapper classes and mapping extension functions.
@@ -71,6 +71,9 @@ party solutions.
   when using it. At the time of writing, judging by the number of stars on each repository,
   the industry seems to lean towards Mockk.
 
+  I was asked about using *fakes*. I have explored fakes, and found them to be overly verbose
+  and too expensive to maintain.
+
 - **Dependency injection framework**
 
   A critical part of most modern apps, dependency injection (DI) helps us obtain the objects
@@ -84,6 +87,13 @@ party solutions.
     2. **Simplicity** - from experience, setting up and using Hilt (unlike the underlying Dagger)
        is considerably easier than using Koin. Hilt also introduces fewer breaking changes
        over time.
+
+- ***XML*** **vs** ***Jetpack Compose***
+
+  Why not both? I still have a lot of concerns around **Jetpack Compose**. Even so, it was
+  important to me to show the presented architecture works well regardless of the UI
+  mechanism chosen. As an exercise, I invite you to try and replace the UI layer from Compose 
+  to XML or vice versa without updating the Presentation layer.
 
 ### Links
 
