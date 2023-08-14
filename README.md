@@ -1,5 +1,8 @@
 # Clean Architecture for Android Sample Project
 
+[![Clean Architecture for Android](https://github.com/EranBoudjnah/CleanArchitectureForAndroid/blob/readme_assets/readme-assets/book_cover.jpg?raw=true&123 "Clean Architecture for Android")](https://amzn.to/43cUuhb "Clean Architecture for Android")
+![Screenshot](https://github.com/EranBoudjnah/CleanArchitectureForAndroid/blob/readme_assets/readme-assets/screenshot_1692005135.png?raw=true&1 "Screenshot")
+
 This project is a loose implementation of Clean Architecture as presented in my book,
 [Clean Architecture for Android](
 https://amzn.to/43cUuhb). It is a native Android project written in Kotlin. It demonstrates
@@ -92,7 +95,7 @@ party solutions.
 
   Why not both? I still have a lot of concerns around **Jetpack Compose**. Even so, it was
   important to me to show the presented architecture works well regardless of the UI
-  mechanism chosen. As an exercise, I invite you to try and replace the UI layer from Compose 
+  mechanism chosen. As an exercise, I invite you to try and replace the UI layer from Compose
   to XML or vice versa without updating the Presentation layer.
 
 ### Links
