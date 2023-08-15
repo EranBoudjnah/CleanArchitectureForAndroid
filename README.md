@@ -103,3 +103,12 @@ party solutions.
 [Clean Architecture for Android on Amazon](https://amzn.to/43cUuhb "Clean Architecture for Android")
 
 [Clean Architecture on the Clean Coder Blog](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html "Clean Architecture")
+
+### Contributing
+
+Contributions to this project are welcome. Please feel free to report any issues or fork to
+make changes and raise a pull request.
+
+### Licence
+
+This project is distributed under the terms of the MIT License. See [LICENSE.md](LICENSE) for details.
