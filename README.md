@@ -111,4 +111,5 @@ make changes and raise a pull request.
 
 ### Licence
 
-This project is distributed under the terms of the MIT License. See [LICENSE.md](LICENSE) for details.
+This project is distributed under the terms of the MIT License. See [LICENSE.md](LICENSE) for
+details.
