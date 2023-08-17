@@ -112,6 +112,7 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.recyclerview)
     kapt(libs.hilt.android.compiler)
 
     implementation(libs.compose.activity)
