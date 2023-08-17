@@ -5,5 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class HistoryRecordUiModel(
-    val ipAddress: String
+    val ipAddress: String,
+    val location: String,
+    val savedAtTimestampMilliseconds: Long
 ) : Parcelable

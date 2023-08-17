@@ -38,7 +38,9 @@ class HistoryViewStateBinder(
                 noRecordsView.isVisible = viewState.historyRecords.isEmpty()
                 recordsListView.isVisible = viewState.historyRecords.isNotEmpty()
                 val historyItems = viewState.historyRecords.map(historyRecordToUiMapper::toUi)
-                    .sortedBy { historyRecord -> historyRecord.ipAddress }
+                    .sortedByDescending { historyRecord ->
+                        historyRecord.savedAtTimestampMilliseconds
+                    }
                 setUpAdapterAndBindItems(historyItems)
             }
 

@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.mitteloupe.whoami.home.ui"
+    namespace = "com.mitteloupe.whoami.history.ui"
     compileSdk = 33
 
     defaultConfig {

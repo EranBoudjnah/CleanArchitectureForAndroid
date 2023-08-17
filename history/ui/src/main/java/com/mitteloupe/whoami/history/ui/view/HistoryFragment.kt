@@ -13,8 +13,8 @@ import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMa
 import com.mitteloupe.whoami.architecture.ui.view.ViewsProvider
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
 import com.mitteloupe.whoami.history.presentation.viewmodel.HistoryViewModel
+import com.mitteloupe.whoami.history.ui.R
 import com.mitteloupe.whoami.history.ui.binder.HistoryViewStateBinder
-import com.mitteloupe.whoami.home.ui.R
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Named

@@ -2,4 +2,9 @@
 <resources>
     <string name="connection_history_title">Connection History</string>
     <string name="history_no_records_label">No saved addresses!</string>
+    <string name="history_record_location_city_format">%s</string>
+    <string name="history_record_location_postcode_format">Post code: %s</string>
+    <string name="history_record_location_full_format">%1$s, %2$s</string>
+    <string name="history_record_location_unknown">Unknown city</string>
+    <string name="history_record_saved_record_icon_hint">Saved record icon</string>
 </resources>

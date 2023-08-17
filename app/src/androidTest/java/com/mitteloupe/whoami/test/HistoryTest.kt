@@ -52,8 +52,10 @@ class HistoryTest : BaseTest() {
     )
     fun givenSavedHistoryWhenOnHistoryScreenThenSeesHistory() {
         with(historyScreen) {
-            seeIpRecord("1.1.1.1")
-            seeIpRecord("2.2.2.2")
+            seeIpRecord(ipAddress = "2.2.2.2", position = 1)
+            seeLocation(city = "Stockholm", postCode = "12345", position = 1)
+            seeIpRecord(ipAddress = "1.1.1.1", position = 2)
+            seeLocation(city = "Aberdeen", postCode = "AA11 2BB", position = 2)
         }
     }
 

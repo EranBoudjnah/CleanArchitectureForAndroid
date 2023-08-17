@@ -1,5 +1,6 @@
 package com.mitteloupe.whoami.di
 
+import android.content.res.Resources
 import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
 import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
 import com.mitteloupe.whoami.architecture.ui.view.ViewsProvider
@@ -54,7 +55,9 @@ object HistoryModule {
     )
 
     @Provides
-    fun providesHistoryRecordToUiMapper() = HistoryRecordToUiMapper()
+    fun providesHistoryRecordToUiMapper(
+        resources: Resources
+    ) = HistoryRecordToUiMapper(resources)
 
     @Suppress("UNCHECKED_CAST")
     @Provides
