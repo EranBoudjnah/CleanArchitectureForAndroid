@@ -29,6 +29,7 @@ fun AppNavHost(
     navController: NavHostController = rememberNavController(),
     startDestination: String = "home"
 ) {
+    val containerId by rememberSaveable { mutableStateOf(View.generateViewId()) }
     NavHost(
         modifier = modifier,
         navController = navController,
@@ -48,6 +49,7 @@ fun AppNavHost(
         }
         composable("history") {
             FragmentContainer(
+                containerId = containerId,
                 modifier = Modifier.fillMaxSize(),
                 fragmentManager = supportFragmentManager,
                 commit = { containerId -> replace(containerId, HistoryFragment.newInstance()) },
@@ -63,12 +65,12 @@ fun AppNavHost(
 
 @Composable
 fun FragmentContainer(
+    containerId: Int,
     modifier: Modifier = Modifier,
     fragmentManager: FragmentManager,
     commit: FragmentTransaction.(containerId: Int) -> Unit,
     onFragmentViewCreated: (containerId: Int) -> Unit
 ) {
-    val containerId by rememberSaveable { mutableStateOf(View.generateViewId()) }
     var initialized by rememberSaveable { mutableStateOf(false) }
     AndroidView(
         modifier = modifier,
@@ -77,12 +79,12 @@ fun FragmentContainer(
                 .apply { id = containerId }
         },
         update = { view ->
-            if (!initialized) {
-                fragmentManager.commit { commit(view.id) }
-                initialized = true
-            } else {
+            if (initialized) {
                 fragmentManager.onContainerAvailable(view)
                 onFragmentViewCreated(view.id)
+            } else {
+                fragmentManager.commit { commit(view.id) }
+                initialized = true
             }
         }
     )

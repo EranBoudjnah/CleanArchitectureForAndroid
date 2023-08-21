@@ -29,19 +29,18 @@ class HistoryViewStateBinder(
             @Suppress("DEPRECATION", "UNCHECKED_CAST")
             getParcelableArray(HISTORY_RECORDS_BUNDLE_KEY) as Array<HistoryRecordUiModel>?
         }
-        viewsProvider.setUpAdapterAndBindItems(savedHistoryItems?.toList().orEmpty())
+
+        val historyItems = savedHistoryItems?.toList().orEmpty()
+        viewsProvider.renderHistoryRecords(historyItems)
     }
 
     override fun HistoryViewsProvider.bindState(viewState: HistoryViewState) {
         when (viewState) {
+            HistoryViewState.NoChange -> Unit
+
             is HistoryViewState.HistoryRecords -> {
-                noRecordsView.isVisible = viewState.historyRecords.isEmpty()
-                recordsListView.isVisible = viewState.historyRecords.isNotEmpty()
                 val historyItems = viewState.historyRecords.map(historyRecordToUiMapper::toUi)
-                    .sortedByDescending { historyRecord ->
-                        historyRecord.savedAtTimestampMilliseconds
-                    }
-                setUpAdapterAndBindItems(historyItems)
+                renderHistoryRecords(historyItems)
             }
 
             HistoryViewState.Loading -> {
@@ -49,6 +48,18 @@ class HistoryViewStateBinder(
                 recordsListView.isVisible = false
             }
         }
+    }
+
+    private fun HistoryViewsProvider.renderHistoryRecords(
+        historyItems: List<HistoryRecordUiModel>
+    ) {
+        noRecordsView.isVisible = historyItems.isEmpty()
+        recordsListView.isVisible = historyItems.isNotEmpty()
+        setUpAdapterAndBindItems(
+            historyItems.sortedByDescending { historyRecord ->
+                historyRecord.savedAtTimestampMilliseconds
+            }
+        )
     }
 
     private fun HistoryViewsProvider.setUpAdapterAndBindItems(

@@ -7,7 +7,7 @@ import com.mitteloupe.whoami.history.domain.usecase.GetHistoryUseCase
 import com.mitteloupe.whoami.history.presentation.mapper.SavedIpAddressRecordToPresentationMapper
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.HistoryRecords
-import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.Loading
+import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.NoChange
 import com.mitteloupe.whoami.history.presentation.model.SavedIpAddressRecordPresentationModel
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.instanceOf
@@ -23,7 +23,7 @@ import org.mockito.kotlin.given
 
 @RunWith(MockitoJUnitRunner::class)
 class HistoryViewModelTest : BaseViewModelTest<HistoryViewState, Any, HistoryViewModel>() {
-    override val expectedInitialState: HistoryViewState = Loading
+    override val expectedInitialState: HistoryViewState = NoChange
 
     @Mock
     private lateinit var getHistoryUseCase: GetHistoryUseCase
