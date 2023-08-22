@@ -65,6 +65,8 @@ dependencies {
     implementation(project(":coroutine"))
     implementation(project(":widget"))
 
+    implementation(project(":analytics"))
+
     implementation(libs.material)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)

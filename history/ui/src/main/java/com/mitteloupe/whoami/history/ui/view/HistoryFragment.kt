@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.navigation.NavHostController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.mitteloupe.whoami.analytics.Analytics
+import com.mitteloupe.whoami.analytics.event.Click
 import com.mitteloupe.whoami.architecture.ui.BaseFragment
 import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
@@ -31,6 +33,9 @@ class HistoryFragment :
     @Named(NAVIGATION_MAPPER_NAME)
     override lateinit var destinationToUiMapper: DestinationToUiMapper
 
+    @Inject
+    lateinit var analytics: Analytics
+
     override lateinit var noRecordsView: View
 
     override lateinit var recordsListView: RecyclerView
@@ -49,6 +54,7 @@ class HistoryFragment :
         toolbar.setNavigationIcon(R.drawable.icon_back)
         toolbar.title = "Hello"
         toolbar.setNavigationOnClickListener {
+            analytics.logEvent(Click("Back"))
             viewModel.onBackAction()
         }
     }
@@ -71,6 +77,11 @@ class HistoryFragment :
             savedInstanceState?.restoreState(this@HistoryFragment)
         }
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        analytics.logScreen("History")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
