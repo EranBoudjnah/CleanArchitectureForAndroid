@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.mitteloupe.whoami.home.ui"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 22
@@ -67,13 +67,13 @@ dependencies {
 
     implementation(project(":analytics"))
 
-    implementation(platform("androidx.compose:compose-bom:2023.06.01"))
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
-    debugImplementation("androidx.compose.ui:ui-tooling:1.4.3")
+    debugImplementation("androidx.compose.ui:ui-tooling")
 
     testImplementation(libs.test.junit)
     testImplementation(libs.test.hamcrest)
