@@ -3,6 +3,7 @@ package com.mitteloupe.whoami.test
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
 import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsToUiMapper
@@ -37,7 +38,8 @@ class HomeTest : BaseTest() {
                         homeViewModel,
                         homeDestinationToUiMapper,
                         connectionDetailsToUiMapper,
-                        coroutineContextProvider
+                        coroutineContextProvider,
+                        analytics
                     ),
                     activity.supportFragmentManager
                 )
@@ -59,6 +61,9 @@ class HomeTest : BaseTest() {
 
     @Inject
     lateinit var homeScreen: HomeScreen
+
+    @Inject
+    lateinit var analytics: Analytics
 
     @Test
     @ServerRequestResponse(

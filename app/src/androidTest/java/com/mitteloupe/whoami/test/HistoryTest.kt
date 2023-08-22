@@ -3,6 +3,7 @@ package com.mitteloupe.whoami.test
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.localstore.KEY_VALUE_NO_HISTORY
 import com.mitteloupe.whoami.localstore.KEY_VALUE_SAVED_HISTORY
@@ -30,7 +31,13 @@ class HistoryTest : BaseTest() {
             WhoAmITheme {
                 val activity = LocalContext.current as MainActivity
                 AppNavHost(
-                    AppNavHostDependencies(mock(), mock(), mock(), coroutineContextProvider),
+                    AppNavHostDependencies(
+                        homeViewModel = mock(),
+                        homeDestinationToUiMapper = mock(),
+                        connectionDetailsToUiMapper = mock(),
+                        coroutineContextProvider = coroutineContextProvider,
+                        analytics = analytics
+                    ),
                     activity.supportFragmentManager,
                     startDestination = "history"
                 )
@@ -44,11 +51,12 @@ class HistoryTest : BaseTest() {
     @Inject
     lateinit var coroutineContextProvider: CoroutineContextProvider
 
+    @Inject
+    lateinit var analytics: Analytics
+
     @Test
     @LocalStore(
-        localStoreDataIds = [
-            KEY_VALUE_SAVED_HISTORY
-        ]
+        localStoreDataIds = [KEY_VALUE_SAVED_HISTORY]
     )
     fun givenSavedHistoryWhenOnHistoryScreenThenSeesHistory() {
         with(historyScreen) {
@@ -61,9 +69,7 @@ class HistoryTest : BaseTest() {
 
     @Test
     @LocalStore(
-        localStoreDataIds = [
-            KEY_VALUE_NO_HISTORY
-        ]
+        localStoreDataIds = [KEY_VALUE_NO_HISTORY]
     )
     fun givenNoHistoryWhenOnHistoryScreenThenSeesHistory() {
         with(historyScreen) {

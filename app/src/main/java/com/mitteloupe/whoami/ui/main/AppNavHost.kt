@@ -43,7 +43,8 @@ fun AppNavHost(
                     homeViewModel,
                     connectionDetailsToUiMapper,
                     homeDestinationToUiMapper,
-                    coroutineContextProvider
+                    coroutineContextProvider,
+                    analytics
                 )
             }
         }

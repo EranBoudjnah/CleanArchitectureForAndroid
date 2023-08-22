@@ -22,6 +22,7 @@ project(":datasource-implementation").projectDir = File("datasource/implementati
 include(":datasource-source")
 project(":datasource-source").projectDir = File("datasource/source")
 
+include(":analytics")
 include(":time")
 include(":coroutine")
 include(":coroutine-test")

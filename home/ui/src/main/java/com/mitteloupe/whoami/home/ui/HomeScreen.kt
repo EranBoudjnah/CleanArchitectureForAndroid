@@ -28,6 +28,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mitteloupe.whoami.analytics.Analytics
+import com.mitteloupe.whoami.analytics.event.Click
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.home.presentation.model.HomeNotification.ConnectionSaved
@@ -46,6 +48,7 @@ fun Home(
     connectionDetailsToUiMapper: ConnectionDetailsToUiMapper,
     navigationMapper: DestinationToUiMapper,
     coroutineContextProvider: CoroutineContextProvider,
+    analytics: Analytics,
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.background
 ) {
@@ -63,6 +66,7 @@ fun Home(
     LaunchedEffect(entered) {
         if (!entered) {
             entered = true
+            analytics.logScreen("Home")
             homeViewModel.onEnter()
         }
     }
@@ -151,6 +155,9 @@ fun Home(
                             iconResourceId = R.drawable.icon_save,
                             label = stringResource(R.string.home_save_details_button_label),
                             onClick = {
+                                analytics.logEvent(
+                                    Click("Save Details", mapOf("State" to "Connected"))
+                                )
                                 homeViewModel.onSaveDetails(viewStateValue)
                             },
                             modifier = Modifier.weight(1f)
@@ -161,7 +168,11 @@ fun Home(
                         NavigationButton(
                             iconResourceId = R.drawable.icon_save,
                             label = stringResource(R.string.home_save_details_button_label),
-                            onClick = {},
+                            onClick = {
+                                analytics.logEvent(
+                                    Click("Save Details", mapOf("State" to "Not connected"))
+                                )
+                            },
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -171,6 +182,7 @@ fun Home(
                     iconResourceId = R.drawable.icon_history,
                     label = stringResource(R.string.home_history_button_label),
                     onClick = {
+                        analytics.logEvent(Click("View History"))
                         homeViewModel.onViewHistoryAction()
                     },
                     modifier = Modifier.weight(1f)

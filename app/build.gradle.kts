@@ -118,6 +118,8 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.compose.navigation)
 
+    implementation(project(":analytics"))
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))

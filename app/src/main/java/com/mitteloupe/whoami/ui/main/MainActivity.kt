@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
 import com.mitteloupe.whoami.home.ui.R
@@ -32,6 +33,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var connectionDetailsToUiMapper: ConnectionDetailsToUiMapper
 
+    @Inject
+    lateinit var analytics: Analytics
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -41,7 +45,8 @@ class MainActivity : AppCompatActivity() {
                         homeViewModel,
                         homeDestinationToUiMapper,
                         connectionDetailsToUiMapper,
-                        coroutineContextProvider
+                        coroutineContextProvider,
+                        analytics
                     ),
                     supportFragmentManager
                 )
