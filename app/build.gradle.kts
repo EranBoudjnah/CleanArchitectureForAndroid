@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.mitteloupe.whoami"
-    compileSdk = 33
+    compileSdk = 34
 
     buildFeatures {
         buildConfig = true
@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId = "com.mitteloupe.whoami"
         minSdk = 22
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -119,6 +119,10 @@ dependencies {
     implementation(libs.compose.navigation)
 
     implementation(project(":analytics"))
+
+    testImplementation(libs.test.junit)
+    testImplementation(libs.test.hamcrest)
+    testImplementation(libs.test.konsist)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
