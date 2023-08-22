@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.mitteloupe.whoami.home.ui"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 22

@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.mitteloupe.whoami.datasource"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 22
