@@ -21,6 +21,9 @@ party solutions.
     - Domain
     - Data
     - Data Source
+- Dummy analytics
+- Navigation
+- Animations
 - Unit tests
 - End-to-end tests
 - Demonstrates use of [Jetpack Compose](https://developer.android.com/jetpack/compose)
