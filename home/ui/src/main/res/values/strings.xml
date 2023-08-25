@@ -14,6 +14,7 @@
     <string name="home_internet_service_provider_label">ISP</string>
     <string name="home_history_button_label">View History</string>
     <string name="home_save_details_button_label">Save Details</string>
+    <string name="home_open_source_notices_label">Open Source Notices</string>
 
     <string name="home_details_saved_notification">%1$s saved.</string>
 </resources>

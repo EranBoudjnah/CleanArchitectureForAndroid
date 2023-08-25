@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     kotlin("kapt")
     alias(libs.plugins.hilt)
+    id("com.google.android.gms.oss-licenses-plugin")
     id("org.jlleitschuh.gradle.ktlint")
     id("io.gitlab.arturbosch.detekt")
 }
@@ -110,6 +111,8 @@ dependencies {
     implementation(libs.retrofit.interceptor.logging)
     implementation(libs.moshi.kotlin)
 
+    implementation(libs.opensource.licenses)
+
     implementation(libs.hilt.android)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.recyclerview)
@@ -121,11 +124,13 @@ dependencies {
     implementation(project(":analytics"))
 
     testImplementation(libs.test.junit)
+    testImplementation(libs.test.mockito.kotlin)
     testImplementation(libs.test.hamcrest)
     testImplementation(libs.test.konsist)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.espresso.intents)
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation(libs.test.android.hilt)

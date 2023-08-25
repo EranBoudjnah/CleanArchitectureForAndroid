@@ -1,6 +1,7 @@
 package com.mitteloupe.whoami.di
 
 import android.content.Context
+import android.content.res.Resources
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,5 +12,5 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object ResourcesModule {
     @Provides
-    fun providesResources(@ApplicationContext context: Context) = context.resources
+    fun providesResources(@ApplicationContext context: Context): Resources = context.resources
 }

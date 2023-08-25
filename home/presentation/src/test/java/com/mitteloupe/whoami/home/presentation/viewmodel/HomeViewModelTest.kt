@@ -13,6 +13,7 @@ import com.mitteloupe.whoami.home.presentation.model.HomeNotification
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Loading
 import com.mitteloupe.whoami.home.presentation.navigation.ViewHistoryPresentationDestination
+import com.mitteloupe.whoami.home.presentation.navigation.ViewOpenSourceNoticesPresentationDestination
 import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
@@ -138,6 +139,21 @@ class HomeViewModelTest : BaseViewModelTest<HomeViewState, HomeNotification, Hom
 
         // When
         classUnderTest.onViewHistoryAction()
+        val actualDestination = deferredDestination.await()
+
+        // Then
+        assertEquals(expectedDestination, actualDestination)
+    }
+
+    @Test
+    fun `When onOpenSourceNoticesAction then navigates to Open Source Notices`() = runTest {
+        val deferredDestination = async(start = UNDISPATCHED) {
+            classUnderTest.destination.first()
+        }
+        val expectedDestination = ViewOpenSourceNoticesPresentationDestination
+
+        // When
+        classUnderTest.onOpenSourceNoticesAction()
         val actualDestination = deferredDestination.await()
 
         // Then

@@ -6,3 +6,12 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.23.0" apply false
     alias(libs.plugins.kotlin.jvm) apply false
 }
+
+buildscript {
+    repositories {
+        google()
+    }
+    dependencies {
+        classpath("com.google.android.gms:oss-licenses-plugin:0.10.6")
+    }
+}

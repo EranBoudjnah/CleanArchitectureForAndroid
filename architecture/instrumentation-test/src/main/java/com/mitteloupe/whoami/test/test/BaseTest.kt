@@ -39,7 +39,7 @@ abstract class BaseTest {
     internal val targetContext
         get() = InstrumentationRegistry.getInstrumentation().targetContext
 
-    internal open val hiltAndroidRule by lazy { HiltAndroidRule(this) }
+    private val hiltAndroidRule by lazy { HiltAndroidRule(this) }
 
     @Inject
     lateinit var mockDispatcher: MockDispatcher
@@ -125,14 +125,11 @@ abstract class BaseTest {
         }
 
         data class FromComposable(
-            private val composeContentTestRule: ComposeContentTestRule,
+            private val composeContentTestRule: AndroidComposeTestRule<TestRule, ComponentActivity>,
             private val composable: @Composable () -> Unit
         ) : AppLauncher() {
             override fun launch() {
-                @Suppress("UNCHECKED_CAST")
-                val androidComposeTestRule =
-                    composeContentTestRule as AndroidComposeTestRule<TestRule, ComponentActivity>
-                val activity = androidComposeTestRule.activity
+                val activity = composeContentTestRule.activity
                 val root = activity.findViewById<ViewGroup>(android.R.id.content)
                 if (root != null) {
                     runBlocking(Dispatchers.Main) {
