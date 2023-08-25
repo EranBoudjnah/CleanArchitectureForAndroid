@@ -2,8 +2,10 @@ package com.mitteloupe.whoami.screen
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.click
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import androidx.compose.ui.test.performTouchInput
 import com.mitteloupe.whoami.constant.IP_ADDRESS
 
 @ExperimentalTestApi
@@ -18,6 +20,7 @@ class HomeScreen {
     private val postCodeLabel = hasText("CM14")
     private val timeZoneLabel = hasText("Europe/London")
     private val internetServiceProviderLabel = hasText("TalkTalk Limited")
+    private val openSourceNoticesButton = hasText("Open Source Notices")
 
     fun ComposeContentTestRule.seesIpAddressLabel() {
         assertIsDisplayed(ipAddressLabel)
@@ -53,6 +56,10 @@ class HomeScreen {
 
     fun ComposeContentTestRule.seesInternetServiceProviderLabel() {
         assertIsDisplayed(internetServiceProviderLabel)
+    }
+
+    fun ComposeContentTestRule.tapOpenSourceNotices() {
+        onNode(openSourceNoticesButton).performTouchInput { click() }
     }
 
     private fun ComposeContentTestRule.assertIsDisplayed(

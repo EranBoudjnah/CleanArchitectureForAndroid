@@ -10,6 +10,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -28,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +39,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.style.TextAlign.Companion.Center
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
@@ -136,41 +140,74 @@ fun Home(
 
             ErrorContentContainer(viewStateValue)
 
-            Row(
+            Column(
                 modifier = Modifier
-                    .padding(start = 16.dp, top = 24.dp, end = 16.dp, bottom = 24.dp)
                     .fillMaxWidth()
+                    .padding(start = 16.dp, top = 24.dp, end = 16.dp, bottom = 16.dp)
             ) {
-                NavigationButton(
-                    iconResourceId = R.drawable.icon_save,
-                    label = stringResource(R.string.home_save_details_button_label),
-                    onClick = {
-                        val viewStateValue = viewState.value
-                        if (viewStateValue is HomeViewState.Connected) {
-                            analytics.logEvent(
-                                Click("Save Details", mapOf("State" to "Connected"))
-                            )
-                            homeViewModel.onSaveDetails(viewStateValue)
-                        } else {
-                            analytics.logEvent(
-                                Click("Save Details", mapOf("State" to "Not connected"))
-                            )
-                        }
-                    },
-                    modifier = Modifier.weight(1f)
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                NavigationButton(
-                    iconResourceId = R.drawable.icon_history,
-                    label = stringResource(R.string.home_history_button_label),
-                    onClick = {
-                        analytics.logEvent(Click("View History"))
-                        homeViewModel.onViewHistoryAction()
-                    },
-                    modifier = Modifier.weight(1f)
-                )
+                NavigationButtons(viewState, analytics, homeViewModel)
+
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .clickable { homeViewModel.onOpenSourceNoticesAction() }
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        text = stringResource(R.string.home_open_source_notices_label),
+                        fontSize = 16.sp,
+                        textAlign = Center,
+                        fontWeight = Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .fillMaxWidth()
+                    )
+                }
             }
         }
+    }
+}
+
+@Composable
+private fun NavigationButtons(
+    viewState: State<HomeViewState>,
+    analytics: Analytics,
+    homeViewModel: HomeViewModel
+) {
+    Row(
+        modifier = Modifier
+            .padding(top = 24.dp, bottom = 24.dp)
+            .fillMaxWidth()
+    ) {
+        NavigationButton(
+            iconResourceId = R.drawable.icon_save,
+            label = stringResource(R.string.home_save_details_button_label),
+            onClick = {
+                val viewStateValue = viewState.value
+                if (viewStateValue is HomeViewState.Connected) {
+                    analytics.logEvent(
+                        Click("Save Details", mapOf("State" to "Connected"))
+                    )
+                    homeViewModel.onSaveDetails(viewStateValue)
+                } else {
+                    analytics.logEvent(
+                        Click("Save Details", mapOf("State" to "Not connected"))
+                    )
+                }
+            },
+            modifier = Modifier.weight(1f)
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        NavigationButton(
+            iconResourceId = R.drawable.icon_history,
+            label = stringResource(R.string.home_history_button_label),
+            onClick = {
+                analytics.logEvent(Click("View History"))
+                homeViewModel.onViewHistoryAction()
+            },
+            modifier = Modifier.weight(1f)
+        )
     }
 }
 

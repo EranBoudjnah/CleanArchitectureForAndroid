@@ -13,6 +13,7 @@ import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Error
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Loading
 import com.mitteloupe.whoami.home.presentation.navigation.ViewHistoryPresentationDestination
+import com.mitteloupe.whoami.home.presentation.navigation.ViewOpenSourceNoticesPresentationDestination
 
 class HomeViewModel(
     private val getConnectionDetailsUseCase: GetConnectionDetailsUseCase,
@@ -53,5 +54,9 @@ class HomeViewModel(
 
     fun onViewHistoryAction() {
         navigate(ViewHistoryPresentationDestination)
+    }
+
+    fun onOpenSourceNoticesAction() {
+        navigate(ViewOpenSourceNoticesPresentationDestination)
     }
 }

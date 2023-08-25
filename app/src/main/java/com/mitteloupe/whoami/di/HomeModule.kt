@@ -19,8 +19,6 @@ import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsToDomainM
 import com.mitteloupe.whoami.home.presentation.mapper.ConnectionStateToPresentationMapper
 import com.mitteloupe.whoami.home.presentation.mapper.ExceptionToPresentationMapper
 import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
-import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsToUiMapper
-import com.mitteloupe.whoami.ui.navigation.mapper.HomeDestinationToUiMapper
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -30,9 +28,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object HomeModule {
-    @Provides
-    fun providesHomeDestinationToUiMapper() = HomeDestinationToUiMapper()
-
     @Provides
     fun providesConnectionDetailsToDomainResolver() =
         ConnectionDetailsToDomainResolver()
@@ -108,7 +103,4 @@ object HomeModule {
         exceptionToPresentationMapper,
         useCaseExecutor
     )
-
-    @Provides
-    fun providesConnectionDetailsToUiMapper() = ConnectionDetailsToUiMapper()
 }
