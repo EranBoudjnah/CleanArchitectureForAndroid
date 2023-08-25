@@ -3,6 +3,7 @@ package com.mitteloupe.whoami.di
 import androidx.compose.ui.test.ExperimentalTestApi
 import com.mitteloupe.whoami.screen.HistoryScreen
 import com.mitteloupe.whoami.screen.HomeScreen
+import com.mitteloupe.whoami.screen.OpenSourceNoticesScreen
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,4 +18,7 @@ object ScreenModule {
 
     @Provides
     fun providesHistoryScreen() = HistoryScreen()
+
+    @Provides
+    fun providesOpenSourceNoticesScreen() = OpenSourceNoticesScreen()
 }
