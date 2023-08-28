@@ -42,6 +42,7 @@ party solutions.
 - **Simplicity**
 
   "*The complexity introduced here is an overkill!*"
+
   I agree. If this was to be a **final** project, to which no new functionality would
   ever be added, then *Clean Architecture* would have been overly complicated for it.
   However, the reality is that mobile project seldom **are** final. User feedback,
@@ -49,6 +50,11 @@ party solutions.
   continuous changes to almost every project. And so, what may now seem like too
   much complexity will reward us when the time for change comes. This will be
   when *Clean Architecture* shines.
+
+  As a side note: in some ways, I have *intentionally* over-complicated this project
+  by introducing different technologies. The goal was to show how, even in real-life
+  scenarios, where a project may have grown over time to include more than one
+  technological solution, the architecture still works.
 
 - ***Mappers as classes*** **vs.** ***mapping extension functions***
 
