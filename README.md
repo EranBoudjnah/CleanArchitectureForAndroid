@@ -39,6 +39,17 @@ party solutions.
 
 ### Choices
 
+- **Simplicity**
+
+  "*The complexity introduced here is an overkill!*"
+  I agree. If this was to be a **final** project, to which no new functionality would
+  ever be added, then *Clean Architecture* would have been overly complicated for it.
+  However, the reality is that mobile project seldom **are** final. User feedback,
+  marketing requirements, new technologies - these factors and others all lead to
+  continuous changes to almost every project. And so, what may now seem like too
+  much complexity will reward us when the time for change comes. This will be
+  when *Clean Architecture* shines.
+
 - ***Mappers as classes*** **vs.** ***mapping extension functions***
 
   When mapping between models, we have several options. The primary decision is
