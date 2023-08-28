@@ -28,6 +28,7 @@ test-androidx-rules = "1.5.0"
 uiautomator = "2.2.0"
 okhttp3 = "4.11.0"
 jetbrains-kotlin = "1.8.22"
+plugin-oss-licenses = "0.10.6"
 
 [libraries]
 material = { module = "com.google.android.material:material", version.ref = "material" }
@@ -74,6 +75,7 @@ test-compose-ui-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 debug-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 debug-compose-ui-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation-fragment-ktx" }
+plugin-oss-licenses = { module = "com.google.android.gms:oss-licenses-plugin", version.ref = "plugin-oss-licenses" }
 
 [bundles]
 compose = ["compose-ui", "compose-ui-graphics", "compose-ui-tooling-preview", "compose-material3", "compose-activity", "compose-navigation"]
