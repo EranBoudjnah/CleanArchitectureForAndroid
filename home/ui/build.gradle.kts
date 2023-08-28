@@ -57,15 +57,15 @@ detekt {
 }
 
 dependencies {
-    implementation(project(":home-presentation"))
+    implementation(projects.homePresentation)
 
-    implementation(project(":architecture-ui"))
-    implementation(project(":architecture-presentation"))
+    implementation(projects.architectureUi)
+    implementation(projects.architecturePresentation)
 
-    implementation(project(":coroutine"))
-    implementation(project(":widget"))
+    implementation(projects.coroutine)
+    implementation(projects.widget)
 
-    implementation(project(":analytics"))
+    implementation(projects.analytics)
 
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("androidx.compose.ui:ui")

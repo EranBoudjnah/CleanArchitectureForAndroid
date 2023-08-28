@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Who Am I"
+rootProject.name = "WhoAmI"
 include(":app")
 include(":datasource-architecture")
 project(":datasource-architecture").projectDir = File("datasource/architecture")
@@ -48,3 +48,5 @@ setOf("ui", "presentation", "domain", "data").forEach { layer ->
     include(":history-$layer")
     project(":history-$layer").projectDir = File("history/$layer")
 }
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

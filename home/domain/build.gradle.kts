@@ -21,9 +21,9 @@ detekt {
 }
 
 dependencies {
-    implementation(project(":architecture-domain"))
+    implementation(projects.architectureDomain)
 
-    implementation(project(":coroutine"))
+    implementation(projects.coroutine)
 
     implementation(libs.kotlinx.coroutines.core)
 

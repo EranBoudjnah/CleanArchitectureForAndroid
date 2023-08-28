@@ -20,7 +20,7 @@ detekt {
 }
 
 dependencies {
-    implementation(project(":coroutine"))
+    implementation(projects.coroutine)
 
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.test.kotlinx.coroutines)

@@ -58,14 +58,14 @@ detekt {
 }
 
 dependencies {
-    implementation(project(":history-presentation"))
-    implementation(project(":architecture-ui"))
-    implementation(project(":architecture-presentation"))
+    implementation(projects.historyPresentation)
+    implementation(projects.architectureUi)
+    implementation(projects.architecturePresentation)
 
-    implementation(project(":coroutine"))
-    implementation(project(":widget"))
+    implementation(projects.coroutine)
+    implementation(projects.widget)
 
-    implementation(project(":analytics"))
+    implementation(projects.analytics)
 
     implementation(libs.material)
     implementation(libs.androidx.fragment.ktx)
