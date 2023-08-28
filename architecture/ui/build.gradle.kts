@@ -56,9 +56,9 @@ detekt {
 }
 
 dependencies {
-    implementation(project(":architecture-presentation"))
+    implementation(projects.architecturePresentation)
 
-    implementation(project(":coroutine"))
+    implementation(projects.coroutine)
 
     implementation(libs.androidx.fragment.ktx)
 }

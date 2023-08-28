@@ -12,6 +12,6 @@ buildscript {
         google()
     }
     dependencies {
-        classpath("com.google.android.gms:oss-licenses-plugin:0.10.6")
+        classpath(libs.plugin.oss.licenses)
     }
 }

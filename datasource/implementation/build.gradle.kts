@@ -52,10 +52,10 @@ detekt {
 }
 
 dependencies {
-    implementation(project(":datasource-architecture"))
-    implementation(project(":datasource-source"))
-    implementation(project(":coroutine"))
-    implementation(project(":time"))
+    implementation(projects.datasourceArchitecture)
+    implementation(projects.datasourceSource)
+    implementation(projects.coroutine)
+    implementation(projects.time)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.moshi)
@@ -69,7 +69,7 @@ dependencies {
     testImplementation(libs.test.hamcrest)
     testImplementation(libs.test.mockito.kotlin)
     testImplementation(libs.test.kotlinx.coroutines)
-    testImplementation(project(":coroutine-test"))
+    testImplementation(projects.coroutineTest)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

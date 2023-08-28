@@ -75,40 +75,35 @@ detekt {
 }
 
 dependencies {
-    implementation(project(":time"))
-    implementation(project(":coroutine"))
-    implementation(project(":datasource-architecture"))
-    implementation(project(":datasource-source"))
-    implementation(project(":datasource-implementation"))
+    implementation(projects.time)
+    implementation(projects.coroutine)
+    implementation(projects.datasourceArchitecture)
+    implementation(projects.datasourceSource)
+    implementation(projects.datasourceImplementation)
 
-    implementation(project(":architecture-ui"))
-    implementation(project(":architecture-presentation"))
-    implementation(project(":architecture-domain"))
+    implementation(projects.architectureUi)
+    implementation(projects.architecturePresentation)
+    implementation(projects.architectureDomain)
 
-    implementation(project(":home-ui"))
-    implementation(project(":home-presentation"))
-    implementation(project(":home-domain"))
-    implementation(project(":home-data"))
+    implementation(projects.homeUi)
+    implementation(projects.homePresentation)
+    implementation(projects.homeDomain)
+    implementation(projects.homeData)
 
-    implementation(project(":history-ui"))
-    implementation(project(":history-presentation"))
-    implementation(project(":history-domain"))
-    implementation(project(":history-data"))
+    implementation(projects.historyUi)
+    implementation(projects.historyPresentation)
+    implementation(projects.historyDomain)
+    implementation(projects.historyData)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    implementation(platform(libs.compose.bom))
+    implementation(libs.bundles.compose)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.fragment.ktx)
 
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.moshi)
-    implementation(libs.retrofit.interceptor.logging)
+    implementation(libs.bundles.retrofit)
     implementation(libs.moshi.kotlin)
 
     implementation(libs.opensource.licenses)
@@ -118,10 +113,7 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     kapt(libs.hilt.android.compiler)
 
-    implementation(libs.compose.activity)
-    implementation(libs.compose.navigation)
-
-    implementation(project(":analytics"))
+    implementation(projects.analytics)
 
     testImplementation(libs.test.junit)
     testImplementation(libs.test.mockito.kotlin)
@@ -131,11 +123,11 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.espresso.intents)
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.test.compose.ui.junit4)
     androidTestImplementation(libs.test.android.hilt)
     androidTestImplementation(libs.test.android.uiautomator)
-    androidTestImplementation(project(":architecture-instrumentation-test"))
+    androidTestImplementation(projects.architectureInstrumentationTest)
     androidTestImplementation(libs.test.android.mockwebserver)
     kaptAndroidTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.test.mockito) {
@@ -144,8 +136,8 @@ dependencies {
     androidTestImplementation(libs.test.mockito.kotlin)
     androidTestImplementation(libs.test.mockito.android)
 
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    debugImplementation(libs.debug.compose.ui.tooling)
+    debugImplementation(libs.debug.compose.ui.manifest)
 }
 
 val installGitHook = tasks.register<Copy>("installGitHook") {

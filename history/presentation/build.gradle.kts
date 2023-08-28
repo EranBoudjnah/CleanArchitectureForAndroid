@@ -20,15 +20,15 @@ detekt {
 }
 
 dependencies {
-    implementation(project(":history-domain"))
-    implementation(project(":architecture-presentation"))
-    implementation(project(":architecture-domain"))
+    implementation(projects.historyDomain)
+    implementation(projects.architecturePresentation)
+    implementation(projects.architectureDomain)
 
     implementation(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.test.junit)
     testImplementation(libs.test.mockito.kotlin)
     testImplementation(libs.test.hamcrest)
-    testImplementation(project(":architecture-presentation-test"))
-    testImplementation(project(":coroutine-test"))
+    testImplementation(projects.architecturePresentationTest)
+    testImplementation(projects.coroutineTest)
 }
