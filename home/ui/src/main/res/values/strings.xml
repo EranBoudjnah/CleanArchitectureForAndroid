@@ -3,6 +3,9 @@
 
     <string name="home_ip_description">This is the address from which you are sending network requests.</string>
     <string name="home_disconnected_description">You seem to be disconnected. This means you have no IP address.</string>
+    <string name="home_error_no_ip_description">Finding your IP address failed.</string>
+    <string name="home_error_no_information_description">Getting information about your IP address (%1$s) failed.</string>
+    <string name="home_error_timeout_description">It seems the request to the server timed out.</string>
     <string name="home_error_unknown_description">Oh no! Something went wrong.</string>
     <string name="home_details_title">Details</string>
     <string name="home_city_label">City</string>

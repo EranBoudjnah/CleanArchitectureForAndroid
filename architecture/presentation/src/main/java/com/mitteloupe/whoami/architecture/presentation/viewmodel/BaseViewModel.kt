@@ -1,16 +1,17 @@
-package com.mitteloupe.whoami.architecture.presentation
+package com.mitteloupe.whoami.architecture.presentation.viewmodel
 
 import com.mitteloupe.whoami.architecture.domain.UseCase
 import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
 import com.mitteloupe.whoami.architecture.domain.exception.DomainException
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
+import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : Any>(
+abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotification>(
     private val useCaseExecutor: UseCaseExecutor
 ) {
     protected abstract val initialViewState: VIEW_STATE

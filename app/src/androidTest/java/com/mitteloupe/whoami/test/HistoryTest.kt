@@ -35,14 +35,15 @@ class HistoryTest : BaseTest() {
         FromComposable(composeContentTestRule) {
             WhoAmITheme {
                 val activity = LocalContext.current as MainActivity
-                AppNavHost(
-                    AppNavHostDependencies(
-                        homeViewModel = mock(),
-                        homeDestinationToUiMapper = mock(),
-                        connectionDetailsToUiMapper = mock(),
-                        coroutineContextProvider = coroutineContextProvider,
-                        analytics = analytics
-                    ),
+                AppNavHostDependencies(
+                    homeViewModel = mock(),
+                    homeDestinationToUiMapper = mock(),
+                    homeNotificationToUiMapper = mock(),
+                    connectionDetailsToUiMapper = mock(),
+                    errorToUiMapper = mock(),
+                    coroutineContextProvider = coroutineContextProvider,
+                    analytics = analytics
+                ).AppNavHost(
                     activity.supportFragmentManager,
                     startDestination = "history"
                 )

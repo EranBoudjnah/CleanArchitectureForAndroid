@@ -35,6 +35,12 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.8"
+    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -61,4 +67,7 @@ dependencies {
     implementation(projects.coroutine)
 
     implementation(libs.androidx.fragment.ktx)
+
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
 }

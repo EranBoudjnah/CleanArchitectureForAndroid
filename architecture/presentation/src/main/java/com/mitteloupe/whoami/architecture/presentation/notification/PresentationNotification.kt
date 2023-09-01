@@ -1,0 +1,3 @@
+package com.mitteloupe.whoami.architecture.presentation.notification
+
+interface PresentationNotification

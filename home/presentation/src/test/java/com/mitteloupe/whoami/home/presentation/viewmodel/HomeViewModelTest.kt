@@ -1,6 +1,6 @@
 package com.mitteloupe.whoami.home.presentation.viewmodel
 
-import com.mitteloupe.whoami.architecture.presentation.BaseViewModelTest
+import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModelTest
 import com.mitteloupe.whoami.coroutine.currentValue
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel.Disconnected
@@ -9,7 +9,7 @@ import com.mitteloupe.whoami.home.domain.usecase.SaveConnectionDetailsUseCase
 import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsToDomainMapper
 import com.mitteloupe.whoami.home.presentation.mapper.ConnectionStateToPresentationMapper
 import com.mitteloupe.whoami.home.presentation.mapper.ExceptionToPresentationMapper
-import com.mitteloupe.whoami.home.presentation.model.HomeNotification
+import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotification
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Loading
 import com.mitteloupe.whoami.home.presentation.navigation.ViewHistoryPresentationDestination
@@ -31,7 +31,8 @@ import org.mockito.kotlin.given
 import org.mockito.kotlin.verify
 
 @RunWith(MockitoJUnitRunner::class)
-class HomeViewModelTest : BaseViewModelTest<HomeViewState, HomeNotification, HomeViewModel>() {
+class HomeViewModelTest :
+    BaseViewModelTest<HomeViewState, HomePresentationNotification, HomeViewModel>() {
     override val expectedInitialState: HomeViewState = Loading
 
     @Mock
@@ -82,7 +83,7 @@ class HomeViewModelTest : BaseViewModelTest<HomeViewState, HomeNotification, Hom
     }
 
     @Test
-    fun `Given connection details when onSaveDetails then details saved, notifies on success`() =
+    fun `Given connection details when onSaveDetailsAction then details saved, notifies success`() =
         runTest {
             val ipAddress = "1.3.3.7"
             val givenConnectionDetails = HomeViewState.Connected(
@@ -114,10 +115,10 @@ class HomeViewModelTest : BaseViewModelTest<HomeViewState, HomeNotification, Hom
             val deferredNotification = async(start = UNDISPATCHED) {
                 classUnderTest.notification.first()
             }
-            val expectedNotification = HomeNotification.ConnectionSaved(ipAddress)
+            val expectedNotification = HomePresentationNotification.ConnectionSaved(ipAddress)
 
             // When
-            classUnderTest.onSaveDetails(givenConnectionDetails)
+            classUnderTest.onSaveDetailsAction(givenConnectionDetails)
             val actualNotification = deferredNotification.await()
 
             // Then
