@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.analytics.event.Click
-import com.mitteloupe.whoami.architecture.ui.BaseFragment
+import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
+import com.mitteloupe.whoami.architecture.ui.view.BaseFragment
 import com.mitteloupe.whoami.architecture.ui.view.ViewsProvider
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
 import com.mitteloupe.whoami.history.presentation.viewmodel.HistoryViewModel
@@ -23,7 +24,8 @@ import javax.inject.Named
 
 @AndroidEntryPoint
 class HistoryFragment :
-    BaseFragment<HistoryViewState, Any>(R.layout.fragment_history), HistoryViewsProvider {
+    BaseFragment<HistoryViewState, PresentationNotification>(R.layout.fragment_history),
+    HistoryViewsProvider {
     lateinit var navHostController: NavHostController
 
     @Inject

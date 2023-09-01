@@ -1,6 +1,7 @@
 package com.mitteloupe.whoami.history.presentation.viewmodel
 
-import com.mitteloupe.whoami.architecture.presentation.BaseViewModelTest
+import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
+import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModelTest
 import com.mitteloupe.whoami.coroutine.currentValue
 import com.mitteloupe.whoami.history.domain.model.SavedIpAddressRecordDomainModel
 import com.mitteloupe.whoami.history.domain.usecase.GetHistoryUseCase
@@ -22,7 +23,8 @@ import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.given
 
 @RunWith(MockitoJUnitRunner::class)
-class HistoryViewModelTest : BaseViewModelTest<HistoryViewState, Any, HistoryViewModel>() {
+class HistoryViewModelTest :
+    BaseViewModelTest<HistoryViewState, PresentationNotification, HistoryViewModel>() {
     override val expectedInitialState: HistoryViewState = NoChange
 
     @Mock

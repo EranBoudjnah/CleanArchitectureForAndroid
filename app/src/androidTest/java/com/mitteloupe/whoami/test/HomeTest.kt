@@ -46,11 +46,10 @@ class HomeTest : BaseTest() {
         FromComposable(composeContentTestRule) {
             WhoAmITheme {
                 val activity = LocalContext.current as MainActivity
-                AppNavHost(
-                    EntryPoints.get(activity, ActivityEntryPoint::class.java)
-                        .appNavHostDependencies(),
-                    activity.supportFragmentManager
-                )
+                EntryPoints.get(activity, ActivityEntryPoint::class.java).appNavHostDependencies()
+                    .AppNavHost(
+                        activity.supportFragmentManager
+                    )
             }
         }
     }

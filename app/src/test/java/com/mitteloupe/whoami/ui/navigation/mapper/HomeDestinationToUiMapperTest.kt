@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.navigation.NavHostController
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
 import com.mitteloupe.whoami.home.presentation.navigation.ViewHistoryPresentationDestination
 import com.mitteloupe.whoami.home.presentation.navigation.ViewOpenSourceNoticesPresentationDestination
@@ -25,6 +26,9 @@ class HomeDestinationToUiMapperTest {
     private lateinit var classUnderTest: HomeDestinationToUiMapper
 
     @Mock
+    private lateinit var analytics: Analytics
+
+    @Mock
     private lateinit var activityContext: Context
 
     @Mock
@@ -32,7 +36,8 @@ class HomeDestinationToUiMapperTest {
 
     @Before
     fun setUp() {
-        classUnderTest = HomeDestinationToUiMapper(activityContext, ossLicensesMenuIntentProvider)
+        classUnderTest =
+            HomeDestinationToUiMapper(analytics, activityContext, ossLicensesMenuIntentProvider)
     }
 
     @Test

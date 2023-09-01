@@ -1,8 +1,9 @@
-package com.mitteloupe.whoami.architecture.presentation
+package com.mitteloupe.whoami.architecture.presentation.viewmodel
 
 import com.mitteloupe.whoami.architecture.domain.UseCase
 import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
 import com.mitteloupe.whoami.architecture.domain.exception.DomainException
+import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.coroutine.currentValue
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -10,10 +11,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.setMain
-import org.junit.Assert.assertEquals
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import org.mockito.BDDMockito.willAnswer
+import org.mockito.BDDMockito
 import org.mockito.Mock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
@@ -22,7 +23,7 @@ private const val ON_EXCEPTION_ARGUMENT_INDEX = 3
 
 abstract class BaseViewModelTest<
     VIEW_STATE : Any,
-    NOTIFICATION : Any,
+    NOTIFICATION : PresentationNotification,
     VIEW_MODEL : BaseViewModel<VIEW_STATE, NOTIFICATION>
     > {
     @OptIn(DelicateCoroutinesApi::class)
@@ -48,7 +49,7 @@ abstract class BaseViewModelTest<
         val viewState = classUnderTest.viewState.currentValue()
 
         // Then
-        assertEquals(expectedInitialState, viewState)
+        Assert.assertEquals(expectedInitialState, viewState)
     }
 
     protected fun <REQUEST> givenFailedUseCaseExecution(
@@ -57,7 +58,7 @@ abstract class BaseViewModelTest<
         domainException: DomainException
     ) {
         runBlocking {
-            willAnswer { invocation ->
+            BDDMockito.willAnswer { invocation ->
                 val onException: (DomainException) -> Unit =
                     invocation.getArgument(ON_EXCEPTION_ARGUMENT_INDEX)
                 onException(domainException)
@@ -76,7 +77,7 @@ abstract class BaseViewModelTest<
         input: REQUEST,
         result: RESULT
     ) {
-        willAnswer { invocationOnMock ->
+        BDDMockito.willAnswer { invocationOnMock ->
             val onResult: (RESULT) -> Unit = invocationOnMock.getArgument(2)
             onResult(result)
         }.given(useCaseExecutor).execute(
@@ -98,7 +99,7 @@ abstract class BaseViewModelTest<
         useCase: UseCase<Unit, RESULT>,
         result: RESULT
     ) {
-        willAnswer { invocationOnMock ->
+        BDDMockito.willAnswer { invocationOnMock ->
             val onResult: (RESULT) -> Unit = invocationOnMock.getArgument(1)
             onResult(result)
         }.given(useCaseExecutor).execute(
@@ -111,7 +112,7 @@ abstract class BaseViewModelTest<
     protected fun givenSuccessfulNoArgumentNoResultUseCaseExecution(
         useCase: UseCase<Unit, Unit>
     ) {
-        willAnswer { invocationOnMock ->
+        BDDMockito.willAnswer { invocationOnMock ->
             val onResult: (Unit) -> Unit = invocationOnMock.getArgument(2)
             onResult(Unit)
         }.given(useCaseExecutor).execute(

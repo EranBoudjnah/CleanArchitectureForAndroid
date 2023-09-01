@@ -1,14 +1,14 @@
 package com.mitteloupe.whoami.home.presentation.viewmodel
 
 import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
-import com.mitteloupe.whoami.architecture.presentation.BaseViewModel
+import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
 import com.mitteloupe.whoami.home.domain.usecase.GetConnectionDetailsUseCase
 import com.mitteloupe.whoami.home.domain.usecase.SaveConnectionDetailsUseCase
 import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsToDomainMapper
 import com.mitteloupe.whoami.home.presentation.mapper.ConnectionStateToPresentationMapper
 import com.mitteloupe.whoami.home.presentation.mapper.ExceptionToPresentationMapper
-import com.mitteloupe.whoami.home.presentation.model.HomeNotification
-import com.mitteloupe.whoami.home.presentation.model.HomeNotification.ConnectionSaved
+import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotification
+import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotification.ConnectionSaved
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Error
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Loading
@@ -22,7 +22,7 @@ class HomeViewModel(
     private val connectionDetailsToDomainMapper: ConnectionDetailsToDomainMapper,
     private val exceptionToPresentationMapper: ExceptionToPresentationMapper,
     useCaseExecutor: UseCaseExecutor
-) : BaseViewModel<HomeViewState, HomeNotification>(useCaseExecutor) {
+) : BaseViewModel<HomeViewState, HomePresentationNotification>(useCaseExecutor) {
     override val initialViewState = Loading
 
     fun onEnter() {
@@ -39,7 +39,7 @@ class HomeViewModel(
         )
     }
 
-    fun onSaveDetails(connectionDetails: HomeViewState.Connected) {
+    fun onSaveDetailsAction(connectionDetails: HomeViewState.Connected) {
         val domainConnectionDetails = connectionDetailsToDomainMapper.toDomain(connectionDetails)
         saveConnectionDetailsUseCase.run(
             value = domainConnectionDetails,
