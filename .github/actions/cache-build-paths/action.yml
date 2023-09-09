@@ -8,7 +8,7 @@ runs:
   using: 'composite'
   steps:
     - name: Cache build artifacts
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: |
           app/build
