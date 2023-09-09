@@ -27,7 +27,7 @@ test-konsist = "0.11.0"
 test-androidx-rules = "1.5.0"
 uiautomator = "2.2.0"
 okhttp3 = "4.11.0"
-jetbrains-kotlin = "1.8.22"
+jetbrains-kotlin = "1.9.10"
 plugin-oss-licenses = "0.10.6"
 
 [libraries]
