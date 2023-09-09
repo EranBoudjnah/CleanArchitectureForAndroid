@@ -57,7 +57,7 @@ detekt {
 }
 
 dependencies {
-    implementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation(platform(libs.compose.bom))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
