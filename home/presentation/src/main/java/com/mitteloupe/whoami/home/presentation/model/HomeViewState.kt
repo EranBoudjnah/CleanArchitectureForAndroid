@@ -1,7 +1,7 @@
 package com.mitteloupe.whoami.home.presentation.model
 
 sealed interface HomeViewState {
-    object Loading : HomeViewState
+    data object Loading : HomeViewState
 
     data class Connected(
         val ipAddress: String,
@@ -14,7 +14,7 @@ sealed interface HomeViewState {
         val timeZone: String?
     ) : HomeViewState
 
-    object Disconnected : HomeViewState
+    data object Disconnected : HomeViewState
 
     data class Error(val error: ErrorPresentationModel) : HomeViewState
 }

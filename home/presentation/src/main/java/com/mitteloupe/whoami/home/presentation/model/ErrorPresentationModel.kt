@@ -1,11 +1,11 @@
 package com.mitteloupe.whoami.home.presentation.model
 
 sealed interface ErrorPresentationModel {
-    object RequestTimeout : ErrorPresentationModel
+    data object RequestTimeout : ErrorPresentationModel
 
-    object NoIpAddress : ErrorPresentationModel
+    data object NoIpAddress : ErrorPresentationModel
 
     data class NoIpAddressInformation(val ipAddress: String) : ErrorPresentationModel
 
-    object Unknown : ErrorPresentationModel
+    data object Unknown : ErrorPresentationModel
 }

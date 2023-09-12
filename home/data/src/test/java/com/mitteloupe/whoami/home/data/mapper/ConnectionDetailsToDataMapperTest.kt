@@ -12,7 +12,7 @@ import org.junit.runners.Parameterized.Parameters
 @RunWith(Parameterized::class)
 class ConnectionDetailsToDataMapperTest(
     @Suppress("unused") private val testTitle: String,
-    private val givenconnectionDetails: ConnectionDetailsDomainModel.Connected,
+    private val givenConnectionDetails: ConnectionDetailsDomainModel.Connected,
     private val expectedHistoryRecord: NewIpAddressHistoryRecordDataModel
 ) {
     companion object {
@@ -90,7 +90,7 @@ class ConnectionDetailsToDataMapperTest(
         // Given
 
         // When
-        val actualValue = classUnderTest.toData(givenconnectionDetails)
+        val actualValue = classUnderTest.toData(givenConnectionDetails)
 
         // Then
         assertEquals(expectedHistoryRecord, actualValue)

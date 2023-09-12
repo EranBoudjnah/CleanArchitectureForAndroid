@@ -73,7 +73,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
-    implementation("com.google.android.gms:play-services-oss-licenses:17.0.1")
+    implementation(libs.opensource.licenses)
 
     debugImplementation("androidx.compose.ui:ui-tooling")
 

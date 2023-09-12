@@ -10,7 +10,7 @@ import org.junit.runners.model.Statement
 class DisableAnimationsRule : TestRule {
     private var transitionAnimationScale: Float = 0f
     private var windowAnimationScale: Float = 0f
-    private var animatprDurationScale: Float = 0f
+    private var animatorDurationScale: Float = 0f
 
     override fun apply(base: Statement, description: Description): Statement {
         return object : Statement() {
@@ -35,7 +35,7 @@ class DisableAnimationsRule : TestRule {
             windowAnimationScale =
                 executeShellCommand("settings get global window_animation_scale")
                     .orDefault().toFloat()
-            animatprDurationScale =
+            animatorDurationScale =
                 executeShellCommand("settings get global animator_duration_scale")
                     .orDefault().toFloat()
             executeShellCommand("settings put global transition_animation_scale 0")
@@ -52,7 +52,7 @@ class DisableAnimationsRule : TestRule {
             )
             executeShellCommand("settings put global window_animation_scale $windowAnimationScale")
             executeShellCommand(
-                "settings put global animator_duration_scale $animatprDurationScale"
+                "settings put global animator_duration_scale $animatorDurationScale"
             )
         }
     }
