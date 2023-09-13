@@ -14,9 +14,9 @@ sealed interface ConnectionDetailsDomainModel {
         val timeZone: String?
     ) : ConnectionDetailsDomainModel
 
-    object Disconnected : ConnectionDetailsDomainModel
+    data object Disconnected : ConnectionDetailsDomainModel
 
     data class Error(val exception: DomainException) : ConnectionDetailsDomainModel
 
-    object Unset : ConnectionDetailsDomainModel
+    data object Unset : ConnectionDetailsDomainModel
 }

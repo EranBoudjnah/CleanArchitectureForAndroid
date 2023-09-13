@@ -11,7 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -28,7 +28,7 @@ fun LoadingAnimation(
     animationDelayMillis: Int = 1000
 ) {
     var circleScale by remember {
-        mutableStateOf(0f)
+        mutableFloatStateOf(0f)
     }
 
     val circleScaleAnimated = animateFloatAsState(

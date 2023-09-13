@@ -11,10 +11,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.setMain
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.BDDMockito
+import org.mockito.BDDMockito.willAnswer
 import org.mockito.Mock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
@@ -49,7 +49,7 @@ abstract class BaseViewModelTest<
         val viewState = classUnderTest.viewState.currentValue()
 
         // Then
-        Assert.assertEquals(expectedInitialState, viewState)
+        assertEquals(expectedInitialState, viewState)
     }
 
     protected fun <REQUEST> givenFailedUseCaseExecution(
@@ -58,7 +58,7 @@ abstract class BaseViewModelTest<
         domainException: DomainException
     ) {
         runBlocking {
-            BDDMockito.willAnswer { invocation ->
+            willAnswer { invocation ->
                 val onException: (DomainException) -> Unit =
                     invocation.getArgument(ON_EXCEPTION_ARGUMENT_INDEX)
                 onException(domainException)
@@ -77,7 +77,7 @@ abstract class BaseViewModelTest<
         input: REQUEST,
         result: RESULT
     ) {
-        BDDMockito.willAnswer { invocationOnMock ->
+        willAnswer { invocationOnMock ->
             val onResult: (RESULT) -> Unit = invocationOnMock.getArgument(2)
             onResult(result)
         }.given(useCaseExecutor).execute(
@@ -99,7 +99,7 @@ abstract class BaseViewModelTest<
         useCase: UseCase<Unit, RESULT>,
         result: RESULT
     ) {
-        BDDMockito.willAnswer { invocationOnMock ->
+        willAnswer { invocationOnMock ->
             val onResult: (RESULT) -> Unit = invocationOnMock.getArgument(1)
             onResult(result)
         }.given(useCaseExecutor).execute(
@@ -112,7 +112,7 @@ abstract class BaseViewModelTest<
     protected fun givenSuccessfulNoArgumentNoResultUseCaseExecution(
         useCase: UseCase<Unit, Unit>
     ) {
-        BDDMockito.willAnswer { invocationOnMock ->
+        willAnswer { invocationOnMock ->
             val onResult: (Unit) -> Unit = invocationOnMock.getArgument(2)
             onResult(Unit)
         }.given(useCaseExecutor).execute(

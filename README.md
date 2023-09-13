@@ -32,6 +32,8 @@ party solutions.
 - Demonstrates <abbr title="Model View ViewModel">MVVM</abbr>
 - Code quality checks using [ktlint](https://github.com/pinterest/ktlint)
 - Code quality checks using [detekt](https://github.com/detekt/detekt)
+- Architecture consistency checks
+  using [konsist](https://docs.konsist.lemonappdev.com/getting-started/readme)
 - Continuous integration (CI) using [GitHub Actions](https://github.com/features/actions)
     - Unit tests
     - Instrumentation tests

@@ -8,5 +8,5 @@ import retrofit2.Call
 fun <T> Call<T>.fetchBodyOrThrow(exceptionProvider: () -> DataException) = try {
     execute().body() ?: throw exceptionProvider()
 } catch (socketTimeoutException: SocketTimeoutException) {
-    throw RequestTimeoutDataException()
+    throw RequestTimeoutDataException(socketTimeoutException)
 }

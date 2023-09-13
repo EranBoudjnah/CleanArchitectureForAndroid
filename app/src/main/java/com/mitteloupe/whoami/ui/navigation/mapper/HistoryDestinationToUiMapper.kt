@@ -3,6 +3,7 @@ package com.mitteloupe.whoami.ui.navigation.mapper
 import androidx.navigation.NavController
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination.Back
+import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledDestinationException
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
 import com.mitteloupe.whoami.architecture.ui.navigation.model.UiDestination
 
@@ -13,7 +14,7 @@ class HistoryDestinationToUiMapper(
         when (presentationDestination) {
             is Back -> BackUiDestination(navControllerProvider())
 
-            else -> error("Unknown destination: $presentationDestination")
+            else -> throw UnhandledDestinationException(presentationDestination)
         }
 
     private data class BackUiDestination(

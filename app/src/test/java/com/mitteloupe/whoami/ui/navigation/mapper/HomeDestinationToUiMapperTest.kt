@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
+import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledDestinationException
 import com.mitteloupe.whoami.home.presentation.navigation.ViewHistoryPresentationDestination
 import com.mitteloupe.whoami.home.presentation.navigation.ViewOpenSourceNoticesPresentationDestination
 import org.hamcrest.MatcherAssert.assertThat
@@ -91,12 +92,12 @@ class HomeDestinationToUiMapperTest {
         val actualException = requireNotNull(caughtException)
         assertThat(
             actualException,
-            isA(IllegalStateException::class.java)
+            isA(UnhandledDestinationException::class.java)
         )
         assertThat(
             actualException.message,
             matchesPattern(
-                "^Unknown destination: Mock for PresentationDestination, hashCode: \\d+$"
+                "^Navigation to PresentationDestination\\\$MockitoMock\\\$\\w+ was not handled.$"
             )
         )
     }

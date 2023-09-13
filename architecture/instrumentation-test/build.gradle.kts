@@ -11,11 +11,6 @@ android {
 
     defaultConfig {
         minSdk = 22
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {

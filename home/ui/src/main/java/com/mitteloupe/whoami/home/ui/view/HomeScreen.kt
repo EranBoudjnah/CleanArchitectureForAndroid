@@ -30,7 +30,6 @@ import com.mitteloupe.whoami.home.ui.view.widget.LoadingAnimationContainer
 
 @Composable
 fun HomeDependencies.Home(
-    modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.background
 ) {
     fun relaySavingToViewModel(viewState: State<HomeViewState>) {
