@@ -1,6 +1,6 @@
 package com.mitteloupe.whoami.history.domain.usecase
 
-import com.mitteloupe.whoami.architecture.domain.BackgroundExecutingUseCase
+import com.mitteloupe.whoami.architecture.domain.usecase.BackgroundExecutingUseCase
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.history.domain.model.SavedIpAddressRecordDomainModel
 import com.mitteloupe.whoami.history.domain.repository.GetHistoryRepository

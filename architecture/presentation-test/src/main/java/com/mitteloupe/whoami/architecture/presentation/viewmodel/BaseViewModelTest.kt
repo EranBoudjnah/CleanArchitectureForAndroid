@@ -1,8 +1,8 @@
 package com.mitteloupe.whoami.architecture.presentation.viewmodel
 
-import com.mitteloupe.whoami.architecture.domain.UseCase
 import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
 import com.mitteloupe.whoami.architecture.domain.exception.DomainException
+import com.mitteloupe.whoami.architecture.domain.usecase.UseCase
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.coroutine.currentValue
 import kotlinx.coroutines.DelicateCoroutinesApi

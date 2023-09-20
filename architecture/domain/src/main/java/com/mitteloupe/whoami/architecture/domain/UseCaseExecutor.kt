@@ -2,6 +2,7 @@ package com.mitteloupe.whoami.architecture.domain
 
 import com.mitteloupe.whoami.architecture.domain.exception.DomainException
 import com.mitteloupe.whoami.architecture.domain.exception.UnknownDomainException
+import com.mitteloupe.whoami.architecture.domain.usecase.UseCase
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
