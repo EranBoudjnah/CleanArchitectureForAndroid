@@ -15,7 +15,7 @@ import com.mitteloupe.whoami.test.test.BaseTest
 import com.mitteloupe.whoami.test.test.BaseTest.AppLauncher.FromComposable
 import com.mitteloupe.whoami.ui.main.AppNavHost
 import com.mitteloupe.whoami.ui.main.MainActivity
-import com.mitteloupe.whoami.ui.main.model.AppNavHostDependencies
+import com.mitteloupe.whoami.ui.main.di.AppNavHostDependencies
 import com.mitteloupe.whoami.ui.theme.WhoAmITheme
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject

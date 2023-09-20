@@ -1,6 +1,6 @@
 package com.mitteloupe.whoami.home.domain.usecase
 
-import com.mitteloupe.whoami.architecture.domain.BackgroundExecutingUseCase
+import com.mitteloupe.whoami.architecture.domain.usecase.BackgroundExecutingUseCase
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel.Connected
 import com.mitteloupe.whoami.home.domain.repository.SaveConnectionDetailsRepository

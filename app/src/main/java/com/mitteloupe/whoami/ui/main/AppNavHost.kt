@@ -13,9 +13,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mitteloupe.whoami.history.ui.view.HistoryFragment
-import com.mitteloupe.whoami.home.ui.model.HomeDependencies
+import com.mitteloupe.whoami.home.ui.di.HomeDependencies
 import com.mitteloupe.whoami.home.ui.view.Home
-import com.mitteloupe.whoami.ui.main.model.AppNavHostDependencies
+import com.mitteloupe.whoami.ui.main.di.AppNavHostDependencies
 
 @Composable
 fun AppNavHostDependencies.AppNavHost(

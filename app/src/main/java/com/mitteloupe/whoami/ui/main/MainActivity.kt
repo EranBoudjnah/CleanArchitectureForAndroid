@@ -9,7 +9,7 @@ import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
 import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsToUiMapper
 import com.mitteloupe.whoami.home.ui.mapper.ErrorToUiMapper
 import com.mitteloupe.whoami.home.ui.mapper.HomeNotificationToUiMapper
-import com.mitteloupe.whoami.ui.main.model.AppNavHostDependencies
+import com.mitteloupe.whoami.ui.main.di.AppNavHostDependencies
 import com.mitteloupe.whoami.ui.navigation.mapper.HomeDestinationToUiMapper
 import com.mitteloupe.whoami.ui.theme.WhoAmITheme
 import dagger.hilt.android.AndroidEntryPoint

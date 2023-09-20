@@ -1,4 +1,4 @@
-package com.mitteloupe.whoami.home.ui.model
+package com.mitteloupe.whoami.home.ui.di
 
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper

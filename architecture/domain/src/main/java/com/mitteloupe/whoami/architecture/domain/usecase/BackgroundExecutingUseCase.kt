@@ -1,4 +1,4 @@
-package com.mitteloupe.whoami.architecture.domain
+package com.mitteloupe.whoami.architecture.domain.usecase
 
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import kotlinx.coroutines.withContext

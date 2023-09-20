@@ -1,4 +1,4 @@
-package com.mitteloupe.whoami.ui.main.model
+package com.mitteloupe.whoami.ui.main.di
 
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider

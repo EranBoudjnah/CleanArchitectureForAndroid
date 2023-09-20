@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.mitteloupe.whoami.architecture.ui.view.ScreenEnterObserver
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.ui.R
-import com.mitteloupe.whoami.home.ui.model.HomeDependencies
+import com.mitteloupe.whoami.home.ui.di.HomeDependencies
 import com.mitteloupe.whoami.home.ui.view.widget.ConnectedContentContainer
 import com.mitteloupe.whoami.home.ui.view.widget.DisconnectedContentContainer
 import com.mitteloupe.whoami.home.ui.view.widget.ErrorContentContainer
