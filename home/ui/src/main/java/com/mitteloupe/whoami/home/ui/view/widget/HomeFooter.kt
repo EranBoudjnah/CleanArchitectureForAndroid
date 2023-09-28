@@ -15,7 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.analytics.AnalyticsEvent
 import com.mitteloupe.whoami.home.ui.R
@@ -48,7 +47,7 @@ fun HomeFooter(
         ) {
             Text(
                 text = stringResource(R.string.home_open_source_notices_label),
-                fontSize = 16.sp,
+                style = MaterialTheme.typography.labelLarge,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,

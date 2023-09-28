@@ -16,7 +16,9 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mitteloupe.whoami.home.ui.R
 
 @Composable
 fun NavigationButton(
@@ -46,7 +48,14 @@ fun NavigationButton(
         )
         Text(
             text = label,
+            style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onPrimary
         )
     }
+}
+
+@Preview
+@Composable
+private fun Preview() {
+    NavigationButton(iconResourceId = R.drawable.icon_save, label = "Save", onClick = {})
 }
