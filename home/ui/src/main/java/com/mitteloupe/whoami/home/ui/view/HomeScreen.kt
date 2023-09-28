@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mitteloupe.whoami.architecture.ui.view.ScreenEnterObserver
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.ui.R
@@ -55,7 +54,7 @@ fun HomeDependencies.Home(
     ) {
         Text(
             text = stringResource(R.string.app_name),
-            fontSize = 32.sp,
+            style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(10.dp, 48.dp, 10.dp, 0.dp)
         )
 

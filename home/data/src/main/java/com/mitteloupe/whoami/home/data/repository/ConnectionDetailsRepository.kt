@@ -13,6 +13,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.retryWhen
 
+private const val RETRY_DELAY_MILLISECONDS = 1000L
+
 class ConnectionDetailsRepository(
     private val ipAddressDataSource: IpAddressDataSource,
     private val ipAddressInformationDataSource: IpAddressInformationDataSource,
@@ -30,7 +32,7 @@ class ConnectionDetailsRepository(
                 )
         }.retryWhen { cause, _ ->
             emit(Error(throwableToDomainMapper.toDomain(cause)))
-            delay(1000L)
+            delay(RETRY_DELAY_MILLISECONDS)
             true
         }
 }
