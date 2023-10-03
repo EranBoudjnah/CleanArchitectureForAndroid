@@ -10,7 +10,7 @@ class ArchitectureDataTest {
     fun `Repositories reside in a repository package under data`() {
         Konsist.scopeFromProject()
             .classes()
-            .withNameMatching("^.*Repository(Impl)?$".toRegex())
+            .withNameMatching("^(?!Fake)[A-Z].*Repository(Impl)?$".toRegex())
             .assert { it.resideInPackage("..data..repository") }
     }
 }
