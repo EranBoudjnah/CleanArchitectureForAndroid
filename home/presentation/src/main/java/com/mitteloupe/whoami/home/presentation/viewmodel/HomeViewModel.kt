@@ -27,7 +27,7 @@ class HomeViewModel(
 
     fun onEnter() {
         updateViewState(Loading)
-        getConnectionDetailsUseCase.run(
+        getConnectionDetailsUseCase(
             onResult = { result ->
                 updateViewState(
                     connectionStateToPresentationMapper.toPresentation(result)
@@ -41,7 +41,7 @@ class HomeViewModel(
 
     fun onSaveDetailsAction(connectionDetails: HomeViewState.Connected) {
         val domainConnectionDetails = connectionDetailsToDomainMapper.toDomain(connectionDetails)
-        saveConnectionDetailsUseCase.run(
+        saveConnectionDetailsUseCase(
             value = domainConnectionDetails,
             onResult = {
                 notify(ConnectionSaved(connectionDetails.ipAddress))
