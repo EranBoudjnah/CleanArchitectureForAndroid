@@ -3,9 +3,13 @@ package com.mitteloupe.whoami.history.presentation.viewmodel
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModelTest
 import com.mitteloupe.whoami.coroutine.currentValue
+import com.mitteloupe.whoami.history.domain.model.HistoryRecordDeletionDomainModel
 import com.mitteloupe.whoami.history.domain.model.SavedIpAddressRecordDomainModel
+import com.mitteloupe.whoami.history.domain.usecase.DeleteHistoryRecordUseCase
 import com.mitteloupe.whoami.history.domain.usecase.GetHistoryUseCase
+import com.mitteloupe.whoami.history.presentation.mapper.DeleteHistoryRecordRequestToDomainMapper
 import com.mitteloupe.whoami.history.presentation.mapper.SavedIpAddressRecordToPresentationMapper
+import com.mitteloupe.whoami.history.presentation.model.HistoryRecordDeletionPresentationModel
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.HistoryRecords
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.NoChange
@@ -20,7 +24,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
 import org.mockito.kotlin.given
+import org.mockito.kotlin.verify
 
 @RunWith(MockitoJUnitRunner::class)
 class HistoryViewModelTest :
@@ -33,11 +40,19 @@ class HistoryViewModelTest :
     @Mock
     private lateinit var ipRecordToPresentationMapper: SavedIpAddressRecordToPresentationMapper
 
+    @Mock
+    private lateinit var deleteHistoryRecordUseCase: DeleteHistoryRecordUseCase
+
+    @Mock
+    private lateinit var deleteRecordRequestToDomainMapper: DeleteHistoryRecordRequestToDomainMapper
+
     @Before
     fun setUp() {
         classUnderTest = HistoryViewModel(
             getHistoryUseCase,
             ipRecordToPresentationMapper,
+            deleteHistoryRecordUseCase,
+            deleteRecordRequestToDomainMapper,
             useCaseExecutor
         )
     }
@@ -68,6 +83,34 @@ class HistoryViewModelTest :
         expectedSavedRecords.forEach { expectedRecord ->
             assertThat(actualValue.historyRecords, hasItem(expectedRecord))
         }
+    }
+
+    @Test
+    fun `Given deletion request when onDeleteAction then deletes record`() {
+        // Given
+        val givenIpAddress = "0.0.0.0"
+        val givenSavedAtTimestampMilliseconds = 444L
+        val givenDeletionRequest = HistoryRecordDeletionPresentationModel(
+            givenIpAddress,
+            givenSavedAtTimestampMilliseconds
+        )
+        val domainDeletionRequest = HistoryRecordDeletionDomainModel(
+            givenIpAddress,
+            givenSavedAtTimestampMilliseconds
+        )
+        given(deleteRecordRequestToDomainMapper.toDomain(givenDeletionRequest))
+            .willReturn(domainDeletionRequest)
+
+        // When
+        classUnderTest.onDeleteAction(givenDeletionRequest)
+
+        // Then
+        verify(useCaseExecutor).execute(
+            eq(deleteHistoryRecordUseCase),
+            eq(domainDeletionRequest),
+            any(),
+            any()
+        )
     }
 
     private fun expectedSavedRecords(

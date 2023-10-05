@@ -48,14 +48,14 @@ abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotifi
         }
     }
 
-    protected fun <OUTPUT> UseCase<Unit, OUTPUT>.run(
+    protected operator fun <OUTPUT> UseCase<Unit, OUTPUT>.invoke(
         onResult: (OUTPUT) -> Unit = {},
         onException: (DomainException) -> Unit = {}
     ) {
         useCaseExecutor.execute(this, onResult, onException)
     }
 
-    protected fun <INPUT, OUTPUT> UseCase<INPUT, OUTPUT>.run(
+    protected operator fun <INPUT, OUTPUT> UseCase<INPUT, OUTPUT>.invoke(
         value: INPUT,
         onResult: (OUTPUT) -> Unit = {},
         onException: (DomainException) -> Unit = {}
