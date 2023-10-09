@@ -126,7 +126,6 @@ class IpAddressHistoryDataSourceImplTest {
         val dataSavedIpAddressHistoryRecord3 = dataSavedIpAddressHistoryRecord("2.2.2.2")
         givenLocalToDataMapped(localSavedIpAddressHistoryRecord3, dataSavedIpAddressHistoryRecord3)
 
-
         // When
         classUnderTest.delete(deletionIdentifier)
         val actualRecords = classUnderTest.allRecords()
