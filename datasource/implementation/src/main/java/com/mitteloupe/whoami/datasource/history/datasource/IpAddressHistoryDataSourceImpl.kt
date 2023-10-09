@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.mitteloupe.whoami.datasource.history.mapper.NewIpAddressRecordToLocalMapper
 import com.mitteloupe.whoami.datasource.history.mapper.SavedIpAddressRecordToDataMapper
+import com.mitteloupe.whoami.datasource.history.model.HistoryRecordDeletionIdentifierDataModel
 import com.mitteloupe.whoami.datasource.history.model.NewIpAddressHistoryRecordDataModel
 import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordDataModel
 import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordLocalModel
@@ -20,10 +21,9 @@ class IpAddressHistoryDataSourceImpl(
 ) : IpAddressHistoryDataSource {
     private val historyRecords: MutableMap<String, SavedIpAddressHistoryRecordLocalModel> by lazy {
         sharedPreferences.getString(KEY_HISTORY_RECORDS, null)?.let { recordsString ->
-            val decode = jsonDecoder.decode(recordsString)
-            val toMutableMap = decode?.toMutableMap()
-            toMutableMap
-        } ?: mutableMapOf()
+            val decodedRecords = jsonDecoder.decode(recordsString)
+            decodedRecords
+        }.orEmpty().toMutableMap()
     }
 
     override fun save(record: NewIpAddressHistoryRecordDataModel) {
@@ -32,6 +32,10 @@ class IpAddressHistoryDataSourceImpl(
         sharedPreferences.edit {
             putString(KEY_HISTORY_RECORDS, jsonEncoder.encode(historyRecords))
         }
+    }
+
+    override fun delete(deletionIdentifier: HistoryRecordDeletionIdentifierDataModel) {
+        historyRecords.remove(deletionIdentifier.ipAddress)
     }
 
     override fun allRecords(): Collection<SavedIpAddressHistoryRecordDataModel> =
