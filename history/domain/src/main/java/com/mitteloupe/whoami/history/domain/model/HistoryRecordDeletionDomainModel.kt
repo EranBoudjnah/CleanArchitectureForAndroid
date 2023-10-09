@@ -1,6 +1,5 @@
 package com.mitteloupe.whoami.history.domain.model
 
 data class HistoryRecordDeletionDomainModel(
-    val ipAddress: String,
-    val savedAtTimestampMilliseconds: Long
+    val ipAddress: String
 )

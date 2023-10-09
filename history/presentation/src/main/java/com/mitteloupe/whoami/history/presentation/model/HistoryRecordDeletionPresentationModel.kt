@@ -1,6 +1,5 @@
 package com.mitteloupe.whoami.history.presentation.model
 
 data class HistoryRecordDeletionPresentationModel(
-    val ipAddress: String,
-    val savedAtTimestampMilliseconds: Long
+    val ipAddress: String
 )
