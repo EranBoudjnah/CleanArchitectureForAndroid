@@ -6,7 +6,7 @@ import com.lemonappdev.konsist.api.ext.list.withAllParentsOf
 import com.lemonappdev.konsist.api.ext.list.withNameEndingWith
 import com.lemonappdev.konsist.api.ext.list.withPackage
 import com.lemonappdev.konsist.api.ext.list.withTopLevel
-import com.lemonappdev.konsist.api.verify.assert
+import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.Test
 
 class ArchitectureUiTest {
@@ -15,7 +15,7 @@ class ArchitectureUiTest {
         Konsist.scopeFromProject()
             .classes()
             .withAllParentsOf(Fragment::class)
-            .assert { it.name.endsWith("Fragment") }
+            .assertTrue { it.name.endsWith("Fragment") }
     }
 
     @Test
@@ -23,7 +23,7 @@ class ArchitectureUiTest {
         Konsist.scopeFromProject()
             .classes()
             .withNameEndingWith("Fragment")
-            .assert { it.resideInPackage("..ui..view") }
+            .assertTrue { it.resideInPackage("..ui..view") }
     }
 
     @Test
@@ -32,6 +32,6 @@ class ArchitectureUiTest {
             .classes()
             .withPackage("..ui..model")
             .withTopLevel()
-            .assert { it.hasNameEndingWith("UiModel") }
+            .assertTrue { it.hasNameEndingWith("UiModel") }
     }
 }

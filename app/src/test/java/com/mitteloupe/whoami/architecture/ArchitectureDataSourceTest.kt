@@ -4,7 +4,7 @@ import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.ext.list.withNameEndingWith
 import com.lemonappdev.konsist.api.ext.list.withPackage
 import com.lemonappdev.konsist.api.ext.list.withTopLevel
-import com.lemonappdev.konsist.api.verify.assert
+import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.Test
 
 private val dataSourceModelNameRegex = "^.*(Data|Api|Local)Model$".toRegex()
@@ -15,7 +15,7 @@ class ArchitectureDataSourceTest {
         Konsist.scopeFromProject()
             .classes()
             .withNameEndingWith("DataSourceImpl")
-            .assert { it.resideInPackage("..datasource..datasource") }
+            .assertTrue { it.resideInPackage("..datasource..datasource") }
     }
 
     @Test
@@ -23,7 +23,7 @@ class ArchitectureDataSourceTest {
         Konsist.scopeFromProject()
             .interfaces()
             .withNameEndingWith("DataSource")
-            .assert { it.resideInPackage("..datasource..datasource") }
+            .assertTrue { it.resideInPackage("..datasource..datasource") }
     }
 
     @Test
@@ -32,6 +32,6 @@ class ArchitectureDataSourceTest {
             .classes()
             .withPackage("..datasource..model")
             .withTopLevel()
-            .assert { it.hasNameMatching(dataSourceModelNameRegex) }
+            .assertTrue { it.hasNameMatching(dataSourceModelNameRegex) }
     }
 }

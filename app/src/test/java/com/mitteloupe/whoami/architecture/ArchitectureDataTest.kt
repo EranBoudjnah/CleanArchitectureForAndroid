@@ -2,7 +2,7 @@ package com.mitteloupe.whoami.architecture
 
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.ext.list.withNameMatching
-import com.lemonappdev.konsist.api.verify.assert
+import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.Test
 
 class ArchitectureDataTest {
@@ -11,6 +11,6 @@ class ArchitectureDataTest {
         Konsist.scopeFromProject()
             .classes()
             .withNameMatching("^(?!Fake)[A-Z].*Repository(Impl)?$".toRegex())
-            .assert { it.resideInPackage("..data..repository") }
+            .assertTrue { it.resideInPackage("..data..repository") }
     }
 }

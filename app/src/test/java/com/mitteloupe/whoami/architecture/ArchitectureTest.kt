@@ -3,7 +3,7 @@ package com.mitteloupe.whoami.architecture
 import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.ext.list.withNameEndingWith
 import com.lemonappdev.konsist.api.ext.list.withNameMatching
-import com.lemonappdev.konsist.api.verify.assert
+import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.Test
 
 class ArchitectureTest {
@@ -12,7 +12,7 @@ class ArchitectureTest {
         Konsist.scopeFromProject()
             .classes()
             .withNameMatching("^.*(?<!View)Model$".toRegex())
-            .assert { it.resideInPackage("..model") }
+            .assertTrue { it.resideInPackage("..model") }
     }
 
     @Test
@@ -20,6 +20,6 @@ class ArchitectureTest {
         Konsist.scopeFromProject()
             .classes()
             .withNameEndingWith("Mapper")
-            .assert { it.resideInPackage("..mapper") }
+            .assertTrue { it.resideInPackage("..mapper") }
     }
 }

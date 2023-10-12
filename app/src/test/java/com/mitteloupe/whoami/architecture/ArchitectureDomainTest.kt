@@ -4,7 +4,7 @@ import com.lemonappdev.konsist.api.Konsist
 import com.lemonappdev.konsist.api.ext.list.withNameEndingWith
 import com.lemonappdev.konsist.api.ext.list.withPackage
 import com.lemonappdev.konsist.api.ext.list.withTopLevel
-import com.lemonappdev.konsist.api.verify.assert
+import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.Test
 
 class ArchitectureDomainTest {
@@ -13,7 +13,7 @@ class ArchitectureDomainTest {
         Konsist.scopeFromProject()
             .classes()
             .withNameEndingWith("UseCase")
-            .assert { it.resideInPackage("..domain..usecase") }
+            .assertTrue { it.resideInPackage("..domain..usecase") }
     }
 
     @Test
@@ -22,7 +22,7 @@ class ArchitectureDomainTest {
             .classes()
             .withPackage("..domain..model")
             .withTopLevel()
-            .assert { it.hasNameEndingWith("DomainModel") }
+            .assertTrue { it.hasNameEndingWith("DomainModel") }
     }
 
     @Test
@@ -30,6 +30,6 @@ class ArchitectureDomainTest {
         Konsist.scopeFromProject()
             .interfaces()
             .withNameEndingWith("Repository")
-            .assert { it.resideInPackage("..domain..repository") }
+            .assertTrue { it.resideInPackage("..domain..repository") }
     }
 }
