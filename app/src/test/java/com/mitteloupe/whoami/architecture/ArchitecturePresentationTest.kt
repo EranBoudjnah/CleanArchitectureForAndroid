@@ -6,7 +6,7 @@ import com.lemonappdev.konsist.api.ext.list.modifierprovider.withPublicOrDefault
 import com.lemonappdev.konsist.api.ext.list.withNameEndingWith
 import com.lemonappdev.konsist.api.ext.list.withPackage
 import com.lemonappdev.konsist.api.ext.list.withTopLevel
-import com.lemonappdev.konsist.api.verify.assert
+import com.lemonappdev.konsist.api.verify.assertTrue
 import org.junit.Test
 
 private val publicFunctionNameRegex = "^on[A-Z0-9].*$".toRegex()
@@ -19,7 +19,7 @@ class ArchitecturePresentationTest {
             .withNameEndingWith("ViewModel")
             .functions()
             .withPublicOrDefaultModifier()
-            .assert { it.hasNameMatching(publicFunctionNameRegex) }
+            .assertTrue { it.hasNameMatching(publicFunctionNameRegex) }
     }
 
     @Test
@@ -27,7 +27,7 @@ class ArchitecturePresentationTest {
         Konsist.scopeFromProject()
             .classes()
             .withNameEndingWith("ViewModel")
-            .assert { it.resideInPackage("..presentation.viewmodel") }
+            .assertTrue { it.resideInPackage("..presentation.viewmodel") }
     }
 
     @Test
@@ -35,7 +35,7 @@ class ArchitecturePresentationTest {
         Konsist.scopeFromProject()
             .objects()
             .withNameEndingWith("PresentationDestination")
-            .assert { it.resideInPackage("..presentation.navigation") }
+            .assertTrue { it.resideInPackage("..presentation.navigation") }
     }
 
     @Test
@@ -44,6 +44,6 @@ class ArchitecturePresentationTest {
             .classes()
             .withPackage("..presentation..model")
             .withTopLevel()
-            .assert { it.hasNameEndingWith("PresentationModel") }
+            .assertTrue { it.hasNameEndingWith("PresentationModel") }
     }
 }
