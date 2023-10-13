@@ -1,13 +1,22 @@
 package com.mitteloupe.whoami.history.data.repository
 
 import com.mitteloupe.whoami.datasource.history.datasource.IpAddressHistoryDataSource
+import com.mitteloupe.whoami.history.data.mapper.HistoryRecordDeletionToDataMapper
 import com.mitteloupe.whoami.history.data.mapper.SavedIpAddressRecordToDomainMapper
+import com.mitteloupe.whoami.history.domain.model.HistoryRecordDeletionDomainModel
+import com.mitteloupe.whoami.history.domain.repository.DeleteHistoryRecordRepository
 import com.mitteloupe.whoami.history.domain.repository.GetHistoryRepository
 
 class ConnectionHistoryRepository(
     private val ipAddressHistoryDataSource: IpAddressHistoryDataSource,
-    private val savedIpAddressRecordToDomainMapper: SavedIpAddressRecordToDomainMapper
-) : GetHistoryRepository {
+    private val savedIpAddressRecordToDomainMapper: SavedIpAddressRecordToDomainMapper,
+    private val recordDeletionToDataMapper: HistoryRecordDeletionToDataMapper
+) : GetHistoryRepository, DeleteHistoryRecordRepository {
     override fun history() = ipAddressHistoryDataSource.allRecords()
         .map(savedIpAddressRecordToDomainMapper::toDomain)
+
+    override fun delete(record: HistoryRecordDeletionDomainModel) {
+        val dataRequest = recordDeletionToDataMapper.toData(record)
+        ipAddressHistoryDataSource.delete(dataRequest)
+    }
 }

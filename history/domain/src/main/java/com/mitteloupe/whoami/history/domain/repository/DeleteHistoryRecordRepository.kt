@@ -4,8 +4,4 @@ import com.mitteloupe.whoami.history.domain.model.HistoryRecordDeletionDomainMod
 
 interface DeleteHistoryRecordRepository {
     fun delete(record: HistoryRecordDeletionDomainModel)
-
-    class FakeDeleteHistoryRecordRepository : DeleteHistoryRecordRepository {
-        override fun delete(record: HistoryRecordDeletionDomainModel) = Unit
-    }
 }

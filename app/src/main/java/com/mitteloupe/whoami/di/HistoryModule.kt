@@ -6,10 +6,10 @@ import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
 import com.mitteloupe.whoami.architecture.ui.view.ViewsProvider
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.datasource.history.datasource.IpAddressHistoryDataSource
+import com.mitteloupe.whoami.history.data.mapper.HistoryRecordDeletionToDataMapper
 import com.mitteloupe.whoami.history.data.mapper.SavedIpAddressRecordToDomainMapper
 import com.mitteloupe.whoami.history.data.repository.ConnectionHistoryRepository
 import com.mitteloupe.whoami.history.domain.repository.DeleteHistoryRecordRepository
-import com.mitteloupe.whoami.history.domain.repository.DeleteHistoryRecordRepository.FakeDeleteHistoryRecordRepository
 import com.mitteloupe.whoami.history.domain.repository.GetHistoryRepository
 import com.mitteloupe.whoami.history.domain.usecase.DeleteHistoryRecordUseCase
 import com.mitteloupe.whoami.history.domain.usecase.GetHistoryUseCase
@@ -31,11 +31,28 @@ object HistoryModule {
     fun providesSavedIpAddressRecordToDomainMapper() = SavedIpAddressRecordToDomainMapper()
 
     @Provides
-    fun providesGetHistoryRepository(
+    fun providesHistoryRecordDeletionToDataMapper() = HistoryRecordDeletionToDataMapper()
+
+    @Provides
+    fun providesConnectionHistoryRepository(
         ipAddressHistoryDataSource: IpAddressHistoryDataSource,
-        savedIpAddressRecordToDomainMapper: SavedIpAddressRecordToDomainMapper
-    ): GetHistoryRepository =
-        ConnectionHistoryRepository(ipAddressHistoryDataSource, savedIpAddressRecordToDomainMapper)
+        savedIpAddressRecordToDomainMapper: SavedIpAddressRecordToDomainMapper,
+        recordDeletionToDataMapper: HistoryRecordDeletionToDataMapper
+    ) = ConnectionHistoryRepository(
+        ipAddressHistoryDataSource,
+        savedIpAddressRecordToDomainMapper,
+        recordDeletionToDataMapper
+    )
+
+    @Provides
+    fun providesGetHistoryRepository(
+        connectionHistoryRepository: ConnectionHistoryRepository
+    ): GetHistoryRepository = connectionHistoryRepository
+
+    @Provides
+    fun providesDeleteHistoryRecordRepository(
+        connectionHistoryRepository: ConnectionHistoryRepository
+    ): DeleteHistoryRecordRepository = connectionHistoryRepository
 
     @Provides
     fun providesGetHistoryUseCase(
@@ -46,10 +63,6 @@ object HistoryModule {
     @Provides
     fun providesSavedIpAddressRecordToPresentationMapper() =
         SavedIpAddressRecordToPresentationMapper()
-
-    @Provides
-    fun providesDeleteHistoryRecordRepository(): DeleteHistoryRecordRepository =
-        FakeDeleteHistoryRecordRepository()
 
     @Provides
     fun providesDeleteHistoryRecordUseCase(
