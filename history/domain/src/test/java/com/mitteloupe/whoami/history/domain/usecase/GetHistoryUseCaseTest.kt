@@ -27,20 +27,21 @@ class GetHistoryUseCaseTest {
     }
 
     @Test
-    fun `Given IP addresses history when executeInBackground then returns history records`() = runTest {
-        // Given
-        val expectedHistory = listOf(
-            savedIpAddressRecord("1.2.3.4"),
-            savedIpAddressRecord("4.3.2.1")
-        )
-        given(getHistoryRepository.history()).willReturn(flowOf(expectedHistory))
+    fun `Given IP addresses history when executeInBackground then returns history records`() =
+        runTest {
+            // Given
+            val expectedHistory = listOf(
+                savedIpAddressRecord("1.2.3.4"),
+                savedIpAddressRecord("4.3.2.1")
+            )
+            given(getHistoryRepository.history()).willReturn(flowOf(expectedHistory))
 
-        // When
-        val actualHistory = classUnderTest.executeInBackground(Unit).currentValue()
+            // When
+            val actualHistory = classUnderTest.executeInBackground(Unit).currentValue()
 
-        // Then
-        assertEquals(expectedHistory, actualHistory)
-    }
+            // Then
+            assertEquals(expectedHistory, actualHistory)
+        }
 
     private fun savedIpAddressRecord(ipAddress: String) = SavedIpAddressRecordDomainModel(
         ipAddress = ipAddress,
