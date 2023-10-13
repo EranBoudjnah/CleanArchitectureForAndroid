@@ -1,8 +1,11 @@
 package com.mitteloupe.whoami.history.domain.usecase
 
-import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
+import com.mitteloupe.whoami.coroutine.currentValue
+import com.mitteloupe.whoami.coroutine.fakeCoroutineContextProvider
 import com.mitteloupe.whoami.history.domain.model.SavedIpAddressRecordDomainModel
 import com.mitteloupe.whoami.history.domain.repository.GetHistoryRepository
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -18,29 +21,27 @@ class GetHistoryUseCaseTest {
     @Mock
     private lateinit var getHistoryRepository: GetHistoryRepository
 
-    @Mock
-    lateinit var coroutineContextProvider: CoroutineContextProvider
-
     @Before
     fun setUp() {
-        classUnderTest = GetHistoryUseCase(getHistoryRepository, coroutineContextProvider)
+        classUnderTest = GetHistoryUseCase(getHistoryRepository, fakeCoroutineContextProvider)
     }
 
     @Test
-    fun `Given IP addresses history when executeInBackground then returns history records`() {
-        // Given
-        val expectedHistory = listOf(
-            savedIpAddressRecord("1.2.3.4"),
-            savedIpAddressRecord("4.3.2.1")
-        )
-        given(getHistoryRepository.history()).willReturn(expectedHistory)
+    fun `Given IP addresses history when executeInBackground then returns history records`() =
+        runTest {
+            // Given
+            val expectedHistory = listOf(
+                savedIpAddressRecord("1.2.3.4"),
+                savedIpAddressRecord("4.3.2.1")
+            )
+            given(getHistoryRepository.history()).willReturn(flowOf(expectedHistory))
 
-        // When
-        val actualHistory = classUnderTest.executeInBackground(Unit)
+            // When
+            val actualHistory = classUnderTest.executeInBackground(Unit).currentValue()
 
-        // Then
-        assertEquals(expectedHistory, actualHistory)
-    }
+            // Then
+            assertEquals(expectedHistory, actualHistory)
+        }
 
     private fun savedIpAddressRecord(ipAddress: String) = SavedIpAddressRecordDomainModel(
         ipAddress = ipAddress,

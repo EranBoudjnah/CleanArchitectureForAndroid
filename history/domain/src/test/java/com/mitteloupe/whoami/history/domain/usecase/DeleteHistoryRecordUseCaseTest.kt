@@ -29,7 +29,7 @@ class DeleteHistoryRecordUseCaseTest {
     @Test
     fun `Given record to delete when executeInBackground then deletes record`() {
         // Given
-        val givenRecordToDelete = HistoryRecordDeletionDomainModel("192.168.0.1", 123L)
+        val givenRecordToDelete = HistoryRecordDeletionDomainModel("192.168.0.1")
 
         // When
         classUnderTest.executeInBackground(givenRecordToDelete)

@@ -21,30 +21,21 @@ class DeleteHistoryRecordRequestToDomainMapperTest(
         fun data(): Collection<Array<*>> = listOf(
             testCase(
                 testTitle = "case 1",
-                ipAddress = "1.1.1.1",
-                savedAtTimestampMilliseconds = 123L
+                ipAddress = "1.1.1.1"
             ),
             testCase(
                 testTitle = "case 2",
-                ipAddress = "255.255.255.255",
-                savedAtTimestampMilliseconds = 321L
+                ipAddress = "255.255.255.255"
             )
         )
 
         private fun testCase(
             testTitle: String,
-            ipAddress: String,
-            savedAtTimestampMilliseconds: Long
+            ipAddress: String
         ) = arrayOf(
             testTitle,
-            HistoryRecordDeletionPresentationModel(
-                ipAddress = ipAddress,
-                savedAtTimestampMilliseconds = savedAtTimestampMilliseconds
-            ),
-            HistoryRecordDeletionDomainModel(
-                ipAddress = ipAddress,
-                savedAtTimestampMilliseconds = savedAtTimestampMilliseconds
-            )
+            HistoryRecordDeletionPresentationModel(ipAddress = ipAddress),
+            HistoryRecordDeletionDomainModel(ipAddress = ipAddress)
         )
     }
 

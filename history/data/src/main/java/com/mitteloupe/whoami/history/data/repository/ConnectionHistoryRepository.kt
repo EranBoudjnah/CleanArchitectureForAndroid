@@ -6,6 +6,7 @@ import com.mitteloupe.whoami.history.data.mapper.SavedIpAddressRecordToDomainMap
 import com.mitteloupe.whoami.history.domain.model.HistoryRecordDeletionDomainModel
 import com.mitteloupe.whoami.history.domain.repository.DeleteHistoryRecordRepository
 import com.mitteloupe.whoami.history.domain.repository.GetHistoryRepository
+import kotlinx.coroutines.flow.map
 
 class ConnectionHistoryRepository(
     private val ipAddressHistoryDataSource: IpAddressHistoryDataSource,
@@ -13,7 +14,9 @@ class ConnectionHistoryRepository(
     private val recordDeletionToDataMapper: HistoryRecordDeletionToDataMapper
 ) : GetHistoryRepository, DeleteHistoryRecordRepository {
     override fun history() = ipAddressHistoryDataSource.allRecords()
-        .map(savedIpAddressRecordToDomainMapper::toDomain)
+        .map { records ->
+            records.map(savedIpAddressRecordToDomainMapper::toDomain)
+        }
 
     override fun delete(record: HistoryRecordDeletionDomainModel) {
         val dataRequest = recordDeletionToDataMapper.toData(record)

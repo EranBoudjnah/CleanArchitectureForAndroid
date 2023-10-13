@@ -89,15 +89,8 @@ class HistoryViewModelTest :
     fun `Given deletion request when onDeleteAction then deletes record`() {
         // Given
         val givenIpAddress = "0.0.0.0"
-        val givenSavedAtTimestampMilliseconds = 444L
-        val givenDeletionRequest = HistoryRecordDeletionPresentationModel(
-            givenIpAddress,
-            givenSavedAtTimestampMilliseconds
-        )
-        val domainDeletionRequest = HistoryRecordDeletionDomainModel(
-            givenIpAddress,
-            givenSavedAtTimestampMilliseconds
-        )
+        val givenDeletionRequest = HistoryRecordDeletionPresentationModel(givenIpAddress)
+        val domainDeletionRequest = HistoryRecordDeletionDomainModel(givenIpAddress)
         given(deleteRecordRequestToDomainMapper.toDomain(givenDeletionRequest))
             .willReturn(domainDeletionRequest)
 

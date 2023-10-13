@@ -60,7 +60,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run unit tests
-        run: ./gradlew testDebugUnitTest --no-daemon
+        run: ./gradlew test --no-daemon
 
   connected-tests:
     needs: setup
