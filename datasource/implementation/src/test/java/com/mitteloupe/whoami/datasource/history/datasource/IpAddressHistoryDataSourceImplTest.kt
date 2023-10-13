@@ -1,6 +1,7 @@
 package com.mitteloupe.whoami.datasource.history.datasource
 
 import android.content.SharedPreferences
+import com.mitteloupe.whoami.coroutine.currentValue
 import com.mitteloupe.whoami.datasource.history.mapper.NewIpAddressRecordToLocalMapper
 import com.mitteloupe.whoami.datasource.history.mapper.SavedIpAddressRecordToDataMapper
 import com.mitteloupe.whoami.datasource.history.model.HistoryRecordDeletionIdentifierDataModel
@@ -10,6 +11,7 @@ import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecor
 import com.mitteloupe.whoami.datasource.json.JsonDecoder
 import com.mitteloupe.whoami.datasource.json.JsonEncoder
 import com.mitteloupe.whoami.datasource.local.LocalStoreKey.KEY_HISTORY_RECORDS
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.hasItems
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.IsEmptyCollection.empty
@@ -63,16 +65,16 @@ class IpAddressHistoryDataSourceImplTest {
     }
 
     @Test
-    fun `Given no records saved when allRecords then returns an empty collection`() {
+    fun `Given no records saved when allRecords then returns an empty collection`() = runTest {
         // When
-        val actualRecords = classUnderTest.allRecords()
+        val actualRecords = classUnderTest.allRecords().currentValue()
 
         // Then
         assertThat(actualRecords, empty())
     }
 
     @Test
-    fun `Given record was saved when allRecords then returns saved record`() {
+    fun `Given record was saved when allRecords then returns saved record`() = runTest {
         // Given
         val ipAddress = "0.0.0.0"
         val givenRecord = NewIpAddressHistoryRecordDataModel(
@@ -94,7 +96,7 @@ class IpAddressHistoryDataSourceImplTest {
         val expectedCollectionSize = 1
 
         // When
-        val actualRecords = classUnderTest.allRecords()
+        val actualRecords = classUnderTest.allRecords().currentValue()
 
         // Then
         assertEquals(expectedCollectionSize, actualRecords.size)
@@ -102,7 +104,7 @@ class IpAddressHistoryDataSourceImplTest {
     }
 
     @Test
-    fun `Given records,delete identifier when delete then deletes identified record`() {
+    fun `Given records,delete identifier when delete then deletes identified record`() = runTest {
         // Given
         val ipAddressToDelete = "1.1.1.1"
         val recordsString = "{JSON}"
@@ -128,7 +130,7 @@ class IpAddressHistoryDataSourceImplTest {
 
         // When
         classUnderTest.delete(deletionIdentifier)
-        val actualRecords = classUnderTest.allRecords()
+        val actualRecords = classUnderTest.allRecords().currentValue()
 
         // Then
         assertThat(

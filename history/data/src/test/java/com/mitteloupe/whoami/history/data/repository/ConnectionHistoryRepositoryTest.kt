@@ -1,5 +1,6 @@
 package com.mitteloupe.whoami.history.data.repository
 
+import com.mitteloupe.whoami.coroutine.currentValue
 import com.mitteloupe.whoami.datasource.history.datasource.IpAddressHistoryDataSource
 import com.mitteloupe.whoami.datasource.history.model.HistoryRecordDeletionIdentifierDataModel
 import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordDataModel
@@ -7,6 +8,8 @@ import com.mitteloupe.whoami.history.data.mapper.HistoryRecordDeletionToDataMapp
 import com.mitteloupe.whoami.history.data.mapper.SavedIpAddressRecordToDomainMapper
 import com.mitteloupe.whoami.history.domain.model.HistoryRecordDeletionDomainModel
 import com.mitteloupe.whoami.history.domain.model.SavedIpAddressRecordDomainModel
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder
@@ -41,7 +44,7 @@ class ConnectionHistoryRepositoryTest {
     }
 
     @Test
-    fun `Given history records when history then returns all items`() {
+    fun `Given history records when history then returns all items`() = runTest {
         // Given
         val dataHistoryRecord1 = dataHistoryRecord("1.1.1.1")
         val domainHistoryRecord1 = domainHistoryRecord("M.A.P.1")
@@ -52,10 +55,10 @@ class ConnectionHistoryRepositoryTest {
         given(connectionDetailsToDataMapper.toDomain(dataHistoryRecord2))
             .willReturn(domainHistoryRecord2)
         val givenHistory = setOf(dataHistoryRecord1, dataHistoryRecord2)
-        given(ipAddressHistoryDataSource.allRecords()).willReturn(givenHistory)
+        given(ipAddressHistoryDataSource.allRecords()).willReturn(flowOf(givenHistory))
 
         // When
-        val actualHistory = classUnderTest.history()
+        val actualHistory = classUnderTest.history().currentValue()
 
         // Then
         assertThat(actualHistory, hasSize(2))

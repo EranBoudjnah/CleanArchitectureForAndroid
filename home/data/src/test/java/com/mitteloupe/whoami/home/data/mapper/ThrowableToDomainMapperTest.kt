@@ -28,7 +28,7 @@ class ThrowableToDomainMapperTest(
                     typeCompatibleWith(ReadFailedDomainException::class.java)
                 )
             },
-            testCase(RequestTimeoutDataException()) { exception ->
+            testCase(RequestTimeoutDataException(Throwable())) { exception ->
                 assertThat(
                     exception::class.java,
                     typeCompatibleWith(ReadFailedDomainException::class.java)

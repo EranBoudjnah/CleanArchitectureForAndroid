@@ -1,3 +1,6 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 plugins {
     id("com.android.application")
     alias(libs.plugins.kotlin.android)
@@ -147,3 +150,15 @@ val installGitHook = tasks.register<Copy>("installGitHook") {
 }
 
 tasks.getByPath(":app:preBuild").dependsOn(installGitHook)
+
+tasks.withType(Test::class) {
+    testLogging {
+        exceptionFormat = TestExceptionFormat.FULL
+        events = mutableSetOf(
+            TestLogEvent.SKIPPED,
+            TestLogEvent.PASSED,
+            TestLogEvent.FAILED
+        )
+        showStandardStreams = true
+    }
+}
