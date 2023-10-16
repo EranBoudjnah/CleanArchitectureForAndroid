@@ -2,8 +2,6 @@ package com.mitteloupe.whoami.di
 
 import android.content.res.Resources
 import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
-import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
-import com.mitteloupe.whoami.architecture.ui.view.ViewsProvider
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.datasource.history.datasource.IpAddressHistoryDataSource
 import com.mitteloupe.whoami.history.data.mapper.HistoryRecordDeletionToDataMapper
@@ -15,9 +13,7 @@ import com.mitteloupe.whoami.history.domain.usecase.DeleteHistoryRecordUseCase
 import com.mitteloupe.whoami.history.domain.usecase.GetHistoryUseCase
 import com.mitteloupe.whoami.history.presentation.mapper.DeleteHistoryRecordRequestToDomainMapper
 import com.mitteloupe.whoami.history.presentation.mapper.SavedIpAddressRecordToPresentationMapper
-import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
 import com.mitteloupe.whoami.history.presentation.viewmodel.HistoryViewModel
-import com.mitteloupe.whoami.history.ui.binder.HistoryViewStateBinder
 import com.mitteloupe.whoami.history.ui.mapper.HistoryRecordToUiMapper
 import dagger.Module
 import dagger.Provides
@@ -93,12 +89,4 @@ object HistoryModule {
     fun providesHistoryRecordToUiMapper(
         resources: Resources
     ) = HistoryRecordToUiMapper(resources)
-
-    @Suppress("UNCHECKED_CAST")
-    @Provides
-    fun providesHistoryViewStateBinder(
-        historyRecordToUiMapper: HistoryRecordToUiMapper
-    ) = HistoryViewStateBinder(
-        historyRecordToUiMapper
-    ) as ViewStateBinder<HistoryViewState, ViewsProvider>
 }

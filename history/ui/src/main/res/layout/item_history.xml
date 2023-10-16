@@ -38,11 +38,12 @@
                 android:id="@+id/history_ip_address_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:color="?attr/colorOnSurface"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/history_location_label"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/history_delete_button"
                 app:layout_constraintStart_toEndOf="@id/history_record_icon"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="1.1.1.1" />
@@ -51,12 +52,24 @@
                 android:id="@+id/history_location_label"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:color="?attr/colorOnSurfaceVariant"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/history_delete_button"
                 app:layout_constraintStart_toStartOf="@id/history_ip_address_label"
                 app:layout_constraintTop_toBottomOf="@id/history_ip_address_label"
                 tools:text="Michigan, 49106" />
+
+            <ImageButton
+                android:id="@+id/history_delete_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/history_record_delete_address_button_hint"
+                android:src="@drawable/icon_delete"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="?attr/colorOnSurfaceVariant" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

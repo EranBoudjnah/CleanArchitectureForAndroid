@@ -7,4 +7,5 @@
     <string name="history_record_location_full_format">%1$s, %2$s</string>
     <string name="history_record_location_unknown">Unknown city</string>
     <string name="history_record_saved_record_icon_hint">Saved record icon</string>
+    <string name="history_record_delete_address_button_hint">Delete address</string>
 </resources>
