@@ -1,7 +1,5 @@
 package com.mitteloupe.whoami.test.test
 
-import androidx.compose.ui.test.IdlingResource as ComposeIdlingResource
-import androidx.test.espresso.IdlingResource as EspressoIdlingResource
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -11,10 +9,12 @@ import android.view.ViewGroup
 import androidx.activity.ComponentActivity
 import androidx.annotation.CallSuper
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.test.IdlingResource as ComposeIdlingResource
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.IdlingResource as EspressoIdlingResource
 import androidx.test.platform.app.InstrumentationRegistry
 import com.mitteloupe.whoami.test.localstore.KeyValueStore
 import com.mitteloupe.whoami.test.rule.DisableAnimationsRule

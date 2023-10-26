@@ -27,7 +27,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "com.mitteloupe.whoami.di.HiltTestRunner"
-        javaCompileOptions.annotationProcessorOptions.arguments["dagger.hilt.disableCrossCompilationRootValidation"] = "true"
+        javaCompileOptions.annotationProcessorOptions
+            .arguments["dagger.hilt.disableCrossCompilationRootValidation"] = "true"
 
         vectorDrawables {
             useSupportLibrary = true
