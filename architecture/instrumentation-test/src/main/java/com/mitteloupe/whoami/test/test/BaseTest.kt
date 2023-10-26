@@ -1,7 +1,9 @@
 package com.mitteloupe.whoami.test.test
 
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import androidx.compose.ui.test.IdlingResource as ComposeIdlingResource
+import androidx.test.espresso.IdlingResource as EspressoIdlingResource
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,19 +11,17 @@ import android.view.ViewGroup
 import androidx.activity.ComponentActivity
 import androidx.annotation.CallSuper
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.test.IdlingResource as ComposeIdlingResource
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.IdlingResource as EspressoIdlingResource
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.GrantPermissionRule
 import com.mitteloupe.whoami.test.localstore.KeyValueStore
 import com.mitteloupe.whoami.test.rule.DisableAnimationsRule
 import com.mitteloupe.whoami.test.rule.HiltInjectorRule
 import com.mitteloupe.whoami.test.rule.LocalStoreRule
 import com.mitteloupe.whoami.test.rule.ScreenshotFailureRule
+import com.mitteloupe.whoami.test.rule.SdkAwareGrantPermissionRule
 import com.mitteloupe.whoami.test.rule.WebServerRule
 import com.mitteloupe.whoami.test.server.MockDispatcher
 import com.mitteloupe.whoami.test.server.MockWebServerProvider
@@ -78,6 +78,10 @@ abstract class BaseTest {
 
     @get:Rule
     open val testRules: RuleChain by lazy {
+        @SuppressLint("UnsafeOptInUsageError")
+        val grantPermissionRule = SdkAwareGrantPermissionRule.grant(
+            WRITE_EXTERNAL_STORAGE
+        )
         RuleChain
             .outerRule(hiltAndroidRule)
             .around(DisableAnimationsRule())
@@ -86,7 +90,7 @@ abstract class BaseTest {
             .around(webServerRule)
             .around(localStoreRule)
             .around(composeTestRule)
-            .around(GrantPermissionRule.grant(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE))
+            .around(grantPermissionRule)
     }
 
     abstract val composeTestRule: ComposeContentTestRule

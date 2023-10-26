@@ -74,4 +74,5 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.test.androidx.rules)
     implementation(libs.androidx.recyclerview)
+    implementation(kotlin("reflect"))
 }
