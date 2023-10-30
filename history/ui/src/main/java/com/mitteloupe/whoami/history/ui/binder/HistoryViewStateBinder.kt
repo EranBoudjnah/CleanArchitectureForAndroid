@@ -13,9 +13,10 @@ import com.mitteloupe.whoami.history.ui.view.HistoryViewsProvider
 private const val HISTORY_RECORDS_BUNDLE_KEY = "historyRecords"
 
 class HistoryViewStateBinder(
+    userEventListener: HistoryAdapter.UserEventListener,
     private val historyRecordToUiMapper: HistoryRecordToUiMapper
 ) : ViewStateBinder<HistoryViewState, HistoryViewsProvider> {
-    private val historyAdapter = HistoryAdapter()
+    private val historyAdapter = HistoryAdapter(userEventListener)
     private val historyItems: MutableList<HistoryRecordUiModel> = mutableListOf()
 
     fun Bundle.saveState() {

@@ -34,7 +34,7 @@ class IpAddressHistoryDataSourceImpl(
         MutableSharedFlow<Map<String, SavedIpAddressHistoryRecordLocalModel>>(replay = 1)
 
     private val historyRecordsFlow = mutableHistoryRecordsFlow.onStart {
-        mutableHistoryRecordsFlow.emitRecords(historyRecords)
+        mutableHistoryRecordsFlow.emitRecords()
     }
 
     override fun save(record: NewIpAddressHistoryRecordDataModel) {
@@ -43,11 +43,12 @@ class IpAddressHistoryDataSourceImpl(
         sharedPreferences.edit {
             putString(KEY_HISTORY_RECORDS, jsonEncoder.encode(historyRecords))
         }
-        mutableHistoryRecordsFlow.emitRecords(historyRecords)
+        mutableHistoryRecordsFlow.emitRecords()
     }
 
     override fun delete(deletionIdentifier: HistoryRecordDeletionIdentifierDataModel) {
         historyRecords.remove(deletionIdentifier.ipAddress)
+        mutableHistoryRecordsFlow.emitRecords()
     }
 
     override fun allRecords() =
@@ -55,11 +56,9 @@ class IpAddressHistoryDataSourceImpl(
             historyRecords.values.map(savedIpAddressRecordToDataMapper::toData)
         }
 
-    private fun FlowCollector<Map<String, SavedIpAddressHistoryRecordLocalModel>>.emitRecords(
-        records: Map<String, SavedIpAddressHistoryRecordLocalModel>
-    ) {
+    private fun FlowCollector<Map<String, SavedIpAddressHistoryRecordLocalModel>>.emitRecords() {
         runBlocking {
-            emit(records)
+            emit(historyRecords)
         }
     }
 }

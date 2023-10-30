@@ -6,12 +6,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mitteloupe.whoami.history.ui.R
 import com.mitteloupe.whoami.history.ui.model.HistoryRecordUiModel
 
-class HistoryAdapter : RecyclerView.Adapter<HistoryItemViewHolder>() {
+class HistoryAdapter(
+    private val userEventListener: UserEventListener
+) : RecyclerView.Adapter<HistoryItemViewHolder>() {
     private val historyRecords: MutableList<HistoryRecordUiModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_history, parent, false)
-        return HistoryItemViewHolder(view)
+        return HistoryItemViewHolder(
+            view,
+            object : HistoryItemViewHolder.UserEventListener {
+                override fun onDeleteClick(record: HistoryRecordUiModel) {
+                    userEventListener.onDeleteClick(record)
+                }
+            }
+        )
     }
 
     override fun onBindViewHolder(holder: HistoryItemViewHolder, position: Int) {
@@ -28,5 +37,9 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryItemViewHolder>() {
             addAll(historyRecords)
             notifyItemRangeInserted(0, itemCount)
         }
+    }
+
+    interface UserEventListener {
+        fun onDeleteClick(record: HistoryRecordUiModel)
     }
 }

@@ -13,6 +13,8 @@ import com.mitteloupe.whoami.screen.HistoryScreen
 import com.mitteloupe.whoami.test.annotation.LocalStore
 import com.mitteloupe.whoami.test.test.BaseTest
 import com.mitteloupe.whoami.test.test.BaseTest.AppLauncher.FromComposable
+import com.mitteloupe.whoami.test.test.doesNot
+import com.mitteloupe.whoami.test.test.retry
 import com.mitteloupe.whoami.ui.main.AppNavHost
 import com.mitteloupe.whoami.ui.main.MainActivity
 import com.mitteloupe.whoami.ui.main.di.AppNavHostDependencies
@@ -66,10 +68,43 @@ class HistoryTest : BaseTest() {
     )
     fun givenSavedHistoryWhenOnHistoryScreenThenSeesHistory() {
         with(historyScreen) {
-            seeIpRecord(ipAddress = "2.2.2.2", position = 1)
-            seeLocation(city = "Stockholm", postCode = "12345", position = 1)
-            seeIpRecord(ipAddress = "1.1.1.1", position = 2)
-            seeLocation(city = "Aberdeen", postCode = "AA11 2BB", position = 2)
+            seeRecord(position = 1, ipAddress = "2.2.2.2", city = "Stockholm", postCode = "12345")
+            seeRecord(position = 2, ipAddress = "1.1.1.1", city = "Aberdeen", postCode = "AA11 2BB")
+        }
+    }
+
+    @Test
+    @LocalStore(
+        localStoreDataIds = [KEY_VALUE_SAVED_HISTORY]
+    )
+    fun givenSavedHistoryWhenTappingDeleteThenRecordDeleted() {
+        with(historyScreen) {
+            retry {
+                seeRecord(
+                    position = 1,
+                    ipAddress = "2.2.2.2",
+                    city = "Stockholm",
+                    postCode = "12345"
+                )
+            }
+            seeRecord(position = 2, ipAddress = "1.1.1.1", city = "Aberdeen", postCode = "AA11 2BB")
+            tapDeleteForRecord(position = 1)
+            retry {
+                seeRecord(
+                    position = 1,
+                    ipAddress = "1.1.1.1",
+                    city = "Aberdeen",
+                    postCode = "AA11 2BB"
+                )
+            }
+            doesNot("See record for 2.2.2.2") {
+                seeRecord(
+                    position = 2,
+                    ipAddress = "2.2.2.2",
+                    city = "Stockholm",
+                    postCode = "12345"
+                )
+            }
         }
     }
 
@@ -81,5 +116,15 @@ class HistoryTest : BaseTest() {
         with(historyScreen) {
             seeNoRecordsLabel()
         }
+    }
+
+    private fun HistoryScreen.seeRecord(
+        position: Int,
+        ipAddress: String,
+        city: String,
+        postCode: String
+    ) {
+        seeIpRecord(ipAddress = ipAddress, position = position)
+        seeLocation(city = city, postCode = postCode, position = position)
     }
 }

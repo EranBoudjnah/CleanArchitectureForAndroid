@@ -27,15 +27,25 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "com.mitteloupe.whoami.di.HiltTestRunner"
+        javaCompileOptions.annotationProcessorOptions
+            .arguments["dagger.hilt.disableCrossCompilationRootValidation"] = "true"
+
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildFeatures {
+            resValues = true
+        }
     }
+
+    testBuildType = "espresso"
 
     buildTypes {
         debug {
             isMinifyEnabled = false
         }
+
         release {
             isMinifyEnabled = true
             proguardFiles(
@@ -43,7 +53,13 @@ android {
                 "proguard-rules.pro"
             )
         }
+
+        create("espresso") {
+            initWith(buildTypes["debug"])
+            matchingFallbacks += listOf("debug")
+        }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -123,9 +139,10 @@ dependencies {
     testImplementation(libs.test.hamcrest)
     testImplementation(libs.test.konsist)
 
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.espresso.intents)
+    androidTestImplementation(libs.test.androidx.junit)
+    androidTestImplementation(libs.test.androidx.espresso.core)
+    androidTestImplementation(libs.test.androidx.espresso.contrib)
+    androidTestImplementation(libs.test.androidx.espresso.intents)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.test.compose.ui.junit4)
     androidTestImplementation(libs.test.android.hilt)

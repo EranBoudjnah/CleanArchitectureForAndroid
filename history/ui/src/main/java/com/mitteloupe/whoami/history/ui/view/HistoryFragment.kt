@@ -17,7 +17,10 @@ import com.mitteloupe.whoami.architecture.ui.view.ViewsProvider
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
 import com.mitteloupe.whoami.history.presentation.viewmodel.HistoryViewModel
 import com.mitteloupe.whoami.history.ui.R
+import com.mitteloupe.whoami.history.ui.adapter.HistoryAdapter
 import com.mitteloupe.whoami.history.ui.binder.HistoryViewStateBinder
+import com.mitteloupe.whoami.history.ui.mapper.HistoryRecordDeletionToPresentationMapper
+import com.mitteloupe.whoami.history.ui.model.HistoryRecordUiModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Named
@@ -25,7 +28,8 @@ import javax.inject.Named
 @AndroidEntryPoint
 class HistoryFragment :
     BaseFragment<HistoryViewState, PresentationNotification>(R.layout.fragment_history),
-    HistoryViewsProvider {
+    HistoryViewsProvider,
+    HistoryAdapter.UserEventListener {
     lateinit var navHostController: NavHostController
 
     @Inject
@@ -34,6 +38,9 @@ class HistoryFragment :
     @Inject
     @Named(NAVIGATION_MAPPER_NAME)
     override lateinit var destinationToUiMapper: DestinationToUiMapper
+
+    @Inject
+    lateinit var recordDeletionToPresentationMapper: HistoryRecordDeletionToPresentationMapper
 
     @Inject
     lateinit var analytics: Analytics
@@ -101,5 +108,10 @@ class HistoryFragment :
         const val NAVIGATION_MAPPER_NAME = "History"
 
         fun newInstance() = HistoryFragment()
+    }
+
+    override fun onDeleteClick(record: HistoryRecordUiModel) {
+        val presentationRequest = recordDeletionToPresentationMapper.toDeletionPresentation(record)
+        viewModel.onDeleteAction(presentationRequest)
     }
 }
