@@ -79,6 +79,6 @@ dependencies {
     testImplementation(libs.test.hamcrest)
     testImplementation(libs.test.mockito.kotlin)
 
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.test.androidx.junit)
+    androidTestImplementation(libs.test.androidx.espresso.core)
 }
