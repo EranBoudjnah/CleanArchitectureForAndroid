@@ -17,20 +17,15 @@ import dagger.hilt.android.qualifiers.ActivityContext
 @InstallIn(ActivityComponent::class)
 object HomeUiModule {
     @Provides
-    fun providesHomeDestinationToUiMapper(
-        analytics: Analytics,
-        @ActivityContext context: Context
-    ) = HomeDestinationToUiMapper(analytics, context)
+    fun providesHomeDestinationToUiMapper(analytics: Analytics, @ActivityContext context: Context) =
+        HomeDestinationToUiMapper(analytics, context)
 
     @Provides
-    fun providesHomeNotificationToUiMapper(
-        @ActivityContext context: Context
-    ) = HomeNotificationToUiMapper(context)
+    fun providesHomeNotificationToUiMapper(@ActivityContext context: Context) =
+        HomeNotificationToUiMapper(context)
 
     @Provides
-    fun providesErrorToUiMapper(
-        resources: Resources
-    ) = ErrorToUiMapper(resources)
+    fun providesErrorToUiMapper(resources: Resources) = ErrorToUiMapper(resources)
 
     @Provides
     fun providesConnectionDetailsToUiMapper() = ConnectionDetailsToUiMapper()

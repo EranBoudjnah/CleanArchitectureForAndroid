@@ -24,9 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.mitteloupe.whoami.home.ui.R
 
 @Composable
-fun DisconnectedContent(
-    modifier: Modifier = Modifier
-) {
+fun DisconnectedContent(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .padding(12.dp, 8.dp, 12.dp, 0.dp)

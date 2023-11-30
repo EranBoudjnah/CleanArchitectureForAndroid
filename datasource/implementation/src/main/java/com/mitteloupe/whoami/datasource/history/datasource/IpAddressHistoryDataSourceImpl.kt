@@ -51,10 +51,9 @@ class IpAddressHistoryDataSourceImpl(
         mutableHistoryRecordsFlow.emitRecords()
     }
 
-    override fun allRecords() =
-        historyRecordsFlow.map { historyRecords ->
-            historyRecords.values.map(savedIpAddressRecordToDataMapper::toData)
-        }
+    override fun allRecords() = historyRecordsFlow.map { historyRecords ->
+        historyRecords.values.map(savedIpAddressRecordToDataMapper::toData)
+    }
 
     private fun FlowCollector<Map<String, SavedIpAddressHistoryRecordLocalModel>>.emitRecords() {
         runBlocking {

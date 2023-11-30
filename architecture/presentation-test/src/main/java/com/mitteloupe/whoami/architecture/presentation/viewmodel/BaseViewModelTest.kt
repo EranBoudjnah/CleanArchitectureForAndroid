@@ -109,9 +109,7 @@ abstract class BaseViewModelTest<
         )
     }
 
-    protected fun givenSuccessfulNoArgumentNoResultUseCaseExecution(
-        useCase: UseCase<Unit, Unit>
-    ) {
+    protected fun givenSuccessfulNoArgumentNoResultUseCaseExecution(useCase: UseCase<Unit, Unit>) {
         willAnswer { invocationOnMock ->
             val onResult: (Unit) -> Unit = invocationOnMock.getArgument(2)
             onResult(Unit)

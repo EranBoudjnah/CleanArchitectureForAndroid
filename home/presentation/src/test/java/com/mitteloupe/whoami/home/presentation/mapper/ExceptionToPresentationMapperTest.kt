@@ -34,11 +34,10 @@ class ExceptionToPresentationMapperTest(
             presentationError: ErrorPresentationModel
         ) = arrayOf(domainException, presentationError)
 
-        private fun noIpAddressInformationTestCase(ipAddress: String) =
-            testCase(
-                NoIpAddressInformationDomainException(ipAddress),
-                ErrorPresentationModel.NoIpAddressInformation(ipAddress)
-            )
+        private fun noIpAddressInformationTestCase(ipAddress: String) = testCase(
+            NoIpAddressInformationDomainException(ipAddress),
+            ErrorPresentationModel.NoIpAddressInformation(ipAddress)
+        )
     }
 
     private lateinit var classUnderTest: ExceptionToPresentationMapper

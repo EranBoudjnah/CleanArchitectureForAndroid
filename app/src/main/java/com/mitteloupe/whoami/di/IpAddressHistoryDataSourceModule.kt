@@ -23,9 +23,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object IpAddressHistoryDataSourceModule {
     @Provides
-    fun providesNewIpAddressRecordToSavedMapper(
-        nowProvider: NowProvider
-    ) = NewIpAddressRecordToLocalMapper(nowProvider)
+    fun providesNewIpAddressRecordToSavedMapper(nowProvider: NowProvider) =
+        NewIpAddressRecordToLocalMapper(nowProvider)
 
     @Provides
     fun providesSavedIpAddressRecordToDataMapper() = SavedIpAddressRecordToDataMapper()

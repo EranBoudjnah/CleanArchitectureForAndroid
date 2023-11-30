@@ -62,9 +62,7 @@ class HomeScreen {
         onNode(openSourceNoticesButton).performTouchInput { click() }
     }
 
-    private fun ComposeContentTestRule.assertIsDisplayed(
-        matcher: SemanticsMatcher
-    ) {
+    private fun ComposeContentTestRule.assertIsDisplayed(matcher: SemanticsMatcher) {
         waitUntilExactlyOneExists(matcher, timeoutMillis = 5_000L)
     }
 }

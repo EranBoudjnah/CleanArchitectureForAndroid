@@ -17,10 +17,7 @@ import com.mitteloupe.whoami.home.ui.view.spring.enterSpring
 import com.mitteloupe.whoami.home.ui.view.widget.preview.ErrorPreviewParameterProvider
 
 @Composable
-fun ErrorContentContainer(
-    visible: Boolean,
-    errorText: String
-) {
+fun ErrorContentContainer(visible: Boolean, errorText: String) {
     AnimatedVisibility(
         visible = visible,
         enter = expandVertically(

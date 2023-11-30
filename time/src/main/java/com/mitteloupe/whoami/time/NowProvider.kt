@@ -4,7 +4,6 @@ interface NowProvider {
     fun nowMilliseconds(): Long
 
     object DefaultNowProvider : NowProvider {
-        override fun nowMilliseconds(): Long =
-            System.currentTimeMillis()
+        override fun nowMilliseconds(): Long = System.currentTimeMillis()
     }
 }

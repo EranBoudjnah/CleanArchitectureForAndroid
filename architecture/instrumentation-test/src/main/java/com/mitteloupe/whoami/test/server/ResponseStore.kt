@@ -5,11 +5,10 @@ private typealias MockRequestResponseMap = Map<String, MockRequestResponse>
 
 abstract class ResponseStore {
     val responses by lazy {
-        _responses.toValidatedMap()
+        internalResponses.toValidatedMap()
     }
 
-    @Suppress("PropertyName")
-    protected abstract val _responses: List<Pair<String, MockRequestResponse>>
+    protected abstract val internalResponses: List<Pair<String, MockRequestResponse>>
 
     private fun MockRequestResponsePairList.toValidatedMap(): MockRequestResponseMap {
         val responses = toMap()

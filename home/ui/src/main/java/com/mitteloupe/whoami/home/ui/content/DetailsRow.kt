@@ -22,11 +22,7 @@ import com.mitteloupe.whoami.home.ui.R
 import com.mitteloupe.whoami.home.ui.model.IconLabelUiModel
 
 @Composable
-fun DetailsRow(
-    label: String,
-    detailsItem: IconLabelUiModel,
-    modifier: Modifier = Modifier
-) {
+fun DetailsRow(label: String, detailsItem: IconLabelUiModel, modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier

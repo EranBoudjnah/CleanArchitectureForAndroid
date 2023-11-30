@@ -28,9 +28,7 @@ import com.mitteloupe.whoami.home.ui.view.widget.HomeFooter
 import com.mitteloupe.whoami.home.ui.view.widget.LoadingAnimationContainer
 
 @Composable
-fun HomeDependencies.Home(
-    color: Color = MaterialTheme.colorScheme.background
-) {
+fun HomeDependencies.Home(color: Color = MaterialTheme.colorScheme.background) {
     fun relaySavingToViewModel(viewState: State<HomeViewState>) {
         val connectionDetails = viewState.value
         require(connectionDetails is HomeViewState.Connected) {

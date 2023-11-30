@@ -15,10 +15,7 @@ import com.mitteloupe.whoami.home.ui.model.ConnectionDetailsUiModel
 import com.mitteloupe.whoami.home.ui.model.IconLabelUiModel
 
 @Composable
-fun ConnectedContent(
-    connectionDetails: ConnectionDetailsUiModel,
-    modifier: Modifier = Modifier
-) {
+fun ConnectedContent(connectionDetails: ConnectionDetailsUiModel, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         IpAddressCard(connectionDetails.ipAddress)
 

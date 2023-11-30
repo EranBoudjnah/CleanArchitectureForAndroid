@@ -22,9 +22,7 @@ class HistoryRecordDeletionToDataMapperTest(
             testCase(ipAddress = "4.3.2.1")
         )
 
-        private fun testCase(
-            ipAddress: String
-        ) = arrayOf(
+        private fun testCase(ipAddress: String) = arrayOf(
             HistoryRecordDeletionDomainModel(ipAddress = ipAddress),
             HistoryRecordDeletionIdentifierDataModel(ipAddress = ipAddress)
         )

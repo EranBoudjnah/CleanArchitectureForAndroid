@@ -148,19 +148,18 @@ class IpAddressHistoryDataSourceImplTest {
             .willReturn(expectedRecord)
     }
 
-    private fun localSavedIpAddressHistoryRecord(
-        ipAddress: String
-    ) = SavedIpAddressHistoryRecordLocalModel(
-        ipAddress = ipAddress,
-        city = null,
-        region = null,
-        countryCode = null,
-        geolocation = null,
-        internetServiceProviderName = null,
-        postCode = null,
-        timeZone = null,
-        savedAtTimestampMilliseconds = 123L
-    )
+    private fun localSavedIpAddressHistoryRecord(ipAddress: String) =
+        SavedIpAddressHistoryRecordLocalModel(
+            ipAddress = ipAddress,
+            city = null,
+            region = null,
+            countryCode = null,
+            geolocation = null,
+            internetServiceProviderName = null,
+            postCode = null,
+            timeZone = null,
+            savedAtTimestampMilliseconds = 123L
+        )
 
     private fun dataSavedIpAddressHistoryRecord(ipAddress: String) =
         SavedIpAddressHistoryRecordDataModel(

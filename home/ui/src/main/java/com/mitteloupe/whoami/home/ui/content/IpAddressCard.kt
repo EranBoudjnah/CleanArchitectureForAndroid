@@ -18,10 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.mitteloupe.whoami.home.ui.R
 
 @Composable
-fun IpAddressCard(
-    ipAddress: String,
-    modifier: Modifier = Modifier
-) {
+fun IpAddressCard(ipAddress: String, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .padding(16.dp, 8.dp, 16.dp, 0.dp)

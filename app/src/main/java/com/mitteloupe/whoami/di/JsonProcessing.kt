@@ -14,9 +14,7 @@ object JsonProcessing {
     fun providesKotlinJsonAdapterFactory() = KotlinJsonAdapterFactory()
 
     @Provides
-    fun providesMoshi(
-        kotlinJsonAdapterFactory: KotlinJsonAdapterFactory
-    ): Moshi = Moshi.Builder()
+    fun providesMoshi(kotlinJsonAdapterFactory: KotlinJsonAdapterFactory): Moshi = Moshi.Builder()
         .addLast(kotlinJsonAdapterFactory)
         .build()
 }

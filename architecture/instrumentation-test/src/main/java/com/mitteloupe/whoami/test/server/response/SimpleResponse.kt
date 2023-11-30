@@ -15,10 +15,9 @@ data class SimpleResponse(
         body = responseBody()
     )
 
-    private fun responseBody() =
-        if (bodyFileName.isEmpty()) {
-            ""
-        } else {
-            assetReader.getAssetAsString(bodyFileName)
-        }
+    private fun responseBody() = if (bodyFileName.isEmpty()) {
+        ""
+    } else {
+        assetReader.getAssetAsString(bodyFileName)
+    }
 }

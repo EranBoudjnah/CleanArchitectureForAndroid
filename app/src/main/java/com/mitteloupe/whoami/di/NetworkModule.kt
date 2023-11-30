@@ -28,11 +28,10 @@ object NetworkModule {
     }
 
     @Provides
-    fun providesOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(httpLoggingInterceptor)
-        .build()
+    fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+        OkHttpClient.Builder()
+            .addInterceptor(httpLoggingInterceptor)
+            .build()
 
     @Provides
     @Named(IP_ADDRESS)

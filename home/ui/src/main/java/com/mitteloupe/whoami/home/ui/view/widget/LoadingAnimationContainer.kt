@@ -14,10 +14,7 @@ import androidx.compose.ui.Modifier
 import com.mitteloupe.whoami.widget.LoadingAnimation
 
 @Composable
-fun ColumnScope.LoadingAnimationContainer(
-    visible: Boolean,
-    modifier: Modifier = Modifier
-) {
+fun ColumnScope.LoadingAnimationContainer(visible: Boolean, modifier: Modifier = Modifier) {
     AnimatedVisibility(
         visible = visible,
         enter = expandVertically() + fadeIn(),
