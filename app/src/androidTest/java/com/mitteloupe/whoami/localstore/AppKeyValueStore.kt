@@ -8,7 +8,7 @@ const val KEY_VALUE_SAVED_HISTORY = "Saved history"
 const val KEY_VALUE_NO_HISTORY = "No history"
 
 class AppKeyValueStore : KeyValueStore() {
-    override val _keyValues = listOf(
+    override val internalKeyValues = listOf(
         KEY_VALUE_SAVED_HISTORY to
             (KEY_HISTORY_RECORDS to assetAsString("localstore/history_records.json")),
         KEY_VALUE_NO_HISTORY to

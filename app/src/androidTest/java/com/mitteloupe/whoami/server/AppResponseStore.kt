@@ -13,7 +13,7 @@ const val REQUEST_RESPONSE_GET_IP = "Get IP"
 const val REQUEST_RESPONSE_GET_IP_DETAILS = "Get IP Details"
 
 class AppResponseStore : ResponseStore() {
-    override val _responses = listOf(
+    override val internalResponses = listOf(
         REQUEST_RESPONSE_GET_IP to MockRequestResponse(
             request = MockRequest(IPIFY_ENDPOINT),
             response = SimpleResponse(200, "api/get_ip.json")

@@ -21,8 +21,7 @@ class EspressoOkHttp3IdlingResource private constructor(
 
     override fun getName(): String = name
 
-    override fun isIdleNow(): Boolean =
-        dispatcher.runningCallsCount() == 0
+    override fun isIdleNow(): Boolean = dispatcher.runningCallsCount() == 0
 
     override fun registerIdleTransitionCallback(callback: ResourceCallback) {
         this.callback = callback

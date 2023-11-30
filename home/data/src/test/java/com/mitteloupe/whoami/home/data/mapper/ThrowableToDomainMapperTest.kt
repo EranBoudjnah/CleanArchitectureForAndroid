@@ -40,12 +40,6 @@ class ThrowableToDomainMapperTest(
                     typeCompatibleWith(UnknownDomainException::class.java)
                 )
             }
-            /***
-             *             is NoIpAddressDataException -> ReadFailedDomainException(exception)
-             *             is RequestTimeoutDataException -> ReadFailedDomainException(exception)
-             *             else -> UnknownDomainException(exception)
-             *
-             */
         )
 
         private fun testCase(givenThrowable: Throwable, assertion: (DomainException) -> Unit) =

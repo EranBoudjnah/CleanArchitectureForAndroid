@@ -7,10 +7,9 @@ import com.mitteloupe.whoami.datasource.remote.exception.RequestTimeoutDataExcep
 import com.mitteloupe.whoami.home.domain.exception.ReadFailedDomainException
 
 class ThrowableToDomainMapper {
-    fun toDomain(exception: Throwable): DomainException =
-        when (exception) {
-            is NoIpAddressDataException -> ReadFailedDomainException(exception)
-            is RequestTimeoutDataException -> ReadFailedDomainException(exception)
-            else -> UnknownDomainException(exception)
-        }
+    fun toDomain(exception: Throwable): DomainException = when (exception) {
+        is NoIpAddressDataException -> ReadFailedDomainException(exception)
+        is RequestTimeoutDataException -> ReadFailedDomainException(exception)
+        else -> UnknownDomainException(exception)
+    }
 }

@@ -11,6 +11,5 @@ class GetHistoryUseCase(
 ) : ContinuousExecutingUseCase<Unit, Collection<SavedIpAddressRecordDomainModel>>(
     coroutineContextProvider
 ) {
-    override fun executeInBackground(request: Unit) =
-        getHistoryRepository.history()
+    override fun executeInBackground(request: Unit) = getHistoryRepository.history()
 }

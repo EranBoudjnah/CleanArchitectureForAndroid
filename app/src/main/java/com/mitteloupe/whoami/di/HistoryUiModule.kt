@@ -23,16 +23,14 @@ import javax.inject.Provider
 @InstallIn(FragmentComponent::class)
 object HistoryUiModule {
     @Provides
-    fun providesNavHostController(
-        fragment: Fragment
-    ): NavController = (fragment as HistoryFragment).navHostController
+    fun providesNavHostController(fragment: Fragment): NavController =
+        (fragment as HistoryFragment).navHostController
 
     @Provides
     @Named(HistoryFragment.NAVIGATION_MAPPER_NAME)
     fun providesHistoryDestinationToUiMapper(
         navControllerProvider: Provider<NavController>
-    ): DestinationToUiMapper =
-        HistoryDestinationToUiMapper { navControllerProvider.get() }
+    ): DestinationToUiMapper = HistoryDestinationToUiMapper { navControllerProvider.get() }
 
     @Provides
     fun providesHistoryRecordDeletionToPresentationMapper() =

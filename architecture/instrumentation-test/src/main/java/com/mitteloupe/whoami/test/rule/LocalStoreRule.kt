@@ -12,15 +12,13 @@ class LocalStoreRule(
     private val lazySharedPreferences: Lazy<SharedPreferences>,
     private val lazyKeyValueStore: Lazy<KeyValueStore>
 ) : TestRule {
-    override fun apply(
-        base: Statement,
-        description: Description
-    ): Statement = LocalStoreInitializationStatement(
-        lazySharedPreferences,
-        lazyKeyValueStore,
-        base,
-        description
-    )
+    override fun apply(base: Statement, description: Description): Statement =
+        LocalStoreInitializationStatement(
+            lazySharedPreferences,
+            lazyKeyValueStore,
+            base,
+            description
+        )
 
     private class LocalStoreInitializationStatement(
         private val lazySharedPreferences: Lazy<SharedPreferences>,
@@ -53,9 +51,8 @@ class LocalStoreRule(
             }
         }
 
-        private fun Description.localStoreDataIds() =
-            annotations.filterIsInstance<LocalStore>()
-                .flatMap { serverResponse -> serverResponse.localStoreDataIds.toList() }
+        private fun Description.localStoreDataIds() = annotations.filterIsInstance<LocalStore>()
+            .flatMap { serverResponse -> serverResponse.localStoreDataIds.toList() }
 
         private fun SharedPreferences.Editor.persistValue(key: String, value: Any) = when (value) {
             is String -> putString(key, value)

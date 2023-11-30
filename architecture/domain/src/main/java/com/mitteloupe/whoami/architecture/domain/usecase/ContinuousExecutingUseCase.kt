@@ -7,10 +7,7 @@ import kotlinx.coroutines.withContext
 abstract class ContinuousExecutingUseCase<REQUEST, RESULT>(
     private val coroutineContextProvider: CoroutineContextProvider
 ) : UseCase<REQUEST, RESULT> {
-    final override suspend fun execute(
-        input: REQUEST,
-        onResult: (RESULT) -> Unit
-    ) {
+    final override suspend fun execute(input: REQUEST, onResult: (RESULT) -> Unit) {
         withContext(coroutineContextProvider.io) {
             executeInBackground(input).collect { result ->
                 withContext(coroutineContextProvider.main) {
@@ -20,7 +17,5 @@ abstract class ContinuousExecutingUseCase<REQUEST, RESULT>(
         }
     }
 
-    abstract fun executeInBackground(
-        request: REQUEST
-    ): Flow<RESULT>
+    abstract fun executeInBackground(request: REQUEST): Flow<RESULT>
 }

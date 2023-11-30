@@ -21,12 +21,10 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object HomeDataModule {
     @Provides
-    fun providesConnectionDetailsToDomainResolver() =
-        ConnectionDetailsToDomainResolver()
+    fun providesConnectionDetailsToDomainResolver() = ConnectionDetailsToDomainResolver()
 
     @Provides
-    fun providesThrowableToDomainMapper() =
-        ThrowableToDomainMapper()
+    fun providesThrowableToDomainMapper() = ThrowableToDomainMapper()
 
     @Provides
     @Reusable

@@ -29,10 +29,7 @@ class DeleteHistoryRecordRequestToDomainMapperTest(
             )
         )
 
-        private fun testCase(
-            testTitle: String,
-            ipAddress: String
-        ) = arrayOf(
+        private fun testCase(testTitle: String, ipAddress: String) = arrayOf(
             testTitle,
             HistoryRecordDeletionPresentationModel(ipAddress = ipAddress),
             HistoryRecordDeletionDomainModel(ipAddress = ipAddress)

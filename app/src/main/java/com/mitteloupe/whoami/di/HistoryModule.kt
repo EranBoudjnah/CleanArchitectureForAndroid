@@ -86,7 +86,5 @@ object HistoryModule {
     )
 
     @Provides
-    fun providesHistoryRecordToUiMapper(
-        resources: Resources
-    ) = HistoryRecordToUiMapper(resources)
+    fun providesHistoryRecordToUiMapper(resources: Resources) = HistoryRecordToUiMapper(resources)
 }

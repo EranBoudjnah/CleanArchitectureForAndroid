@@ -53,9 +53,7 @@ class SdkAwareGrantPermissionRule(
     }
 
     companion object {
-        fun grant(
-            vararg permissions: String
-        ): SdkAwareGrantPermissionRule {
+        fun grant(vararg permissions: String): SdkAwareGrantPermissionRule {
             val granter = ServiceLoaderWrapper.loadSingleService(PermissionGranter::class.java) {
                 PermissionRequester()
             }

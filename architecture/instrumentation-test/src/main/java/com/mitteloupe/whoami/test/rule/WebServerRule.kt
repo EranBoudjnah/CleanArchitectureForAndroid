@@ -12,16 +12,14 @@ class WebServerRule(
     private val lazyResponseStore: Lazy<ResponseStore>,
     private val mockWebServerUrlProvider: () -> String = { "" }
 ) : TestRule {
-    override fun apply(
-        base: Statement,
-        description: Description
-    ): Statement = WebServerInitializationStatement(
-        lazyMockDispatchers,
-        lazyResponseStore,
-        mockWebServerUrlProvider,
-        base,
-        description
-    )
+    override fun apply(base: Statement, description: Description): Statement =
+        WebServerInitializationStatement(
+            lazyMockDispatchers,
+            lazyResponseStore,
+            mockWebServerUrlProvider,
+            base,
+            description
+        )
 
     private class WebServerInitializationStatement(
         private val lazyMockDispatchers: Lazy<Collection<ResponseDispatcher>>,

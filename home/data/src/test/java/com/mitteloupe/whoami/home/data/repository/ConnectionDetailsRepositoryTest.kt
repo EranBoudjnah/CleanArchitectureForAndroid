@@ -90,45 +90,44 @@ class ConnectionDetailsRepositoryTest {
         }
 
     @Test
-    fun `Given connected when connectionDetails then returns connected state`() =
-        runBlocking {
-            // Given
-            val givenState = ConnectionStateDataModel.Connected
-            every { connectionDataSource.observeIsConnected() } returns flow {
-                emit(givenState)
-            }
-            val expectedState = ConnectionDetailsDomainModel.Connected(
-                ipAddress = "1.2.3.4",
-                city = "Paris",
-                region = "Paris",
-                countryCode = "France",
-                geolocation = "0.0,0.0",
-                internetServiceProviderName = "Le ISP",
-                postCode = "12345",
-                timeZone = "GMT +1"
-            )
-
-            val ipAddress = "1.1.1.1"
-
-            every {
-                connectionDetailsToDomainResolver.toDomain(eq(givenState), any(), any())
-            } answers { call ->
-                @Suppress("UNCHECKED_CAST")
-                testIpAddressReadCorrectly(ipAddress, call.invocation.args[1] as () -> String)
-                @Suppress("UNCHECKED_CAST")
-                testConnectionDetailsReadCorrectly(
-                    ipAddress,
-                    call.invocation.args[2] as (String) -> IpAddressInformationDataModel
-                )
-                expectedState
-            }
-
-            // When
-            val actualValue = classUnderTest.connectionDetails().toList()
-
-            // Then
-            assertEquals(listOf(expectedState), actualValue)
+    fun `Given connected when connectionDetails then returns connected state`() = runBlocking {
+        // Given
+        val givenState = ConnectionStateDataModel.Connected
+        every { connectionDataSource.observeIsConnected() } returns flow {
+            emit(givenState)
         }
+        val expectedState = ConnectionDetailsDomainModel.Connected(
+            ipAddress = "1.2.3.4",
+            city = "Paris",
+            region = "Paris",
+            countryCode = "France",
+            geolocation = "0.0,0.0",
+            internetServiceProviderName = "Le ISP",
+            postCode = "12345",
+            timeZone = "GMT +1"
+        )
+
+        val ipAddress = "1.1.1.1"
+
+        every {
+            connectionDetailsToDomainResolver.toDomain(eq(givenState), any(), any())
+        } answers { call ->
+            @Suppress("UNCHECKED_CAST")
+            testIpAddressReadCorrectly(ipAddress, call.invocation.args[1] as () -> String)
+            @Suppress("UNCHECKED_CAST")
+            testConnectionDetailsReadCorrectly(
+                ipAddress,
+                call.invocation.args[2] as (String) -> IpAddressInformationDataModel
+            )
+            expectedState
+        }
+
+        // When
+        val actualValue = classUnderTest.connectionDetails().toList()
+
+        // Then
+        assertEquals(listOf(expectedState), actualValue)
+    }
 
     @Test
     fun `Given throwable, disconnected when connectionDetails then returns error, disconnected`() =

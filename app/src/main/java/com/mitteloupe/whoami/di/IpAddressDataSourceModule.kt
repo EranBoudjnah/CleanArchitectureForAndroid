@@ -18,9 +18,8 @@ import retrofit2.create
 @InstallIn(SingletonComponent::class)
 object IpAddressDataSourceModule {
     @Provides
-    fun providesIpAddressService(
-        @Named(IP_ADDRESS) retrofit: Retrofit
-    ): IpAddressService = retrofit.create()
+    fun providesIpAddressService(@Named(IP_ADDRESS) retrofit: Retrofit): IpAddressService =
+        retrofit.create()
 
     @Provides
     fun providesIpAddressToDataMapper() = IpAddressToDataMapper()
