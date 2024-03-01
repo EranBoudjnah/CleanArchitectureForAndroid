@@ -10,14 +10,16 @@ private const val APP_NOT_RESPONDING_TEXT = " isn't responding"
 private const val APP_NOT_RESPONDING_TAG = "AppNotResponding"
 fun UiDevice.registerAppNotRespondingWatcher() {
     registerWatcher("AppNotResponding") {
-        val anrDialog = findObject(
-            UiSelector()
-                .packageName("android")
-                .textContains(APP_NOT_RESPONDING_TEXT)
-        )
-        findAndCloseAppNotRespondingDialog(anrDialog)
+        findAndCloseAppNotRespondingDialog(appNotRespondingDialog())
     }
+    findAndCloseAppNotRespondingDialog(appNotRespondingDialog())
 }
+
+private fun UiDevice.appNotRespondingDialog() = findObject(
+    UiSelector()
+        .packageName("android")
+        .textContains(APP_NOT_RESPONDING_TEXT)
+)
 
 private fun UiDevice.findAndCloseAppNotRespondingDialog(appNotRespondingDialog: UiObject) =
     appNotRespondingDialog.exists()
