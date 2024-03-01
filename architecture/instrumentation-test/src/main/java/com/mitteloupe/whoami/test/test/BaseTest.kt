@@ -17,6 +17,7 @@ import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource as EspressoIdlingResource
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
+import com.mitteloupe.whoami.test.idlingresource.findAndCloseAppNotRespondingDialog
 import com.mitteloupe.whoami.test.idlingresource.registerAppNotRespondingWatcher
 import com.mitteloupe.whoami.test.localstore.KeyValueStore
 import com.mitteloupe.whoami.test.rule.DisableAnimationsRule
@@ -103,6 +104,8 @@ abstract class BaseTest {
     @Before
     @CallSuper
     open fun setUp() {
+        val deviceUi = UiDevice.getInstance(getInstrumentation())
+        deviceUi.findAndCloseAppNotRespondingDialog()
         registerIdlingResources()
         startActivityLauncher.launch()
     }
