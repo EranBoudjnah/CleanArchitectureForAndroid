@@ -15,7 +15,9 @@ import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource as EspressoIdlingResource
-import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
+import androidx.test.uiautomator.UiDevice
+import com.mitteloupe.whoami.test.idlingresource.registerAppNotRespondingWatcher
 import com.mitteloupe.whoami.test.localstore.KeyValueStore
 import com.mitteloupe.whoami.test.rule.DisableAnimationsRule
 import com.mitteloupe.whoami.test.rule.HiltInjectorRule
@@ -31,13 +33,14 @@ import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
 
 abstract class BaseTest {
     internal val targetContext
-        get() = InstrumentationRegistry.getInstrumentation().targetContext
+        get() = getInstrumentation().targetContext
 
     private val hiltAndroidRule by lazy { HiltAndroidRule(this) }
 
@@ -142,6 +145,16 @@ abstract class BaseTest {
                 }
                 composeContentTestRule.setContent(composable)
             }
+        }
+    }
+
+    companion object {
+        @BeforeClass
+        @CallSuper
+        @JvmStatic
+        fun setUpGlobally() {
+            val deviceUi = UiDevice.getInstance(getInstrumentation())
+            deviceUi.registerAppNotRespondingWatcher()
         }
     }
 }
