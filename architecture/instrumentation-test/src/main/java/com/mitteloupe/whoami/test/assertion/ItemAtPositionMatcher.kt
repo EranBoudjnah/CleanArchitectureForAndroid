@@ -12,8 +12,7 @@ fun matchesItemAtPosition(matcher: Matcher<View?>?, position: Int) =
             throw noViewFoundException
         }
         val recyclerView = view as RecyclerView
-        val viewHolder = requireNotNull(recyclerView.findViewHolderForAdapterPosition(position)) {
-            "No view holder at position: $position"
-        }
+        val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            ?: throw AssertionError("No view holder at position: $position")
         assertThat(viewHolder.itemView, matcher)
     }
