@@ -4,6 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import junit.framework.AssertionFailedError
 import org.hamcrest.Matcher
 
 fun matchesItemAtPosition(matcher: Matcher<View?>?, position: Int) =
@@ -12,8 +13,7 @@ fun matchesItemAtPosition(matcher: Matcher<View?>?, position: Int) =
             throw noViewFoundException
         }
         val recyclerView = view as RecyclerView
-        val viewHolder = requireNotNull(recyclerView.findViewHolderForAdapterPosition(position)) {
-            "No view holder at position: $position"
-        }
+        val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+            ?: throw AssertionFailedError("No view holder at position: $position")
         assertThat(viewHolder.itemView, matcher)
     }

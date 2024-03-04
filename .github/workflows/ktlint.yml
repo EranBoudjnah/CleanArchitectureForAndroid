@@ -23,7 +23,7 @@ jobs:
       - name: Install ktlint
         if: env.changed_kotlin_files != ''
         run: |
-          curl -sSLO https://github.com/pinterest/ktlint/releases/download/1.1.1/ktlint && chmod a+x ktlint && sudo mv ktlint /usr/local/bin/
+          curl -sSLO https://github.com/pinterest/ktlint/releases/download/1.2.1/ktlint && chmod a+x ktlint && sudo mv ktlint /usr/local/bin/
 
       - name: run ktlint
         if: env.changed_kotlin_files != ''
