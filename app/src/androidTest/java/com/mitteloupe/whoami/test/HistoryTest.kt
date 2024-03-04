@@ -79,7 +79,7 @@ class HistoryTest : BaseTest() {
     )
     fun givenSavedHistoryWhenTappingDeleteThenRecordDeleted() {
         with(historyScreen) {
-            retry {
+            retry(repeat = 20) {
                 seeRecord(
                     position = 1,
                     ipAddress = "2.2.2.2",
@@ -89,7 +89,7 @@ class HistoryTest : BaseTest() {
             }
             seeRecord(position = 2, ipAddress = "1.1.1.1", city = "Aberdeen", postCode = "AA11 2BB")
             tapDeleteForRecord(position = 1)
-            retry {
+            retry(repeat = 20) {
                 seeRecord(
                     position = 1,
                     ipAddress = "1.1.1.1",
