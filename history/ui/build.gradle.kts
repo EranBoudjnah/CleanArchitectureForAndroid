@@ -1,10 +1,10 @@
 plugins {
-    id("com.android.library")
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    kotlin("kapt")
     alias(libs.plugins.hilt)
-    id("org.jlleitschuh.gradle.ktlint")
-    id("io.gitlab.arturbosch.detekt")
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.detekt)
     id("kotlin-parcelize")
 }
 
@@ -44,10 +44,6 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 ktlint {
     version.set("0.49.1")
     android.set(true)
@@ -73,7 +69,7 @@ dependencies {
     implementation(libs.androidx.recyclerview)
 
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     testImplementation(libs.test.junit)
     testImplementation(libs.test.hamcrest)
