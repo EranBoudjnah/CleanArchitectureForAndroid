@@ -2,13 +2,13 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    id("com.android.application")
+    alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    kotlin("kapt")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     id("com.google.android.gms.oss-licenses-plugin")
-    id("org.jlleitschuh.gradle.ktlint")
-    id("io.gitlab.arturbosch.detekt")
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -80,10 +80,6 @@ android {
     }
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 ktlint {
     version.set("0.50.0")
     android.set(true)
@@ -130,7 +126,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.recyclerview)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     implementation(projects.analytics)
 
@@ -149,7 +145,7 @@ dependencies {
     androidTestImplementation(libs.test.android.uiautomator)
     androidTestImplementation(projects.architectureInstrumentationTest)
     androidTestImplementation(libs.test.android.mockwebserver)
-    kaptAndroidTest(libs.hilt.android.compiler)
+    kspAndroidTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.test.mockito) {
         exclude("net.bytebuddy")
     }
