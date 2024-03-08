@@ -1,5 +1,5 @@
 [versions]
-ksp = "1.9.22-1.0.18"
+ksp = "1.9.23-1.0.19"
 android = "8.3.0"
 material = "1.11.0"
 androidx-appcompat = "1.6.1"
