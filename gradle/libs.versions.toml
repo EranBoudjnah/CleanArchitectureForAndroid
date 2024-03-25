@@ -31,7 +31,7 @@ okhttp3 = "4.12.0"
 jetbrains-kotlin = "1.9.23"
 plugin-oss-licenses = "0.10.6"
 ktlint = "12.1.0"
-detekt = "1.23.5"
+detekt = "1.23.6"
 
 [libraries]
 material = { module = "com.google.android.material:material", version.ref = "material" }
