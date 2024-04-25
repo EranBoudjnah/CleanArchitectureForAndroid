@@ -2,7 +2,7 @@ package com.mitteloupe.whoami.ui.navigation.mapper
 
 import android.content.Context
 import android.content.Intent
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
@@ -45,11 +45,11 @@ class HomeDestinationToUiMapperTest {
     fun `Given ViewHistory when toUi then returns history navigation`() {
         // Given
         val presentationDestination = ViewHistoryPresentationDestination
-        val navController = givenSetNavHostController()
+        val navController: NavController = mock()
         val uiDestination = classUnderTest.toUi(presentationDestination)
 
         // When
-        uiDestination.navigate()
+        uiDestination.navigate(navController)
 
         // Then
         verify(navController).navigate("history")
@@ -61,6 +61,7 @@ class HomeDestinationToUiMapperTest {
         val presentationDestination = ViewOpenSourceNoticesPresentationDestination
         val uiDestination = classUnderTest.toUi(presentationDestination)
         val expectedIntent: Intent = mock()
+        val navController: NavController = mock()
         given(
             ossLicensesMenuIntentProvider.invoke(
                 eq(activityContext),
@@ -69,7 +70,7 @@ class HomeDestinationToUiMapperTest {
         ).willReturn(expectedIntent)
 
         // When
-        uiDestination.navigate()
+        uiDestination.navigate(navController)
 
         // Then
         verify(activityContext).startActivity(expectedIntent)
@@ -100,11 +101,5 @@ class HomeDestinationToUiMapperTest {
                 "^Navigation to PresentationDestination\\\$MockitoMock\\\$\\w+ was not handled.$"
             )
         )
-    }
-
-    private fun givenSetNavHostController(): NavHostController {
-        val navController: NavHostController = mock()
-        classUnderTest.setNavController(navController)
-        return navController
     }
 }
