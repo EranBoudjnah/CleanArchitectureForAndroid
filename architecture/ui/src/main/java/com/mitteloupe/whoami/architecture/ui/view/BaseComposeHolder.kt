@@ -3,6 +3,7 @@ package com.mitteloupe.whoami.architecture.ui.view
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.navigation.NavController
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
@@ -18,14 +19,14 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
 ) {
 
     @Composable
-    fun ViewModelObserver() {
+    fun ViewModelObserver(navController: NavController) {
         val navigation = viewModel.destination.collectAsState(
             initial = null,
             coroutineContextProvider.main
         )
 
         navigation.value?.let { navigationValue ->
-            Navigate(navigationValue)
+            Navigate(navigationValue, navController)
         }
 
         val notification = viewModel.notification.collectAsState(
@@ -48,10 +49,10 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
     }
 
     @Composable
-    fun Navigate(navigation: PresentationDestination) {
+    fun Navigate(navigation: PresentationDestination, navController: NavController) {
         navigationMapper.toUi(navigation).let { uiDestination ->
             LaunchedEffect(navigation) {
-                uiDestination.navigate()
+                uiDestination.navigate(navController)
             }
         }
     }

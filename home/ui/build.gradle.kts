@@ -73,6 +73,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
+    implementation(libs.androidx.navigation.fragment.ktx)
+
     implementation(libs.opensource.licenses)
 
     debugImplementation("androidx.compose.ui:ui-tooling")

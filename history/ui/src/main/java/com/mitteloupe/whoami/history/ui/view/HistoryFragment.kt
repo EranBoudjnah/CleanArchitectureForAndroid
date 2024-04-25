@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.mitteloupe.whoami.analytics.Analytics
@@ -30,7 +30,7 @@ class HistoryFragment :
     BaseFragment<HistoryViewState, PresentationNotification>(R.layout.fragment_history),
     HistoryViewsProvider,
     HistoryAdapter.UserEventListener {
-    lateinit var navHostController: NavHostController
+    override lateinit var navController: NavController
 
     @Inject
     override lateinit var viewModel: HistoryViewModel
@@ -100,18 +100,14 @@ class HistoryFragment :
         }
     }
 
-    fun setNavController(navController: NavHostController) {
-        navHostController = navController
+    override fun onDeleteClick(record: HistoryRecordUiModel) {
+        val presentationRequest = recordDeletionToPresentationMapper.toDeletionPresentation(record)
+        viewModel.onDeleteAction(presentationRequest)
     }
 
     companion object {
         const val NAVIGATION_MAPPER_NAME = "History"
 
         fun newInstance() = HistoryFragment()
-    }
-
-    override fun onDeleteClick(record: HistoryRecordUiModel) {
-        val presentationRequest = recordDeletionToPresentationMapper.toDeletionPresentation(record)
-        viewModel.onDeleteAction(presentationRequest)
     }
 }

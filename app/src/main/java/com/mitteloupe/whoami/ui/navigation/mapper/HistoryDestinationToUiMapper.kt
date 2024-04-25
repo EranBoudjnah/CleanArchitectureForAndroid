@@ -1,27 +1,19 @@
 package com.mitteloupe.whoami.ui.navigation.mapper
 
-import androidx.navigation.NavController
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination.Back
 import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledDestinationException
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
 import com.mitteloupe.whoami.architecture.ui.navigation.model.UiDestination
 
-class HistoryDestinationToUiMapper(
-    private val navControllerProvider: () -> NavController
-) : DestinationToUiMapper {
+class HistoryDestinationToUiMapper : DestinationToUiMapper {
     override fun toUi(presentationDestination: PresentationDestination): UiDestination =
         when (presentationDestination) {
-            is Back -> BackUiDestination(navControllerProvider())
-
+            is Back -> backUiDestination()
             else -> throw UnhandledDestinationException(presentationDestination)
         }
 
-    private data class BackUiDestination(
-        private val navController: NavController
-    ) : UiDestination {
-        override fun navigate() {
-            navController.popBackStack()
-        }
+    private fun backUiDestination() = UiDestination { navController ->
+        navController.navigateUp()
     }
 }

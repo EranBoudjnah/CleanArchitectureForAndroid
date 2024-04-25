@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
@@ -26,6 +28,9 @@ abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : PresentationNotific
     protected abstract val viewStateBinder: ViewStateBinder<VIEW_STATE, ViewsProvider>
 
     protected abstract val destinationToUiMapper: DestinationToUiMapper
+
+    open val navController: NavController
+        get() = findNavController()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,6 +66,6 @@ abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : PresentationNotific
 
     private fun navigate(destination: PresentationDestination) {
         val uiDestination = destinationToUiMapper.toUi(destination)
-        uiDestination.navigate()
+        uiDestination.navigate(navController)
     }
 }
