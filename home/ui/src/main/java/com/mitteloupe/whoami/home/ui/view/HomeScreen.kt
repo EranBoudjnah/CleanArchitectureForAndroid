@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.mitteloupe.whoami.architecture.ui.view.ScreenEnterObserver
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.ui.R
@@ -28,7 +29,10 @@ import com.mitteloupe.whoami.home.ui.view.widget.HomeFooter
 import com.mitteloupe.whoami.home.ui.view.widget.LoadingAnimationContainer
 
 @Composable
-fun HomeDependencies.Home(color: Color = MaterialTheme.colorScheme.background) {
+fun HomeDependencies.Home(
+    navController: NavController,
+    color: Color = MaterialTheme.colorScheme.background
+) {
     fun relaySavingToViewModel(viewState: State<HomeViewState>) {
         val connectionDetails = viewState.value
         require(connectionDetails is HomeViewState.Connected) {
@@ -42,7 +46,7 @@ fun HomeDependencies.Home(color: Color = MaterialTheme.colorScheme.background) {
         homeViewModel.onEnter()
     }
 
-    ViewModelObserver()
+    ViewModelObserver(navController)
 
     Column(
         modifier = Modifier

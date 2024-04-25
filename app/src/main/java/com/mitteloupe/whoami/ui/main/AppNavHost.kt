@@ -31,8 +31,6 @@ fun AppNavHostDependencies.AppNavHost(
         startDestination = startDestination
     ) {
         composable("home") {
-            homeDestinationToUiMapper.setNavController(navController)
-
             HomeDependencies(
                 homeViewModel,
                 connectionDetailsToUiMapper,
@@ -41,7 +39,7 @@ fun AppNavHostDependencies.AppNavHost(
                 errorToUiMapper,
                 coroutineContextProvider,
                 analytics
-            ).Home()
+            ).Home(navController)
         }
         composable("history") {
             FragmentContainer(
@@ -52,7 +50,7 @@ fun AppNavHostDependencies.AppNavHost(
                 onFragmentViewCreated = { containerId ->
                     val fragment = supportFragmentManager
                         .findFragmentById(containerId) as? HistoryFragment
-                    fragment?.setNavController(navController)
+                    fragment?.navController = navController
                 }
             )
         }
