@@ -41,7 +41,7 @@ fun AppNavHostDependencies.AppNavHost(
                 analytics
             ).Home(navController)
         }
-        composable("history") { navBackStackEntry ->
+        composable("history") {
             FragmentContainer(
                 containerId = containerId,
                 modifier = Modifier.fillMaxSize(),
