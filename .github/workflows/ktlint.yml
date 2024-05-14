@@ -5,7 +5,7 @@ on:
 
 jobs:
   ktlint:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - name: Get changed files
         id: changes
