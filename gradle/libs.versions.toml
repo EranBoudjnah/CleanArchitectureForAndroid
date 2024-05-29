@@ -1,5 +1,5 @@
 [versions]
-ksp = "1.9.24-1.0.20"
+ksp = "2.0.0-1.0.21"
 android = "8.4.1"
 material = "1.12.0"
 androidx-appcompat = "1.6.1"
@@ -28,12 +28,17 @@ test-androidx-junit = "1.1.5"
 test-androidx-rules = "1.5.0"
 uiautomator = "2.3.0"
 okhttp3 = "4.12.0"
-jetbrains-kotlin = "1.9.24"
+kotlin = "2.0.0"
 plugin-oss-licenses = "0.10.6"
 ktlint = "12.1.1"
 detekt = "1.23.6"
 
 [libraries]
+androidx-material3 = { module = "androidx.compose.material3:material3" }
+androidx-ui = { module = "androidx.compose.ui:ui" }
+androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core-ktx" }
@@ -87,8 +92,9 @@ retrofit = ["retrofit", "retrofit-converter-moshi", "retrofit-interceptor-loggin
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 android-application = { id = "com.android.application", version.ref = "android" }
 android-library = { id = "com.android.library", version.ref = "android" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "jetbrains-kotlin" }
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrains-kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

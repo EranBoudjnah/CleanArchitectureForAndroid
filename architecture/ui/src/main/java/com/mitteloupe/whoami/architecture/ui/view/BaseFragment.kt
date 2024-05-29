@@ -23,11 +23,11 @@ abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : PresentationNotific
     constructor() : super()
     constructor(@LayoutRes layoutResourceId: Int) : super(layoutResourceId)
 
-    protected abstract val viewModel: BaseViewModel<VIEW_STATE, NOTIFICATION>
+    abstract val viewModel: BaseViewModel<VIEW_STATE, NOTIFICATION>
 
-    protected abstract val viewStateBinder: ViewStateBinder<VIEW_STATE, ViewsProvider>
+    abstract val viewStateBinder: ViewStateBinder<VIEW_STATE, ViewsProvider>
 
-    protected abstract val destinationToUiMapper: DestinationToUiMapper
+    abstract val destinationToUiMapper: DestinationToUiMapper
 
     open val navController: NavController
         get() = findNavController()

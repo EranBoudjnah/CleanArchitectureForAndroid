@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -68,16 +69,16 @@ dependencies {
     implementation(projects.analytics)
 
     implementation(platform(libs.compose.bom))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
 
     implementation(libs.androidx.navigation.fragment.ktx)
 
     implementation(libs.opensource.licenses)
 
-    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation(libs.androidx.ui.tooling)
 
     testImplementation(libs.test.junit)
     testImplementation(libs.test.hamcrest)
