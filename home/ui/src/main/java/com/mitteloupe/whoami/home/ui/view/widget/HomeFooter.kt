@@ -66,7 +66,6 @@ private fun Preview() {
         connected = true,
         analytics = object : Analytics {
             override fun logScreen(screenName: String) = Unit
-
             override fun logEvent(event: AnalyticsEvent) = Unit
         },
         onSaveDetailsClick = {},

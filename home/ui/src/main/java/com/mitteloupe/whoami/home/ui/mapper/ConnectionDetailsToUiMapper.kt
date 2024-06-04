@@ -15,11 +15,11 @@ class ConnectionDetailsToUiMapper(
 ) {
     fun toUi(connectionDetails: HomeViewState.Connected) = ConnectionDetailsUiModel(
         ipAddress = connectionDetails.ipAddress,
-        city = connectionDetails.city.labelAndIcon(R.drawable.icon_city),
-        region = connectionDetails.region.labelAndIcon(R.drawable.icon_region),
-        countryName = connectionDetails.countryCode?.toCountryName()
+        cityIconLabel = connectionDetails.city.labelAndIcon(R.drawable.icon_city),
+        regionIconLabel = connectionDetails.region.labelAndIcon(R.drawable.icon_region),
+        countryIconLabel = connectionDetails.countryCode?.toCountryName()
             .labelAndIcon(R.drawable.icon_country),
-        geolocation = connectionDetails.geolocation?.replace(",", ", ")
+        geolocationIconLabel = connectionDetails.geolocation?.replace(",", ", ")
             .labelAndIcon(R.drawable.icon_geolocation),
         postCode = connectionDetails.postCode.labelAndIcon(R.drawable.icon_post_code),
         timeZone = connectionDetails.timeZone.labelAndIcon(R.drawable.icon_time_zone),

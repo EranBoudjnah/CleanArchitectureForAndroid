@@ -7,6 +7,7 @@ import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
+import com.mitteloupe.whoami.di.testAppDependenciesEntryPoint
 import com.mitteloupe.whoami.localstore.KEY_VALUE_NO_HISTORY
 import com.mitteloupe.whoami.localstore.KEY_VALUE_SAVED_HISTORY
 import com.mitteloupe.whoami.screen.HistoryScreen
@@ -17,13 +18,11 @@ import com.mitteloupe.whoami.test.test.doesNot
 import com.mitteloupe.whoami.test.test.retry
 import com.mitteloupe.whoami.ui.main.AppNavHost
 import com.mitteloupe.whoami.ui.main.MainActivity
-import com.mitteloupe.whoami.ui.main.di.AppNavHostDependencies
 import com.mitteloupe.whoami.ui.theme.WhoAmITheme
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import org.junit.Test
 import org.junit.rules.TestRule
-import org.mockito.kotlin.mock
 
 @HiltAndroidTest
 @ExperimentalTestApi
@@ -37,18 +36,12 @@ class HistoryTest : BaseTest() {
         FromComposable(composeContentTestRule) {
             WhoAmITheme {
                 val activity = LocalContext.current as MainActivity
-                AppNavHostDependencies(
-                    homeViewModel = mock(),
-                    homeDestinationToUiMapper = mock(),
-                    homeNotificationToUiMapper = mock(),
-                    connectionDetailsToUiMapper = mock(),
-                    errorToUiMapper = mock(),
-                    coroutineContextProvider = coroutineContextProvider,
-                    analytics = analytics
-                ).AppNavHost(
-                    activity.supportFragmentManager,
-                    startDestination = "history"
-                )
+                with(testAppDependenciesEntryPoint(activity).appNavHostDependencies) {
+                    AppNavHost(
+                        activity.supportFragmentManager,
+                        startDestination = "history"
+                    )
+                }
             }
         }
     }

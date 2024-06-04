@@ -76,10 +76,13 @@ class ConnectionDetailsToUiMapperTest(
             ),
             ConnectionDetailsUiModel(
                 ipAddress = ipAddress,
-                city = IconLabelUiModel(R.drawable.icon_city, city),
-                region = IconLabelUiModel(R.drawable.icon_region, region),
-                countryName = IconLabelUiModel(R.drawable.icon_country, countryName),
-                geolocation = IconLabelUiModel(R.drawable.icon_geolocation, formattedGeolocation),
+                cityIconLabel = IconLabelUiModel(R.drawable.icon_city, city),
+                regionIconLabel = IconLabelUiModel(R.drawable.icon_region, region),
+                countryIconLabel = IconLabelUiModel(R.drawable.icon_country, countryName),
+                geolocationIconLabel = IconLabelUiModel(
+                    R.drawable.icon_geolocation,
+                    formattedGeolocation
+                ),
                 postCode = IconLabelUiModel(R.drawable.icon_post_code, postCode),
                 timeZone = IconLabelUiModel(R.drawable.icon_time_zone, timeZone),
                 internetServiceProviderName = IconLabelUiModel(
@@ -103,10 +106,10 @@ class ConnectionDetailsToUiMapperTest(
             ),
             ConnectionDetailsUiModel(
                 ipAddress = ipAddress,
-                city = null,
-                region = null,
-                countryName = null,
-                geolocation = null,
+                cityIconLabel = null,
+                regionIconLabel = null,
+                countryIconLabel = null,
+                geolocationIconLabel = null,
                 postCode = null,
                 timeZone = null,
                 internetServiceProviderName = null
@@ -122,9 +125,9 @@ class ConnectionDetailsToUiMapperTest(
     fun setUp() {
         toCountryName = {
             assertEquals(this, presentationConnectionDetails.countryCode)
-            val countryName = expectedUiConnectionDetails.countryName
-            requireNotNull(countryName)
-            countryName.label
+            val countryIconLabel = expectedUiConnectionDetails.countryIconLabel
+            requireNotNull(countryIconLabel)
+            countryIconLabel.label
         }
         classUnderTest = ConnectionDetailsToUiMapper(toCountryName)
     }

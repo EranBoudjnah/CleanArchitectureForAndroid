@@ -21,13 +21,13 @@ fun DetailsBlock(
     detailsContainer: DetailsUiModel = DetailsUiModel(
         listOf(
             R.string.home_city_label to
-                connectionDetails.city,
+                connectionDetails.cityIconLabel,
             R.string.home_region_label to
-                connectionDetails.region,
+                connectionDetails.regionIconLabel,
             R.string.home_country_label to
-                connectionDetails.countryName,
+                connectionDetails.countryIconLabel,
             R.string.home_geolocation_label to
-                connectionDetails.geolocation,
+                connectionDetails.geolocationIconLabel,
             R.string.home_post_code_label to
                 connectionDetails.postCode,
             R.string.home_time_zone_label to
@@ -67,10 +67,10 @@ private fun Preview() {
     DetailsBlock(
         connectionDetails = ConnectionDetailsUiModel(
             ipAddress = "8.8.8.8",
-            city = IconLabelUiModel(R.drawable.icon_city, "Tatatown"),
-            region = IconLabelUiModel(R.drawable.icon_region, "Lalaland"),
-            countryName = IconLabelUiModel(R.drawable.icon_country, "LA"),
-            geolocation = IconLabelUiModel(R.drawable.icon_geolocation, "0, 0"),
+            cityIconLabel = IconLabelUiModel(R.drawable.icon_city, "Tatatown"),
+            regionIconLabel = IconLabelUiModel(R.drawable.icon_region, "Lalaland"),
+            countryIconLabel = IconLabelUiModel(R.drawable.icon_country, "LA"),
+            geolocationIconLabel = IconLabelUiModel(R.drawable.icon_geolocation, "0, 0"),
             postCode = IconLabelUiModel(R.drawable.icon_post_code, "AB12 3CD"),
             timeZone = IconLabelUiModel(R.drawable.icon_time_zone, "Europe/London"),
             internetServiceProviderName =

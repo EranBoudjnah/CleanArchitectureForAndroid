@@ -16,6 +16,7 @@ import com.mitteloupe.whoami.architecture.presentation.notification.Presentation
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
 import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : PresentationNotification> :
@@ -46,15 +47,19 @@ abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : PresentationNotific
     abstract fun View.bindViews()
 
     private fun observeViewModel() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.viewState.collect(::applyViewState)
+        with(viewModel) {
+            performOnStartedLifecycleEvent {
+                viewState.collect(::applyViewState)
+            }
+            performOnStartedLifecycleEvent {
+                destination.collect(::navigate)
             }
         }
+    }
+
+    private fun performOnStartedLifecycleEvent(block: suspend CoroutineScope.() -> Unit) {
         lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.destination.collect(::navigate)
-            }
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED, block)
         }
     }
 

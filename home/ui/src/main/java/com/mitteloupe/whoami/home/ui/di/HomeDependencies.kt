@@ -10,9 +10,11 @@ import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
 import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsToUiMapper
 import com.mitteloupe.whoami.home.ui.mapper.ErrorToUiMapper
+import com.mitteloupe.whoami.home.ui.mapper.HomeViewStateToUiMapper
 
 data class HomeDependencies(
     val homeViewModel: HomeViewModel,
+    val homeViewStateToUiMapper: HomeViewStateToUiMapper,
     val connectionDetailsToUiMapper: ConnectionDetailsToUiMapper,
     private val homeNavigationMapper: DestinationToUiMapper,
     private val homeNotificationMapper: NotificationToUiMapper,
