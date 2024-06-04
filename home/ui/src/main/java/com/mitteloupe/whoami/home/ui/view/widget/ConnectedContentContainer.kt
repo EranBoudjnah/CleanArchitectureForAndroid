@@ -47,10 +47,10 @@ private fun Preview() {
         visible = true,
         connectionDetails = ConnectionDetailsUiModel(
             ipAddress = "8.8.8.8",
-            city = IconLabelUiModel(R.drawable.icon_city, "Brentwood"),
-            region = IconLabelUiModel(R.drawable.icon_region, "England"),
-            countryName = IconLabelUiModel(R.drawable.icon_country, "GB"),
-            geolocation = IconLabelUiModel(R.drawable.icon_geolocation, "0, 0"),
+            cityIconLabel = IconLabelUiModel(R.drawable.icon_city, "Brentwood"),
+            regionIconLabel = IconLabelUiModel(R.drawable.icon_region, "England"),
+            countryIconLabel = IconLabelUiModel(R.drawable.icon_country, "GB"),
+            geolocationIconLabel = IconLabelUiModel(R.drawable.icon_geolocation, "0, 0"),
             postCode = IconLabelUiModel(R.drawable.icon_post_code, "AB12 3CD"),
             timeZone = IconLabelUiModel(R.drawable.icon_time_zone, "Europe/London"),
             internetServiceProviderName =
