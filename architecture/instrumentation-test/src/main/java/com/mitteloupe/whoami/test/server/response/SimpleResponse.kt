@@ -9,15 +9,18 @@ data class SimpleResponse(
     private val bodyFileName: String = "",
     private val headers: List<Pair<String, String>> = emptyList()
 ) : MockResponseContents {
+
+    private val responseBody by lazy {
+        if (bodyFileName.isEmpty()) {
+            ""
+        } else {
+            assetReader.getAssetAsString(bodyFileName)
+        }
+    }
+
     override fun mockResponse(responseDispatcher: ResponseDispatcher) = ServerResponse(
         code = responseCode,
         headers = headers,
-        body = responseBody()
+        body = responseBody
     )
-
-    private fun responseBody() = if (bodyFileName.isEmpty()) {
-        ""
-    } else {
-        assetReader.getAssetAsString(bodyFileName)
-    }
 }
