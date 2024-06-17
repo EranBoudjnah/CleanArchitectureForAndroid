@@ -6,6 +6,12 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
+kotlin {
+    sourceSets.all {
+        languageSettings.enableLanguageFeature("ExplicitBackingFields")
+    }
+}
+
 android {
     namespace = "com.mitteloupe.whoami.test"
     compileSdk = 34

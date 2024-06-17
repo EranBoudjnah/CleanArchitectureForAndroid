@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
@@ -16,5 +18,17 @@ buildscript {
     }
     dependencies {
         classpath(libs.plugin.oss.licenses)
+    }
+}
+
+subprojects {
+    afterEvaluate {
+        tasks {
+            withType<KotlinCompile> {
+                compilerOptions {
+                    freeCompilerArgs.add("-Xskip-prerelease-check")
+                }
+            }
+        }
     }
 }

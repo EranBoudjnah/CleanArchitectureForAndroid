@@ -168,7 +168,7 @@ tasks.getByPath(":app:preBuild").dependsOn(installGitHook)
 tasks.withType(Test::class) {
     testLogging {
         exceptionFormat = TestExceptionFormat.FULL
-        events = mutableSetOf(
+        events = setOf(
             TestLogEvent.SKIPPED,
             TestLogEvent.PASSED,
             TestLogEvent.FAILED
