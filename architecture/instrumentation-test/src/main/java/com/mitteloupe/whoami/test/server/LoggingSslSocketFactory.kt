@@ -6,7 +6,7 @@ import java.net.Socket
 import javax.net.ssl.SSLSocket
 import javax.net.ssl.SSLSocketFactory
 
-class LoggingSSLSocketFactory(
+class LoggingSslSocketFactory(
     private val delegate: SSLSocketFactory
 ) : SSLSocketFactory() {
     override fun getDefaultCipherSuites(): Array<String> = delegate.defaultCipherSuites

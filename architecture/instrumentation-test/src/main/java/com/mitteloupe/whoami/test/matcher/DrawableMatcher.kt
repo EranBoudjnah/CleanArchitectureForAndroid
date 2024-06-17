@@ -17,6 +17,8 @@ import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.appcompat.view.menu.MenuItemImpl
 import androidx.core.content.res.ResourcesCompat
 import androidx.test.platform.app.InstrumentationRegistry
+import kotlin.reflect.KClass
+import kotlin.reflect.full.memberProperties
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
@@ -28,9 +30,18 @@ class DrawableMatcher(
 ) : TypeSafeMatcher<View>(View::class.java) {
 
     override fun matchesSafely(target: View): Boolean {
-        val drawable: Drawable = when (target) {
-            is ActionMenuItemView -> target.icon
-            is ImageView -> target.drawable?.extractStateIfStateful(target.getDrawableState())
+        @Suppress("UNCHECKED_CAST")
+        val drawable: Drawable = when {
+            target::class.simpleName == "androidx.appcompat.view.menu.ActionMenuItemView" -> {
+                (target::class as KClass<in View>).memberProperties
+                    .first { it.name == "bar" }
+                    .getter(target) as Drawable
+            }
+
+            target is ImageView -> {
+                target.drawable?.extractStateIfStateful(target.getDrawableState())
+            }
+
             else -> null
         } ?: return false
 
