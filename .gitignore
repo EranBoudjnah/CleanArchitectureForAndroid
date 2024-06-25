@@ -10,6 +10,7 @@
 /.idea/modules.xml
 /.idea/navEditor.xml
 /.idea/workspace.xml
+/.idea/inspectionProfiles/Project_Default.xml
 .DS_Store
 /build
 **/build/
