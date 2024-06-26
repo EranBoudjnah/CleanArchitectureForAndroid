@@ -162,7 +162,21 @@ dependencies {
 val installGitHook = tasks.register<Copy>("installGitHook") {
     from(File(rootProject.rootDir, "automation/git/pre-commit"))
     into(File(rootProject.rootDir, ".git/hooks"))
-    fileMode = 0b111111101
+    filePermissions {
+         user {
+             read = true
+             write = true
+             execute = true
+         }
+         group {
+             read = true
+             execute = true
+         }
+         other {
+             read = true
+             execute = true
+         }
+     }
 }
 
 tasks.getByPath(":app:preBuild").dependsOn(installGitHook)

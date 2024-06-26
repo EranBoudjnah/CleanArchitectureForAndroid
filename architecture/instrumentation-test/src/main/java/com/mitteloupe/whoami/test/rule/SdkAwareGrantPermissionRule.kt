@@ -4,7 +4,6 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.VisibleForTesting
-import androidx.test.annotation.ExperimentalTestApi
 import androidx.test.internal.platform.ServiceLoaderWrapper
 import androidx.test.internal.platform.content.PermissionGranter
 import androidx.test.runner.permission.PermissionRequester
@@ -13,7 +12,6 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
 @SuppressLint("RestrictedApi")
-@ExperimentalTestApi
 class SdkAwareGrantPermissionRule(
     private val permissionGranter: PermissionGranter,
     vararg permissions: String
