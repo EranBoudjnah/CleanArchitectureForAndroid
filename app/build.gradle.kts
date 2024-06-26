@@ -153,6 +153,8 @@ dependencies {
     androidTestImplementation(libs.test.mockito.kotlin)
     androidTestImplementation(libs.test.mockito.android)
 
+    implementation(libs.androidx.tracing)
+
     debugImplementation(libs.debug.compose.ui.tooling)
     debugImplementation(libs.debug.compose.ui.manifest)
 }
