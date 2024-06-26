@@ -24,8 +24,9 @@ test-mockito-kotlin = "5.3.1"
 test-mockito-android = "2.28.3"
 test-konsist = "0.15.1"
 test-android-espresso = "3.5.1"
-test-androidx-junit = "1.1.5"
+test-androidx-junit = "1.2.0"
 test-androidx-rules = "1.5.0"
+androidx-tracing = "1.2.0"
 uiautomator = "2.3.0"
 okhttp3 = "4.12.0"
 kotlin = "2.0.0"
@@ -45,6 +46,7 @@ androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx-fragment-ktx" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
 test-androidx-junit = { module = "androidx.test.ext:junit", version.ref = "test-androidx-junit" }
+androidx-tracing = { module = "androidx.tracing:tracing", version.ref = "androidx-tracing" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime-ktx" }
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
 compose-ui = { module = "androidx.compose.ui:ui" }
