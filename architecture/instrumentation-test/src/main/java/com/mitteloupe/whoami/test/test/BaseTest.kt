@@ -125,9 +125,8 @@ abstract class BaseTest {
             }
         }
 
-        data class FromClass<ACTIVITY : Activity>(
-            private val activityClass: Class<out ACTIVITY>
-        ) : AppLauncher() {
+        data class FromClass<ACTIVITY : Activity>(private val activityClass: Class<out ACTIVITY>) :
+            AppLauncher() {
             @Suppress("UNCHECKED_CAST")
             override fun launch() {
                 ActivityScenario.launch(activityClass) as ActivityScenario<Activity>

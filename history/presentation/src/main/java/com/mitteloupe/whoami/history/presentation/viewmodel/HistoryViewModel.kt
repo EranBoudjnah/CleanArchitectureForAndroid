@@ -23,13 +23,15 @@ class HistoryViewModel(
 ) : BaseViewModel<HistoryViewState, PresentationNotification>(useCaseExecutor) {
     override val initialViewState = NoChange
 
-    fun onEnter() {
+    fun onEnter(highlightedIpAddress: String?) {
         updateViewState(Loading)
         getHistoryUseCase(
             onResult = { result ->
                 updateViewState(
                     HistoryRecords(
-                        result.map(savedIpAddressRecordToPresentationMapper::toPresentation)
+                        highlightedIpAddress = highlightedIpAddress,
+                        historyRecords = result
+                            .map(savedIpAddressRecordToPresentationMapper::toPresentation)
                     )
                 )
             },

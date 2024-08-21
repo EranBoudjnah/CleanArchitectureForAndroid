@@ -26,7 +26,8 @@ class HistoryRecordDeletionToPresentationMapperTest(
             HistoryRecordUiModel(
                 ipAddress = ipAddress,
                 location = "Home",
-                savedAtTimestampMilliseconds = 123L
+                savedAtTimestampMilliseconds = 123L,
+                isHighlighted = false
             ),
             HistoryRecordDeletionPresentationModel(ipAddress)
         )

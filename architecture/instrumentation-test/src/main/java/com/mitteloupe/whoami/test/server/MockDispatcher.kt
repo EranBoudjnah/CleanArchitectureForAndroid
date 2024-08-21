@@ -9,7 +9,9 @@ import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
 
-class MockDispatcher : Dispatcher(), ResponseDispatcher {
+class MockDispatcher :
+    Dispatcher(),
+    ResponseDispatcher {
     private val _usedResponseKeys = mutableSetOf<String>()
     override val usedResponseKeys: Set<String> = _usedResponseKeys
 

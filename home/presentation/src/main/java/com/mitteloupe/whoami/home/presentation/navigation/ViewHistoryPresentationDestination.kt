@@ -2,4 +2,5 @@ package com.mitteloupe.whoami.home.presentation.navigation
 
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
 
-object ViewHistoryPresentationDestination : PresentationDestination
+data class ViewHistoryPresentationDestination(val highlightedIpAddress: String?) :
+    PresentationDestination

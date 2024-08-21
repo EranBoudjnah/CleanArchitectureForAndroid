@@ -11,9 +11,7 @@ import org.hamcrest.Matcher
 
 fun clickChildView(matcher: Matcher<View>) = ClickChildView(matcher)
 
-class ClickChildView(
-    private val matcher: Matcher<View>
-) : ViewAction {
+class ClickChildView(private val matcher: Matcher<View>) : ViewAction {
     override fun getConstraints(): Matcher<View> = allOf(isDisplayed(), matcher)
 
     override fun getDescription() = "Click on a matching view"
