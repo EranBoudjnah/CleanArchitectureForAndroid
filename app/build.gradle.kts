@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     id("com.google.android.gms.oss-licenses-plugin")
+    alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.detekt)
     alias(libs.plugins.compose.compiler)
@@ -14,7 +15,7 @@ plugins {
 
 android {
     namespace = "com.mitteloupe.whoami"
-    compileSdk = 34
+    compileSdk = 35
 
     buildFeatures {
         buildConfig = true
@@ -23,7 +24,7 @@ android {
     defaultConfig {
         applicationId = "com.mitteloupe.whoami"
         minSdk = 22
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -74,11 +75,11 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.15"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
+//    packaging {
+//        resources {
+//            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+//        }
+//    }
 }
 
 ktlint {
@@ -130,6 +131,8 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     implementation(projects.analytics)
+
+    implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.test.junit)
     testImplementation(libs.test.mockito.kotlin)

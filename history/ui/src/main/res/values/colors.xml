@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cardview_light_background_highlighted">#FFDD33</color>
+    <color name="cardview_dark_background_highlighted">#003366</color>
+</resources>

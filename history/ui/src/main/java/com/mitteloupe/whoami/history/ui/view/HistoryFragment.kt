@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
@@ -56,6 +57,9 @@ class HistoryFragment :
     private val viewStateStore: HistoryViewStateBinder
         get() = viewStateBinder as HistoryViewStateBinder
 
+    private val highlightedIpAddress: String?
+        get() = arguments?.getString(ARGUMENT_HIGHLIGHTED_IP)
+
     override fun View.bindViews() {
         noRecordsView = findViewById(R.id.history_no_records_view)
         recordsListView = findViewById(R.id.history_records_list)
@@ -72,7 +76,7 @@ class HistoryFragment :
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            viewModel.onEnter()
+            viewModel.onEnter(highlightedIpAddress)
         }
     }
 
@@ -107,7 +111,10 @@ class HistoryFragment :
 
     companion object {
         const val NAVIGATION_MAPPER_NAME = "History"
+        const val ARGUMENT_HIGHLIGHTED_IP = "Highlighted IP"
 
-        fun newInstance() = HistoryFragment()
+        fun newInstance(highlightedIpAddress: String?) = HistoryFragment().apply {
+            arguments = bundleOf(ARGUMENT_HIGHLIGHTED_IP to highlightedIpAddress)
+        }
     }
 }

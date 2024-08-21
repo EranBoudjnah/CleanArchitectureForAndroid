@@ -13,7 +13,9 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.mitteloupe.whoami.R
 import com.mitteloupe.whoami.test.action.clickChildView
 import com.mitteloupe.whoami.test.assertion.matchesItemAtPosition
+import com.mitteloupe.whoami.test.matcher.withBackgroundColorMatcher
 import com.mitteloupe.whoami.test.matcher.withDrawableId
+import org.hamcrest.Matchers.allOf
 
 class HistoryScreen {
     private val recordsList = isAssignableFrom(RecyclerView::class.java)
@@ -27,6 +29,40 @@ class HistoryScreen {
     fun seeIpRecord(ipAddress: String, position: Int) {
         onView(recordsList).check(
             matchesItemAtPosition(hasDescendant(withText(ipAddress)), position.zeroBased)
+        )
+    }
+
+    fun seeHighlightedRecord(ipAddress: String, position: Int) {
+        onView(recordsList).check(
+            matchesItemAtPosition(
+                allOf(
+                    hasDescendant(withText(ipAddress)),
+                    hasDescendant(
+                        withBackgroundColorMatcher(
+                            color = 0xFFFFDD33.toInt(),
+                            matchCardViewBackgrounds = true
+                        )
+                    )
+                ),
+                position.zeroBased
+            )
+        )
+    }
+
+    fun seeNonHighlightedRecord(ipAddress: String, position: Int) {
+        onView(recordsList).check(
+            matchesItemAtPosition(
+                allOf(
+                    hasDescendant(withText(ipAddress)),
+                    hasDescendant(
+                        withBackgroundColorMatcher(
+                            color = 0xFFFFFFFF.toInt(),
+                            matchCardViewBackgrounds = true
+                        )
+                    )
+                ),
+                position.zeroBased
+            )
         )
     }
 

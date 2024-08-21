@@ -4,9 +4,7 @@ import com.mitteloupe.whoami.datasource.history.model.NewIpAddressHistoryRecordD
 import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordLocalModel
 import com.mitteloupe.whoami.time.NowProvider
 
-class NewIpAddressRecordToLocalMapper(
-    private val nowProvider: NowProvider
-) {
+class NewIpAddressRecordToLocalMapper(private val nowProvider: NowProvider) {
     fun toLocal(historyRecord: NewIpAddressHistoryRecordDataModel) =
         SavedIpAddressHistoryRecordLocalModel(
             ipAddress = historyRecord.ipAddress,

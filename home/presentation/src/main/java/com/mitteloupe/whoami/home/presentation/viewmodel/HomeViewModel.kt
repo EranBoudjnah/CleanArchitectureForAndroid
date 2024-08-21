@@ -45,6 +45,11 @@ class HomeViewModel(
             value = domainConnectionDetails,
             onResult = {
                 notify(ConnectionSaved(connectionDetails.ipAddress))
+                navigate(
+                    ViewHistoryPresentationDestination(
+                        highlightedIpAddress = connectionDetails.ipAddress
+                    )
+                )
             },
             onException = { exception ->
                 updateViewState(Error(exceptionToPresentationMapper.toPresentation(exception)))
@@ -53,7 +58,7 @@ class HomeViewModel(
     }
 
     fun onViewHistoryAction() {
-        navigate(ViewHistoryPresentationDestination)
+        navigate(ViewHistoryPresentationDestination(highlightedIpAddress = null))
     }
 
     fun onOpenSourceNoticesAction() {

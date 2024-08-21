@@ -12,7 +12,8 @@ class ConnectionHistoryRepository(
     private val ipAddressHistoryDataSource: IpAddressHistoryDataSource,
     private val savedIpAddressRecordToDomainMapper: SavedIpAddressRecordToDomainMapper,
     private val recordDeletionToDataMapper: HistoryRecordDeletionToDataMapper
-) : GetHistoryRepository, DeleteHistoryRecordRepository {
+) : GetHistoryRepository,
+    DeleteHistoryRecordRepository {
     override fun history() = ipAddressHistoryDataSource.allRecords()
         .map { records ->
             records.map(savedIpAddressRecordToDomainMapper::toDomain)

@@ -12,8 +12,8 @@ class DisableAnimationsRule : TestRule {
     private var windowAnimationScale: Float = 0f
     private var animatorDurationScale: Float = 0f
 
-    override fun apply(base: Statement, description: Description): Statement {
-        return object : Statement() {
+    override fun apply(base: Statement, description: Description): Statement =
+        object : Statement() {
             @Throws(Throwable::class)
             override fun evaluate() {
                 disableAnimations()
@@ -24,7 +24,6 @@ class DisableAnimationsRule : TestRule {
                 }
             }
         }
-    }
 
     @Throws(IOException::class)
     private fun disableAnimations() {

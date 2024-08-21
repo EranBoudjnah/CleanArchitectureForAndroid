@@ -23,11 +23,10 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 
-fun withDrawableId(@DrawableRes id: Int): Matcher<View> = DrawableMatcher(id)
+fun withDrawableId(@DrawableRes id: Int): Matcher<View> = WithDrawableIdMatcher(id)
 
-class DrawableMatcher(
-    @param:DrawableRes private val expectedId: Int
-) : TypeSafeMatcher<View>(View::class.java) {
+class WithDrawableIdMatcher(@param:DrawableRes private val expectedId: Int) :
+    TypeSafeMatcher<View>(View::class.java) {
 
     override fun matchesSafely(target: View): Boolean {
         @Suppress("UNCHECKED_CAST")
@@ -111,10 +110,7 @@ class DrawableMatcher(
             }.call() as Drawable?
         }
 
-    private class BitmapHolder(
-        val bitmap: Bitmap,
-        private val recyclable: Boolean
-    ) {
+    private class BitmapHolder(val bitmap: Bitmap, private val recyclable: Boolean) {
         fun recycleIfRecyclable() {
             if (recyclable) {
                 bitmap.recycle()

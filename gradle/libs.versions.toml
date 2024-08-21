@@ -1,13 +1,13 @@
 [versions]
-ksp = "2.0.10-1.0.24"
-android = "8.5.2"
+ksp = "2.0.20-RC2-1.0.24"
+android = "8.6.0-rc01"
 material = "1.12.0"
 androidx-appcompat = "1.7.0"
 androidx-core-ktx = "1.13.1"
 androidx-fragment-ktx = "1.8.2"
 androidx-recyclerview = "1.3.2"
 androidx-lifecycle-runtime-ktx = "2.8.4"
-android-navigation = "2.7.7"
+android-navigation = "2.8.0-beta07"
 compose-bom = "2024.06.00"
 compose-activity = "1.9.1"
 hilt = "2.52"
@@ -29,10 +29,12 @@ test-androidx-rules = "1.6.1"
 androidx-tracing = "1.2.0"
 uiautomator = "2.3.0"
 okhttp3 = "4.12.0"
-kotlin = "2.0.10"
+kotlin = "2.0.20-RC2"
 plugin-oss-licenses = "0.10.6"
 ktlint = "12.1.1"
 detekt = "1.23.6"
+kotlin-plugin-serialization = "2.0.10"
+kotlinx-serialization-json = "1.7.1"
 
 [libraries]
 androidx-material3 = { module = "androidx.compose.material3:material3" }
@@ -85,6 +87,7 @@ debug-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 debug-compose-ui-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "android-navigation" }
 plugin-oss-licenses = { module = "com.google.android.gms:oss-licenses-plugin", version.ref = "plugin-oss-licenses" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 
 [bundles]
 compose = ["compose-ui", "compose-ui-graphics", "compose-ui-tooling-preview", "compose-material3", "compose-activity", "compose-navigation"]
@@ -100,3 +103,4 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization",version.ref = "kotlin-plugin-serialization" }

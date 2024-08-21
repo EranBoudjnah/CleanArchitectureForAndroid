@@ -40,7 +40,9 @@ class HistoryViewStateBinder(
             HistoryViewState.NoChange -> Unit
 
             is HistoryViewState.HistoryRecords -> {
-                val historyItems = viewState.historyRecords.map(historyRecordToUiMapper::toUi)
+                val historyItems = viewState.historyRecords.map { record ->
+                    historyRecordToUiMapper.toUi(record, viewState.highlightedIpAddress)
+                }
                 renderHistoryRecords(historyItems)
             }
 
