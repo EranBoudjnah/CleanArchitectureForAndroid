@@ -49,7 +49,7 @@ detekt {
 }
 
 dependencies {
-    implementation(projects.architecturePresentation)
+    implementation(projects.architecture.presentation)
 
     implementation(projects.coroutine)
 

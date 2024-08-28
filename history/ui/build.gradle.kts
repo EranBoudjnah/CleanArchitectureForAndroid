@@ -49,9 +49,9 @@ detekt {
 }
 
 dependencies {
-    implementation(projects.historyPresentation)
-    implementation(projects.architectureUi)
-    implementation(projects.architecturePresentation)
+    implementation(projects.history.presentation)
+    implementation(projects.architecture.ui)
+    implementation(projects.architecture.presentation)
 
     implementation(projects.coroutine)
     implementation(projects.widget)
