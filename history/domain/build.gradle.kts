@@ -15,7 +15,7 @@ detekt {
 }
 
 dependencies {
-    implementation(projects.architectureDomain)
+    implementation(projects.architecture.domain)
 
     implementation(projects.coroutine)
 

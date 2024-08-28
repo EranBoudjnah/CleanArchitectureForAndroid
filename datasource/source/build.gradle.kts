@@ -15,7 +15,7 @@ detekt {
 }
 
 dependencies {
-    implementation(projects.datasourceArchitecture)
+    implementation(projects.datasource.architecture)
 
     implementation(libs.kotlinx.coroutines.core)
 

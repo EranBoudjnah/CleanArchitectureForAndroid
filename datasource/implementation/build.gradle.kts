@@ -42,8 +42,8 @@ detekt {
 }
 
 dependencies {
-    implementation(projects.datasourceArchitecture)
-    implementation(projects.datasourceSource)
+    implementation(projects.datasource.architecture)
+    implementation(projects.datasource.source)
     implementation(projects.coroutine)
     implementation(projects.time)
 

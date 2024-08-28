@@ -15,11 +15,11 @@ detekt {
 }
 
 dependencies {
-    implementation(projects.historyDomain)
-    implementation(projects.architectureDomain)
+    implementation(projects.history.domain)
+    implementation(projects.architecture.domain)
 
-    implementation(projects.datasourceArchitecture)
-    implementation(projects.datasourceSource)
+    implementation(projects.datasource.architecture)
+    implementation(projects.datasource.source)
 
     implementation(libs.kotlinx.coroutines.core)
 

@@ -53,10 +53,10 @@ detekt {
 }
 
 dependencies {
-    implementation(projects.homePresentation)
+    implementation(projects.home.presentation)
 
-    implementation(projects.architectureUi)
-    implementation(projects.architecturePresentation)
+    implementation(projects.architecture.ui)
+    implementation(projects.architecture.presentation)
 
     implementation(projects.coroutine)
     implementation(projects.widget)

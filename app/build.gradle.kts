@@ -66,20 +66,24 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
+
     buildFeatures {
         compose = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.15"
     }
-//    packaging {
-//        resources {
-//            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-//        }
-//    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
 }
 
 ktlint {
@@ -94,23 +98,23 @@ detekt {
 dependencies {
     implementation(projects.time)
     implementation(projects.coroutine)
-    implementation(projects.datasourceArchitecture)
-    implementation(projects.datasourceSource)
-    implementation(projects.datasourceImplementation)
+    implementation(projects.datasource.architecture)
+    implementation(projects.datasource.source)
+    implementation(projects.datasource.implementation)
 
-    implementation(projects.architectureUi)
-    implementation(projects.architecturePresentation)
-    implementation(projects.architectureDomain)
+    implementation(projects.architecture.ui)
+    implementation(projects.architecture.presentation)
+    implementation(projects.architecture.domain)
 
-    implementation(projects.homeUi)
-    implementation(projects.homePresentation)
-    implementation(projects.homeDomain)
-    implementation(projects.homeData)
+    implementation(projects.home.ui)
+    implementation(projects.home.presentation)
+    implementation(projects.home.domain)
+    implementation(projects.home.data)
 
-    implementation(projects.historyUi)
-    implementation(projects.historyPresentation)
-    implementation(projects.historyDomain)
-    implementation(projects.historyData)
+    implementation(projects.history.ui)
+    implementation(projects.history.presentation)
+    implementation(projects.history.domain)
+    implementation(projects.history.data)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -147,7 +151,7 @@ dependencies {
     androidTestImplementation(libs.test.compose.ui.junit4)
     androidTestImplementation(libs.test.android.hilt)
     androidTestImplementation(libs.test.android.uiautomator)
-    androidTestImplementation(projects.architectureInstrumentationTest)
+    androidTestImplementation(projects.architecture.instrumentationTest)
     androidTestImplementation(libs.test.android.mockwebserver)
     kspAndroidTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.test.mockito) {
