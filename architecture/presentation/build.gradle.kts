@@ -5,6 +5,12 @@ plugins {
     id("io.gitlab.arturbosch.detekt")
 }
 
+kotlin {
+    sourceSets.all {
+        languageSettings.enableLanguageFeature("ExplicitBackingFields")
+    }
+}
+
 ktlint {
     version.set("0.49.1")
     android.set(true)
