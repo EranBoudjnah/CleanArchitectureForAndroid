@@ -22,9 +22,7 @@ class HomeViewModel(
     private val connectionDetailsToDomainMapper: ConnectionDetailsToDomainMapper,
     private val exceptionToPresentationMapper: ExceptionToPresentationMapper,
     useCaseExecutor: UseCaseExecutor
-) : BaseViewModel<HomeViewState, HomePresentationNotification>(useCaseExecutor) {
-    override val initialViewState = Loading
-
+) : BaseViewModel<HomeViewState, HomePresentationNotification>(useCaseExecutor, Loading) {
     fun onEnter() {
         updateViewState(Loading)
         getConnectionDetailsUseCase(

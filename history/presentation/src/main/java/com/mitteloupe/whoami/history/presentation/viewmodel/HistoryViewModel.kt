@@ -20,9 +20,7 @@ class HistoryViewModel(
     private val deleteHistoryRecordUseCase: DeleteHistoryRecordUseCase,
     private val deleteHistoryRecordRequestToDomainMapper: DeleteHistoryRecordRequestToDomainMapper,
     useCaseExecutor: UseCaseExecutor
-) : BaseViewModel<HistoryViewState, PresentationNotification>(useCaseExecutor) {
-    override val initialViewState = NoChange
-
+) : BaseViewModel<HistoryViewState, PresentationNotification>(useCaseExecutor, NoChange) {
     fun onEnter(highlightedIpAddress: String?) {
         updateViewState(Loading)
         getHistoryUseCase(

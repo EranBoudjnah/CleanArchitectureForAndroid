@@ -12,11 +12,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotification>(
-    private val useCaseExecutor: UseCaseExecutor
+    private val useCaseExecutor: UseCaseExecutor,
+    initialViewState: VIEW_STATE
 ) {
-    protected abstract val initialViewState: VIEW_STATE
-    private val mutableViewState by lazy { MutableStateFlow(initialViewState) }
-    val viewState: Flow<VIEW_STATE> by lazy { mutableViewState }
+    val viewState: Flow<VIEW_STATE>
+        field = MutableStateFlow(initialViewState)
 
     val notification: Flow<NOTIFICATION>
         field = MutableSharedFlow()
@@ -26,7 +26,7 @@ abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotifi
 
     protected fun updateViewState(newState: VIEW_STATE) {
         MainScope().launch {
-            mutableViewState.emit(newState)
+            viewState.emit(newState)
         }
     }
 
