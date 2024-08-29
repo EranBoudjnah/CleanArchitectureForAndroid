@@ -9,6 +9,7 @@ import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDe
 import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledDestinationException
 import com.mitteloupe.whoami.home.presentation.navigation.ViewHistoryPresentationDestination
 import com.mitteloupe.whoami.home.presentation.navigation.ViewOpenSourceNoticesPresentationDestination
+import com.mitteloupe.whoami.ui.main.route.History
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.isA
 import org.hamcrest.Matchers.matchesPattern
@@ -44,15 +45,16 @@ class HomeDestinationToUiMapperTest {
     @Test
     fun `Given ViewHistory when toUi then returns history navigation`() {
         // Given
-        val presentationDestination = ViewHistoryPresentationDestination
+        val presentationDestination = ViewHistoryPresentationDestination(null)
         val navController: NavController = mock()
         val uiDestination = classUnderTest.toUi(presentationDestination)
+        val expectedDestination = History(null)
 
         // When
         uiDestination.navigate(navController)
 
         // Then
-        verify(navController).navigate("history")
+        verify(navController).navigate(expectedDestination)
     }
 
     @Test

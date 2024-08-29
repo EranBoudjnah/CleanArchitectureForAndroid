@@ -24,6 +24,7 @@ private const val UNKNOWN_LOCATION_TEXT = "Unknown location"
 class HistoryRecordToUiMapperTest(
     @Suppress("unused") private val testTitle: String,
     private val givenSavedRecord: SavedIpAddressRecordPresentationModel,
+    private val givenHighlightedIpAddress: String,
     private val expectedValue: HistoryRecordUiModel
 ) {
     companion object {
@@ -41,6 +42,38 @@ class HistoryRecordToUiMapperTest(
                 postCode = null,
                 timeZone = null,
                 savedAtTimestampMilliseconds = 0L,
+                highlightedIpAddress = "",
+                isHighlighted = false,
+                expectedLocation = UNKNOWN_LOCATION_TEXT
+            ),
+            testCase(
+                testTitle = "Is highlighted",
+                ipAddress = "4.3.2.1",
+                city = null,
+                region = null,
+                countryCode = null,
+                geolocation = null,
+                internetServiceProviderName = null,
+                postCode = null,
+                timeZone = null,
+                savedAtTimestampMilliseconds = 10L,
+                highlightedIpAddress = "4.3.2.1",
+                isHighlighted = true,
+                expectedLocation = UNKNOWN_LOCATION_TEXT
+            ),
+            testCase(
+                testTitle = "Another IP is highlighted",
+                ipAddress = "4.3.2.1",
+                city = null,
+                region = null,
+                countryCode = null,
+                geolocation = null,
+                internetServiceProviderName = null,
+                postCode = null,
+                timeZone = null,
+                savedAtTimestampMilliseconds = 10L,
+                highlightedIpAddress = "0.0.0.0",
+                isHighlighted = false,
                 expectedLocation = UNKNOWN_LOCATION_TEXT
             ),
             testCase(
@@ -54,7 +87,69 @@ class HistoryRecordToUiMapperTest(
                 postCode = " ",
                 timeZone = null,
                 savedAtTimestampMilliseconds = 0L,
+                highlightedIpAddress = "",
+                isHighlighted = false,
                 expectedLocation = "City: Testtown"
+            ),
+            testCase(
+                testTitle = "Only region",
+                ipAddress = "1.2.3.4",
+                city = null,
+                region = "Some region",
+                countryCode = null,
+                geolocation = null,
+                internetServiceProviderName = null,
+                postCode = " ",
+                timeZone = null,
+                savedAtTimestampMilliseconds = 0L,
+                highlightedIpAddress = "",
+                isHighlighted = false,
+                expectedLocation = "Unknown location"
+            ),
+            testCase(
+                testTitle = "Only country code",
+                ipAddress = "1.2.3.4",
+                city = null,
+                region = null,
+                countryCode = "GB",
+                geolocation = null,
+                internetServiceProviderName = null,
+                postCode = " ",
+                timeZone = null,
+                savedAtTimestampMilliseconds = 0L,
+                highlightedIpAddress = "",
+                isHighlighted = false,
+                expectedLocation = "Unknown location"
+            ),
+            testCase(
+                testTitle = "Only geolocation",
+                ipAddress = "1.2.3.4",
+                city = null,
+                region = null,
+                countryCode = null,
+                geolocation = "0, 0",
+                internetServiceProviderName = null,
+                postCode = " ",
+                timeZone = null,
+                savedAtTimestampMilliseconds = 0L,
+                highlightedIpAddress = "",
+                isHighlighted = false,
+                expectedLocation = "Unknown location"
+            ),
+            testCase(
+                testTitle = "Only internet service provider",
+                ipAddress = "1.2.3.4",
+                city = null,
+                region = null,
+                countryCode = null,
+                geolocation = "0, 0",
+                internetServiceProviderName = "Golden Internet Provider",
+                postCode = " ",
+                timeZone = null,
+                savedAtTimestampMilliseconds = 0L,
+                highlightedIpAddress = "",
+                isHighlighted = false,
+                expectedLocation = "Unknown location"
             ),
             testCase(
                 testTitle = "Only postcode",
@@ -67,6 +162,8 @@ class HistoryRecordToUiMapperTest(
                 postCode = "12345",
                 timeZone = null,
                 savedAtTimestampMilliseconds = 0L,
+                highlightedIpAddress = "",
+                isHighlighted = false,
                 expectedLocation = "Post code: 12345"
             ),
             testCase(
@@ -80,7 +177,24 @@ class HistoryRecordToUiMapperTest(
                 postCode = "12345",
                 timeZone = null,
                 savedAtTimestampMilliseconds = 0L,
+                highlightedIpAddress = "",
+                isHighlighted = false,
                 expectedLocation = "Successville - 12345"
+            ),
+            testCase(
+                testTitle = "Only time zone",
+                ipAddress = "1.2.3.4",
+                city = null,
+                region = null,
+                countryCode = null,
+                geolocation = null,
+                internetServiceProviderName = null,
+                postCode = null,
+                timeZone = "GMT",
+                savedAtTimestampMilliseconds = 0L,
+                highlightedIpAddress = "",
+                isHighlighted = false,
+                expectedLocation = "Unknown location"
             )
         )
 
@@ -95,6 +209,8 @@ class HistoryRecordToUiMapperTest(
             postCode: String?,
             timeZone: String?,
             savedAtTimestampMilliseconds: Long,
+            highlightedIpAddress: String,
+            isHighlighted: Boolean,
             expectedLocation: String
         ) = arrayOf(
             testTitle,
@@ -109,10 +225,12 @@ class HistoryRecordToUiMapperTest(
                 timeZone = timeZone,
                 savedAtTimestampMilliseconds = savedAtTimestampMilliseconds
             ),
+            highlightedIpAddress,
             HistoryRecordUiModel(
                 ipAddress,
                 expectedLocation,
-                savedAtTimestampMilliseconds
+                savedAtTimestampMilliseconds,
+                isHighlighted
             )
         )
     }
@@ -135,7 +253,7 @@ class HistoryRecordToUiMapperTest(
     @Test
     fun `When toUi`() {
         // When
-        val actualValue = classUnderTest.toUi(givenSavedRecord)
+        val actualValue = classUnderTest.toUi(givenSavedRecord, givenHighlightedIpAddress)
 
         // Then
         assertEquals(expectedValue, actualValue)

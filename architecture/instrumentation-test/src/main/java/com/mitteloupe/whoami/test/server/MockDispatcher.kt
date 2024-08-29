@@ -9,9 +9,11 @@ import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
 
-class MockDispatcher : Dispatcher(), ResponseDispatcher {
-    private val _usedResponseKeys = mutableSetOf<String>()
-    override val usedResponseKeys: Set<String> = _usedResponseKeys
+class MockDispatcher :
+    Dispatcher(),
+    ResponseDispatcher {
+    override val usedResponseKeys: Set<String>
+        field = mutableSetOf<String>()
 
     private val responses = mutableMapOf<String, MockResponseContents>()
 
@@ -21,7 +23,7 @@ class MockDispatcher : Dispatcher(), ResponseDispatcher {
 
     override fun reset() {
         responses.clear()
-        _usedResponseKeys.clear()
+        usedResponseKeys.clear()
     }
 
     override fun addResponse(request: MockRequest, response: MockResponseContents) {
@@ -30,7 +32,7 @@ class MockDispatcher : Dispatcher(), ResponseDispatcher {
 
     override fun dispatch(request: RecordedRequest): MockResponse {
         val endPoint = request.path!!.substringBefore("?")
-        _usedResponseKeys.add(endPoint)
+        usedResponseKeys.add(endPoint)
         val response = responses[endPoint]?.mockResponse(this) ?: ServerResponse(code = 404)
         return if (response.upgradeToWebSocket) {
             MockResponse().withWebSocketUpgrade(

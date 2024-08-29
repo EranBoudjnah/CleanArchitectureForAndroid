@@ -9,10 +9,10 @@ plugins {
 
 android {
     namespace = "com.mitteloupe.whoami.architecture.ui"
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 22
+        minSdk = libs.versions.minSdk.get().toInt()
     }
 
     buildTypes {
@@ -35,12 +35,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
 }
 
@@ -54,7 +49,7 @@ detekt {
 }
 
 dependencies {
-    implementation(projects.architecturePresentation)
+    implementation(projects.architecture.presentation)
 
     implementation(projects.coroutine)
 

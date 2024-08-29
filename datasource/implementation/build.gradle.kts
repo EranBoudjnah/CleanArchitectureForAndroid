@@ -8,10 +8,10 @@ plugins {
 
 android {
     namespace = "com.mitteloupe.whoami.datasource"
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 22
+        minSdk = libs.versions.minSdk.get().toInt()
     }
 
     buildTypes {
@@ -30,11 +30,6 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 ktlint {
@@ -47,8 +42,8 @@ detekt {
 }
 
 dependencies {
-    implementation(projects.datasourceArchitecture)
-    implementation(projects.datasourceSource)
+    implementation(projects.datasource.architecture)
+    implementation(projects.datasource.source)
     implementation(projects.coroutine)
     implementation(projects.time)
 

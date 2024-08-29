@@ -20,7 +20,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : PresentationNotification> :
-    Fragment, ViewsProvider {
+    Fragment,
+    ViewsProvider {
     constructor() : super()
     constructor(@LayoutRes layoutResourceId: Int) : super(layoutResourceId)
 

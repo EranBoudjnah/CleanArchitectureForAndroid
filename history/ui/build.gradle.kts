@@ -10,10 +10,10 @@ plugins {
 
 android {
     namespace = "com.mitteloupe.whoami.history.ui"
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 22
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -37,11 +37,6 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 ktlint {
@@ -54,9 +49,9 @@ detekt {
 }
 
 dependencies {
-    implementation(projects.historyPresentation)
-    implementation(projects.architectureUi)
-    implementation(projects.architecturePresentation)
+    implementation(projects.history.presentation)
+    implementation(projects.architecture.ui)
+    implementation(projects.architecture.presentation)
 
     implementation(projects.coroutine)
     implementation(projects.widget)

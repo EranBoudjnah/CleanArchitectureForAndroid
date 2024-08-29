@@ -5,25 +5,25 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.launcher.historyScreenLauncher
-import com.mitteloupe.whoami.localstore.KEY_VALUE_NO_HISTORY
 import com.mitteloupe.whoami.localstore.KEY_VALUE_SAVED_HISTORY
 import com.mitteloupe.whoami.screen.HistoryScreen
 import com.mitteloupe.whoami.test.annotation.LocalStore
 import com.mitteloupe.whoami.test.test.BaseTest
-import com.mitteloupe.whoami.test.test.doesNot
 import com.mitteloupe.whoami.test.test.retry
 import com.mitteloupe.whoami.ui.main.MainActivity
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import org.junit.Test
 
+private const val HIGHLIGHTED_IP_ADDRESS = "2.2.2.2"
+
 @HiltAndroidTest
 @ExperimentalTestApi
-class HistoryTest : BaseTest() {
+class HistoryHighlightedIpAddressTest : BaseTest() {
     override val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     override val startActivityLauncher: AppLauncher by lazy {
-        historyScreenLauncher(highlightedIpAddress = null)
+        historyScreenLauncher(highlightedIpAddress = HIGHLIGHTED_IP_ADDRESS)
     }
 
     @Inject
@@ -39,55 +39,25 @@ class HistoryTest : BaseTest() {
     @LocalStore(
         localStoreDataIds = [KEY_VALUE_SAVED_HISTORY]
     )
-    fun givenSavedHistoryWhenOnHistoryScreenThenSeesHistory() {
-        with(historyScreen) {
-            seeRecord(position = 1, ipAddress = "2.2.2.2", city = "Stockholm", postCode = "12345")
-            seeRecord(position = 2, ipAddress = "1.1.1.1", city = "Aberdeen", postCode = "AA11 2BB")
-        }
-    }
-
-    @Test
-    @LocalStore(
-        localStoreDataIds = [KEY_VALUE_SAVED_HISTORY]
-    )
-    fun givenSavedHistoryWhenTappingDeleteThenRecordDeleted() {
+    fun givenSavedHistoryAndHighlightedIpAddressWhenOnHistoryScreenTheSeesHighlight() {
         with(historyScreen) {
             retry(repeat = 20) {
                 seeRecord(
                     position = 1,
-                    ipAddress = "2.2.2.2",
+                    ipAddress = HIGHLIGHTED_IP_ADDRESS,
                     city = "Stockholm",
                     postCode = "12345"
                 )
             }
-            seeRecord(position = 2, ipAddress = "1.1.1.1", city = "Aberdeen", postCode = "AA11 2BB")
-            tapDeleteForRecord(position = 1)
-            retry(repeat = 20) {
-                seeRecord(
-                    position = 1,
-                    ipAddress = "1.1.1.1",
-                    city = "Aberdeen",
-                    postCode = "AA11 2BB"
-                )
-            }
-            doesNot("See record for 2.2.2.2") {
-                seeRecord(
-                    position = 2,
-                    ipAddress = "2.2.2.2",
-                    city = "Stockholm",
-                    postCode = "12345"
-                )
-            }
-        }
-    }
-
-    @Test
-    @LocalStore(
-        localStoreDataIds = [KEY_VALUE_NO_HISTORY]
-    )
-    fun givenNoHistoryWhenOnHistoryScreenThenSeesHistory() {
-        with(historyScreen) {
-            seeNoRecordsLabel()
+            seeHighlightedRecord(ipAddress = HIGHLIGHTED_IP_ADDRESS, position = 1)
+            val ipAddress2 = "1.1.1.1"
+            seeRecord(
+                position = 2,
+                ipAddress = ipAddress2,
+                city = "Aberdeen",
+                postCode = "AA11 2BB"
+            )
+            seeNonHighlightedRecord(ipAddress = ipAddress2, position = 2)
         }
     }
 

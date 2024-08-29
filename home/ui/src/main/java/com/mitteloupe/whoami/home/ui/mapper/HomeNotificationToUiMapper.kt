@@ -8,9 +8,7 @@ import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotificatio
 import com.mitteloupe.whoami.home.ui.R
 import com.mitteloupe.whoami.home.ui.view.widget.notificationToast
 
-class HomeNotificationToUiMapper(
-    private val context: Context
-) : NotificationToUiMapper {
+class HomeNotificationToUiMapper(private val context: Context) : NotificationToUiMapper {
     override fun toUi(notification: PresentationNotification): UiNotification =
         when (notification) {
             is ConnectionSaved -> ConnectionSavedUiNotification(context, notification.ipAddress)

@@ -10,6 +10,7 @@ import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMa
 import com.mitteloupe.whoami.architecture.ui.navigation.model.UiDestination
 import com.mitteloupe.whoami.home.presentation.navigation.ViewHistoryPresentationDestination
 import com.mitteloupe.whoami.home.presentation.navigation.ViewOpenSourceNoticesPresentationDestination
+import com.mitteloupe.whoami.ui.main.route.History
 
 class HomeDestinationToUiMapper(
     private val analytics: Analytics,
@@ -19,14 +20,15 @@ class HomeDestinationToUiMapper(
 ) : DestinationToUiMapper {
     override fun toUi(presentationDestination: PresentationDestination): UiDestination =
         when (presentationDestination) {
-            is ViewHistoryPresentationDestination -> history()
+            is ViewHistoryPresentationDestination -> {
+                history(presentationDestination.highlightedIpAddress)
+            }
             is ViewOpenSourceNoticesPresentationDestination -> openSourceNotices()
             else -> throw UnhandledDestinationException(presentationDestination)
         }
 
-    private fun history(): UiDestination = UiDestination { navController ->
-        navController.navigate("history")
-    }
+    private fun history(highlightedIpAddress: String?): UiDestination =
+        UiDestination { navController -> navController.navigate(History(highlightedIpAddress)) }
 
     private fun openSourceNotices(): UiDestination = UiDestination {
         analytics.logScreen("Open Source Licenses")

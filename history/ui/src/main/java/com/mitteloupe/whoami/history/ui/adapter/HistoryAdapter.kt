@@ -6,9 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mitteloupe.whoami.history.ui.R
 import com.mitteloupe.whoami.history.ui.model.HistoryRecordUiModel
 
-class HistoryAdapter(
-    private val userEventListener: UserEventListener
-) : RecyclerView.Adapter<HistoryItemViewHolder>() {
+class HistoryAdapter(private val userEventListener: UserEventListener) :
+    RecyclerView.Adapter<HistoryItemViewHolder>() {
     private val historyRecords: MutableList<HistoryRecordUiModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryItemViewHolder {

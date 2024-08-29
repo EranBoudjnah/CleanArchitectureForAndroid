@@ -1,5 +1,3 @@
 package com.mitteloupe.whoami.datasource.history.model
 
-data class HistoryRecordDeletionIdentifierDataModel(
-    val ipAddress: String
-)
+data class HistoryRecordDeletionIdentifierDataModel(val ipAddress: String)

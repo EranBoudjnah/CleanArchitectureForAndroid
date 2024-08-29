@@ -6,9 +6,7 @@ import com.mitteloupe.whoami.home.presentation.model.ErrorPresentationModel
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.ui.R
 
-class ErrorToUiMapper(
-    private val resources: Resources
-) {
+class ErrorToUiMapper(private val resources: Resources) {
     fun toUi(presentationError: HomeViewState.Error) = when (val error = presentationError.error) {
         ErrorPresentationModel.NoIpAddress -> string(R.string.home_error_no_ip_description)
         is ErrorPresentationModel.NoIpAddressInformation -> {

@@ -86,26 +86,8 @@ class HomeViewModelTest :
     fun `Given connection details when onSaveDetailsAction then details saved, notifies success`() =
         runTest {
             val ipAddress = "1.3.3.7"
-            val givenConnectionDetails = HomeViewState.Connected(
-                ipAddress = ipAddress,
-                city = null,
-                region = null,
-                countryCode = null,
-                geolocation = null,
-                internetServiceProviderName = null,
-                postCode = null,
-                timeZone = null
-            )
-            val domainConnectionDetails = ConnectionDetailsDomainModel.Connected(
-                ipAddress = ipAddress,
-                city = null,
-                region = null,
-                countryCode = null,
-                geolocation = null,
-                internetServiceProviderName = null,
-                postCode = null,
-                timeZone = null
-            )
+            val givenConnectionDetails = viewStateConnected(ipAddress)
+            val domainConnectionDetails = domainConnectionDetails(ipAddress)
             given { connectionDetailsToDomainMapper.toDomain(givenConnectionDetails) }
                 .willReturn(domainConnectionDetails)
             givenSuccessfulNoResultUseCaseExecution(
@@ -132,11 +114,89 @@ class HomeViewModelTest :
         }
 
     @Test
+    fun `Given connection details when onSaveDetailsAction then details saved`() = runTest {
+        val ipAddress = "1.3.3.7"
+        val givenConnectionDetails = viewStateConnected(ipAddress)
+        val domainConnectionDetails = domainConnectionDetails(ipAddress)
+        given { connectionDetailsToDomainMapper.toDomain(givenConnectionDetails) }
+            .willReturn(domainConnectionDetails)
+        givenSuccessfulNoResultUseCaseExecution(
+            saveConnectionDetailsUseCase,
+            domainConnectionDetails
+        )
+        val deferredNotification = async(start = UNDISPATCHED) {
+            classUnderTest.notification.first()
+        }
+        val expectedNotification = HomePresentationNotification.ConnectionSaved(ipAddress)
+
+        // When
+        classUnderTest.onSaveDetailsAction(givenConnectionDetails)
+        val actualNotification = deferredNotification.await()
+
+        // Then
+        verify(useCaseExecutor).execute(
+            useCase = eq(saveConnectionDetailsUseCase),
+            value = eq(domainConnectionDetails),
+            onResult = any(),
+            onException = any()
+        )
+    }
+
+    @Test
+    fun `Given connection details when onSaveDetailsAction then notifies success`() = runTest {
+        val ipAddress = "192.168.0.1"
+        val givenConnectionDetails = viewStateConnected(ipAddress)
+        val domainConnectionDetails = domainConnectionDetails(ipAddress)
+        given { connectionDetailsToDomainMapper.toDomain(givenConnectionDetails) }
+            .willReturn(domainConnectionDetails)
+        givenSuccessfulNoResultUseCaseExecution(
+            saveConnectionDetailsUseCase,
+            domainConnectionDetails
+        )
+        val deferredNotification = async(start = UNDISPATCHED) {
+            classUnderTest.notification.first()
+        }
+        val expectedNotification = HomePresentationNotification.ConnectionSaved(ipAddress)
+
+        // When
+        classUnderTest.onSaveDetailsAction(givenConnectionDetails)
+        val actualNotification = deferredNotification.await()
+
+        // Then
+        assertEquals(expectedNotification, actualNotification)
+    }
+
+    @Test
+    fun `Given connection details when onSaveDetailsAction then navigates to View History`() =
+        runTest {
+            val ipAddress = "1.1.1.1"
+            val givenConnectionDetails = viewStateConnected(ipAddress)
+            val domainConnectionDetails = domainConnectionDetails(ipAddress)
+            given { connectionDetailsToDomainMapper.toDomain(givenConnectionDetails) }
+                .willReturn(domainConnectionDetails)
+            givenSuccessfulNoResultUseCaseExecution(
+                saveConnectionDetailsUseCase,
+                domainConnectionDetails
+            )
+            val deferredDestination = async(start = UNDISPATCHED) {
+                classUnderTest.destination.first()
+            }
+            val expectedDestination = ViewHistoryPresentationDestination(ipAddress)
+
+            // When
+            classUnderTest.onSaveDetailsAction(givenConnectionDetails)
+            val actualDestination = deferredDestination.await()
+
+            // Then
+            assertEquals(expectedDestination, actualDestination)
+        }
+
+    @Test
     fun `When onViewHistoryAction then navigates to View History`() = runTest {
         val deferredDestination = async(start = UNDISPATCHED) {
             classUnderTest.destination.first()
         }
-        val expectedDestination = ViewHistoryPresentationDestination
+        val expectedDestination = ViewHistoryPresentationDestination(null)
 
         // When
         classUnderTest.onViewHistoryAction()
@@ -159,5 +219,33 @@ class HomeViewModelTest :
 
         // Then
         assertEquals(expectedDestination, actualDestination)
+    }
+
+    private fun viewStateConnected(ipAddress: String): HomeViewState.Connected {
+        val givenConnectionDetails = HomeViewState.Connected(
+            ipAddress = ipAddress,
+            city = null,
+            region = null,
+            countryCode = null,
+            geolocation = null,
+            internetServiceProviderName = null,
+            postCode = null,
+            timeZone = null
+        )
+        return givenConnectionDetails
+    }
+
+    private fun domainConnectionDetails(ipAddress: String): ConnectionDetailsDomainModel.Connected {
+        val domainConnectionDetails = ConnectionDetailsDomainModel.Connected(
+            ipAddress = ipAddress,
+            city = null,
+            region = null,
+            countryCode = null,
+            geolocation = null,
+            internetServiceProviderName = null,
+            postCode = null,
+            timeZone = null
+        )
+        return domainConnectionDetails
     }
 }

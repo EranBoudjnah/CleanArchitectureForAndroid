@@ -8,10 +8,10 @@ plugins {
 
 android {
     namespace = "com.mitteloupe.whoami.test"
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 22
+        minSdk = libs.versions.minSdk.get().toInt()
     }
 
     buildTypes {
@@ -34,12 +34,13 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
+}
+
+kotlin {
+    sourceSets.all {
+        languageSettings.enableLanguageFeature("ExplicitBackingFields")
     }
 }
 
@@ -53,21 +54,23 @@ detekt {
 }
 
 dependencies {
-    implementation(projects.architecturePresentation)
+    implementation(projects.architecture.presentation)
 
     implementation(projects.coroutine)
     implementation(projects.widget)
 
+    implementation(libs.material)
+
     implementation(platform(libs.compose.bom))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.material3)
 
     implementation(libs.test.junit)
     implementation(libs.test.androidx.junit)
     implementation(libs.test.androidx.espresso.core)
-    implementation("androidx.compose.ui:ui-test-junit4")
+    implementation(libs.test.compose.ui.junit4)
     implementation(libs.test.android.hilt)
     implementation(libs.test.android.uiautomator)
     implementation(libs.test.androidx.espresso.core)

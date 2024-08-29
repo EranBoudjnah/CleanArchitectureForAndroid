@@ -1,5 +1,6 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     alias(libs.plugins.android.application)
@@ -7,6 +8,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     id("com.google.android.gms.oss-licenses-plugin")
+    alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.detekt)
     alias(libs.plugins.compose.compiler)
@@ -14,7 +16,7 @@ plugins {
 
 android {
     namespace = "com.mitteloupe.whoami"
-    compileSdk = 34
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     buildFeatures {
         buildConfig = true
@@ -22,8 +24,8 @@ android {
 
     defaultConfig {
         applicationId = "com.mitteloupe.whoami"
-        minSdk = 22
-        targetSdk = 34
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -65,15 +67,19 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
+
     buildFeatures {
         compose = true
     }
+
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -93,23 +99,23 @@ detekt {
 dependencies {
     implementation(projects.time)
     implementation(projects.coroutine)
-    implementation(projects.datasourceArchitecture)
-    implementation(projects.datasourceSource)
-    implementation(projects.datasourceImplementation)
+    implementation(projects.datasource.architecture)
+    implementation(projects.datasource.source)
+    implementation(projects.datasource.implementation)
 
-    implementation(projects.architectureUi)
-    implementation(projects.architecturePresentation)
-    implementation(projects.architectureDomain)
+    implementation(projects.architecture.ui)
+    implementation(projects.architecture.presentation)
+    implementation(projects.architecture.domain)
 
-    implementation(projects.homeUi)
-    implementation(projects.homePresentation)
-    implementation(projects.homeDomain)
-    implementation(projects.homeData)
+    implementation(projects.home.ui)
+    implementation(projects.home.presentation)
+    implementation(projects.home.domain)
+    implementation(projects.home.data)
 
-    implementation(projects.historyUi)
-    implementation(projects.historyPresentation)
-    implementation(projects.historyDomain)
-    implementation(projects.historyData)
+    implementation(projects.history.ui)
+    implementation(projects.history.presentation)
+    implementation(projects.history.domain)
+    implementation(projects.history.data)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -131,6 +137,8 @@ dependencies {
 
     implementation(projects.analytics)
 
+    implementation(libs.kotlinx.serialization.json)
+
     testImplementation(libs.test.junit)
     testImplementation(libs.test.mockito.kotlin)
     testImplementation(libs.test.hamcrest)
@@ -144,7 +152,7 @@ dependencies {
     androidTestImplementation(libs.test.compose.ui.junit4)
     androidTestImplementation(libs.test.android.hilt)
     androidTestImplementation(libs.test.android.uiautomator)
-    androidTestImplementation(projects.architectureInstrumentationTest)
+    androidTestImplementation(projects.architecture.instrumentationTest)
     androidTestImplementation(libs.test.android.mockwebserver)
     kspAndroidTest(libs.hilt.android.compiler)
     androidTestImplementation(libs.test.mockito) {
@@ -190,5 +198,11 @@ tasks.withType(Test::class) {
             TestLogEvent.FAILED
         )
         showStandardStreams = true
+    }
+}
+
+tasks.withType<KotlinCompile> {
+    compilerOptions {
+        freeCompilerArgs.add("-Xskip-prerelease-check")
     }
 }
