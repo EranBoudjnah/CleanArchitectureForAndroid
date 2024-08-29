@@ -35,6 +35,9 @@ ktlint = "12.1.1"
 detekt = "1.23.6"
 kotlin-plugin-serialization = "2.0.20"
 kotlinx-serialization-json = "1.7.2"
+minSdk = "22"
+targetSdk = "35"
+compileSdk = "35"
 
 [libraries]
 androidx-material3 = { module = "androidx.compose.material3:material3" }
