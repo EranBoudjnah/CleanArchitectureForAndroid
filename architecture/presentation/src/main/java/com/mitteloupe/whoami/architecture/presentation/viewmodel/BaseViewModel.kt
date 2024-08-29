@@ -15,14 +15,14 @@ abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotifi
     private val useCaseExecutor: UseCaseExecutor
 ) {
     protected abstract val initialViewState: VIEW_STATE
-    private val mutableViewState by mutableStateFlow { initialViewState }
-    val viewState by immutableFlow { mutableViewState }
+    private val mutableViewState by lazy { MutableStateFlow(initialViewState) }
+    val viewState: Flow<VIEW_STATE> by lazy { mutableViewState }
 
-    private val mutableNotification by mutableSharedFlow<NOTIFICATION>()
-    val notification by immutableFlow { mutableNotification }
+    val notification: Flow<NOTIFICATION>
+        field = MutableSharedFlow()
 
-    private val mutableDestination by mutableSharedFlow<PresentationDestination>()
-    val destination by immutableFlow { mutableDestination }
+    val destination: Flow<PresentationDestination>
+        field = MutableSharedFlow()
 
     protected fun updateViewState(newState: VIEW_STATE) {
         MainScope().launch {
@@ -32,19 +32,19 @@ abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotifi
 
     protected fun notify(notification: NOTIFICATION) {
         MainScope().launch {
-            mutableNotification.emit(notification)
+            this@BaseViewModel.notification.emit(notification)
         }
     }
 
     protected fun navigate(destination: PresentationDestination) {
         MainScope().launch {
-            mutableDestination.emit(destination)
+            this@BaseViewModel.destination.emit(destination)
         }
     }
 
     protected fun navigateBack() {
         MainScope().launch {
-            mutableDestination.emit(PresentationDestination.Back)
+            destination.emit(PresentationDestination.Back)
         }
     }
 
@@ -62,13 +62,4 @@ abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotifi
     ) {
         useCaseExecutor.execute(this, value, onResult, onException)
     }
-
-    private fun <T> mutableStateFlow(initialValueProvider: () -> T) =
-        lazy { MutableStateFlow(initialValueProvider()) }
-
-    private fun <T> mutableSharedFlow() = lazy { MutableSharedFlow<T>() }
-
-    private fun <T, FLOW : MutableSharedFlow<T>> immutableFlow(
-        initializer: () -> FLOW
-    ): Lazy<Flow<T>> = lazy { initializer() }
 }
