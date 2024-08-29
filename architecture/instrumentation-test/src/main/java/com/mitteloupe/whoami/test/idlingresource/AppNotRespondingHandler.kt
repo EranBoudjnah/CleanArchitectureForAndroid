@@ -24,7 +24,11 @@ private fun UiDevice.appNotRespondingDialog() = findObject(
 fun UiDevice.findAndCloseAppNotRespondingDialog() =
     appNotRespondingDialog().let { appNotRespondingDialog ->
         appNotRespondingDialog.exists()
-            .also { closeAnrWithWait(appNotRespondingDialog) }
+            .also { dialogExists ->
+                if (dialogExists) {
+                    closeAnrWithWait(appNotRespondingDialog)
+                }
+            }
     }
 
 private fun UiDevice.closeAnrWithWait(appNotRespondingDialog: UiObject) {
