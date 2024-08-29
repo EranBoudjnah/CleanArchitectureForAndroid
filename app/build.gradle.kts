@@ -1,5 +1,6 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     alias(libs.plugins.android.application)
@@ -15,7 +16,7 @@ plugins {
 
 android {
     namespace = "com.mitteloupe.whoami"
-    compileSdk = 35
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     buildFeatures {
         buildConfig = true
@@ -23,8 +24,8 @@ android {
 
     defaultConfig {
         applicationId = "com.mitteloupe.whoami"
-        minSdk = 22
-        targetSdk = 35
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -197,5 +198,11 @@ tasks.withType(Test::class) {
             TestLogEvent.FAILED
         )
         showStandardStreams = true
+    }
+}
+
+tasks.withType<KotlinCompile> {
+    compilerOptions {
+        freeCompilerArgs.add("-Xskip-prerelease-check")
     }
 }
