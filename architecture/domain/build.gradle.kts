@@ -18,6 +18,4 @@ dependencies {
     implementation(projects.coroutine)
 
     implementation(libs.kotlinx.coroutines.core)
-
-    testImplementation(libs.test.junit)
 }
