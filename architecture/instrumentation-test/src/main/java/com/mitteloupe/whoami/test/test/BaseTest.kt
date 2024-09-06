@@ -40,9 +40,6 @@ import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
 
 abstract class BaseTest {
-    internal val targetContext
-        get() = getInstrumentation().targetContext
-
     private val hiltAndroidRule by lazy { HiltAndroidRule(this) }
 
     @Inject

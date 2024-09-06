@@ -13,7 +13,6 @@ android {
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -58,8 +57,4 @@ dependencies {
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
-
-    testImplementation(libs.test.junit)
-    androidTestImplementation(libs.test.androidx.junit)
-    androidTestImplementation(libs.test.androidx.espresso.core)
 }

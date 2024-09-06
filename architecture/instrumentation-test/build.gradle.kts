@@ -54,11 +54,6 @@ detekt {
 }
 
 dependencies {
-    implementation(projects.architecture.presentation)
-
-    implementation(projects.coroutine)
-    implementation(projects.widget)
-
     implementation(libs.material)
 
     implementation(platform(libs.compose.bom))
