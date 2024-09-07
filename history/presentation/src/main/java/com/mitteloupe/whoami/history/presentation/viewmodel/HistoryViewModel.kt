@@ -1,7 +1,7 @@
 package com.mitteloupe.whoami.history.presentation.viewmodel
 
 import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
-import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination.Back
+import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent.Back
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
 import com.mitteloupe.whoami.history.domain.usecase.DeleteHistoryRecordUseCase
@@ -52,6 +52,6 @@ class HistoryViewModel(
     }
 
     fun onBackAction() {
-        navigate(Back)
+        emitNavigationEvent(Back)
     }
 }

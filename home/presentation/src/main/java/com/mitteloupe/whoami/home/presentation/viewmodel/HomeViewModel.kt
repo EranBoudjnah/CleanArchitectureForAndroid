@@ -12,8 +12,9 @@ import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotificatio
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Error
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Loading
-import com.mitteloupe.whoami.home.presentation.navigation.ViewHistoryPresentationDestination
-import com.mitteloupe.whoami.home.presentation.navigation.ViewOpenSourceNoticesPresentationDestination
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSaveDetails
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewHistory
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewOpenSourceNotices
 
 class HomeViewModel(
     private val getConnectionDetailsUseCase: GetConnectionDetailsUseCase,
@@ -43,10 +44,8 @@ class HomeViewModel(
             value = domainConnectionDetails,
             onResult = {
                 notify(ConnectionSaved(connectionDetails.ipAddress))
-                navigate(
-                    ViewHistoryPresentationDestination(
-                        highlightedIpAddress = connectionDetails.ipAddress
-                    )
+                emitNavigationEvent(
+                    OnSaveDetails(highlightedIpAddress = connectionDetails.ipAddress)
                 )
             },
             onException = { exception ->
@@ -56,10 +55,10 @@ class HomeViewModel(
     }
 
     fun onViewHistoryAction() {
-        navigate(ViewHistoryPresentationDestination(highlightedIpAddress = null))
+        emitNavigationEvent(OnViewHistory)
     }
 
     fun onOpenSourceNoticesAction() {
-        navigate(ViewOpenSourceNoticesPresentationDestination)
+        emitNavigationEvent(OnViewOpenSourceNotices)
     }
 }

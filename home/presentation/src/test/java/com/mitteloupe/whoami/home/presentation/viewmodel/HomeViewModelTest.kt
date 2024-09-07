@@ -12,8 +12,9 @@ import com.mitteloupe.whoami.home.presentation.mapper.ExceptionToPresentationMap
 import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotification
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Loading
-import com.mitteloupe.whoami.home.presentation.navigation.ViewHistoryPresentationDestination
-import com.mitteloupe.whoami.home.presentation.navigation.ViewOpenSourceNoticesPresentationDestination
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSaveDetails
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewHistory
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewOpenSourceNotices
 import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
@@ -124,14 +125,9 @@ class HomeViewModelTest :
             saveConnectionDetailsUseCase,
             domainConnectionDetails
         )
-        val deferredNotification = async(start = UNDISPATCHED) {
-            classUnderTest.notification.first()
-        }
-        val expectedNotification = HomePresentationNotification.ConnectionSaved(ipAddress)
 
         // When
         classUnderTest.onSaveDetailsAction(givenConnectionDetails)
-        val actualNotification = deferredNotification.await()
 
         // Then
         verify(useCaseExecutor).execute(
@@ -167,7 +163,7 @@ class HomeViewModelTest :
     }
 
     @Test
-    fun `Given connection details when onSaveDetailsAction then navigates to View History`() =
+    fun `Given connection details when onSaveDetailsAction then emits OnSaveDetails event`() =
         runTest {
             val ipAddress = "1.1.1.1"
             val givenConnectionDetails = viewStateConnected(ipAddress)
@@ -178,47 +174,47 @@ class HomeViewModelTest :
                 saveConnectionDetailsUseCase,
                 domainConnectionDetails
             )
-            val deferredDestination = async(start = UNDISPATCHED) {
+            val deferredNavigationEvent = async(start = UNDISPATCHED) {
                 classUnderTest.destination.first()
             }
-            val expectedDestination = ViewHistoryPresentationDestination(ipAddress)
+            val expectedNavigationEvent = OnSaveDetails(ipAddress)
 
             // When
             classUnderTest.onSaveDetailsAction(givenConnectionDetails)
-            val actualDestination = deferredDestination.await()
+            val actualNavigationEvent = deferredNavigationEvent.await()
 
             // Then
-            assertEquals(expectedDestination, actualDestination)
+            assertEquals(expectedNavigationEvent, actualNavigationEvent)
         }
 
     @Test
-    fun `When onViewHistoryAction then navigates to View History`() = runTest {
-        val deferredDestination = async(start = UNDISPATCHED) {
+    fun `When onViewHistoryAction then emits OnViewHistory event`() = runTest {
+        val deferredNavigationEvent = async(start = UNDISPATCHED) {
             classUnderTest.destination.first()
         }
-        val expectedDestination = ViewHistoryPresentationDestination(null)
+        val expectedNavigationEvent = OnViewHistory
 
         // When
         classUnderTest.onViewHistoryAction()
-        val actualDestination = deferredDestination.await()
+        val actualNavigationEvent = deferredNavigationEvent.await()
 
         // Then
-        assertEquals(expectedDestination, actualDestination)
+        assertEquals(expectedNavigationEvent, actualNavigationEvent)
     }
 
     @Test
-    fun `When onOpenSourceNoticesAction then navigates to Open Source Notices`() = runTest {
-        val deferredDestination = async(start = UNDISPATCHED) {
+    fun `When onOpenSourceNoticesAction then emits OnViewOpenSourceNotices`() = runTest {
+        val deferredNavigationEvent = async(start = UNDISPATCHED) {
             classUnderTest.destination.first()
         }
-        val expectedDestination = ViewOpenSourceNoticesPresentationDestination
+        val expectedNavigationEvent = OnViewOpenSourceNotices
 
         // When
         classUnderTest.onOpenSourceNoticesAction()
-        val actualDestination = deferredDestination.await()
+        val actualNavigationEvent = deferredNavigationEvent.await()
 
         // Then
-        assertEquals(expectedDestination, actualDestination)
+        assertEquals(expectedNavigationEvent, actualNavigationEvent)
     }
 
     private fun viewStateConnected(ipAddress: String): HomeViewState.Connected {

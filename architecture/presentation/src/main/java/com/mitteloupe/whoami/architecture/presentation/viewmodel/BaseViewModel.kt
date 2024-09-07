@@ -3,7 +3,7 @@ package com.mitteloupe.whoami.architecture.presentation.viewmodel
 import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
 import com.mitteloupe.whoami.architecture.domain.exception.DomainException
 import com.mitteloupe.whoami.architecture.domain.usecase.UseCase
-import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
+import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +21,7 @@ abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotifi
     val notification: Flow<NOTIFICATION>
         field = MutableSharedFlow()
 
-    val destination: Flow<PresentationDestination>
+    val destination: Flow<PresentationNavigationEvent>
         field = MutableSharedFlow()
 
     protected fun updateViewState(newState: VIEW_STATE) {
@@ -36,7 +36,7 @@ abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotifi
         }
     }
 
-    protected fun navigate(destination: PresentationDestination) {
+    protected fun emitNavigationEvent(destination: PresentationNavigationEvent) {
         MainScope().launch {
             this@BaseViewModel.destination.emit(destination)
         }
@@ -44,7 +44,7 @@ abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotifi
 
     protected fun navigateBack() {
         MainScope().launch {
-            destination.emit(PresentationDestination.Back)
+            destination.emit(PresentationNavigationEvent.Back)
         }
     }
 

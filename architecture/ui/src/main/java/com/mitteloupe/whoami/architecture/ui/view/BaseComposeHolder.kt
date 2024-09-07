@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavController
-import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
+import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
@@ -49,7 +49,7 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
     }
 
     @Composable
-    fun Navigate(navigation: PresentationDestination, navController: NavController) {
+    fun Navigate(navigation: PresentationNavigationEvent, navController: NavController) {
         navigationMapper.toUi(navigation).let { uiDestination ->
             LaunchedEffect(navigation) {
                 uiDestination.navigate(navController)
