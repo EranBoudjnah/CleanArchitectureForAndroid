@@ -12,7 +12,7 @@ import com.mitteloupe.whoami.home.presentation.mapper.ExceptionToPresentationMap
 import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotification
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Loading
-import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSaveDetails
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSavedDetails
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewHistory
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewOpenSourceNotices
 import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
@@ -163,7 +163,7 @@ class HomeViewModelTest :
     }
 
     @Test
-    fun `Given connection details when onSaveDetailsAction then emits OnSaveDetails event`() =
+    fun `Given connection details when onSaveDetailsAction then emits OnSavedDetails event`() =
         runTest {
             val ipAddress = "1.1.1.1"
             val givenConnectionDetails = viewStateConnected(ipAddress)
@@ -177,7 +177,7 @@ class HomeViewModelTest :
             val deferredNavigationEvent = async(start = UNDISPATCHED) {
                 classUnderTest.destination.first()
             }
-            val expectedNavigationEvent = OnSaveDetails(ipAddress)
+            val expectedNavigationEvent = OnSavedDetails(ipAddress)
 
             // When
             classUnderTest.onSaveDetailsAction(givenConnectionDetails)

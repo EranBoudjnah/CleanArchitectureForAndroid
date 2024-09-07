@@ -12,7 +12,7 @@ import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotificatio
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Error
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Loading
-import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSaveDetails
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSavedDetails
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewHistory
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewOpenSourceNotices
 
@@ -45,7 +45,7 @@ class HomeViewModel(
             onResult = {
                 notify(ConnectionSaved(connectionDetails.ipAddress))
                 emitNavigationEvent(
-                    OnSaveDetails(highlightedIpAddress = connectionDetails.ipAddress)
+                    OnSavedDetails(highlightedIpAddress = connectionDetails.ipAddress)
                 )
             },
             onException = { exception ->

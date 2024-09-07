@@ -7,7 +7,7 @@ import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledDestinationException
-import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSaveDetails
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSavedDetails
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewHistory
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewOpenSourceNotices
 import com.mitteloupe.whoami.ui.main.route.History
@@ -59,10 +59,10 @@ class HomeDestinationToUiMapperTest {
     }
 
     @Test
-    fun `Given OnSaveDetails when toUi then returns history navigation with given highlight`() {
+    fun `Given OnSavedDetails when toUi then returns history navigation with given highlight`() {
         // Given
         val ipAddress = "1.2.3.4"
-        val presentationDestination = OnSaveDetails(ipAddress)
+        val presentationDestination = OnSavedDetails(ipAddress)
         val navController: NavController = mock()
         val uiDestination = classUnderTest.toUi(presentationDestination)
         val expectedDestination = History(ipAddress)

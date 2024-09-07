@@ -9,7 +9,7 @@ import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledDesti
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
 import com.mitteloupe.whoami.architecture.ui.navigation.model.UiDestination
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent
-import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSaveDetails
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSavedDetails
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewHistory
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewOpenSourceNotices
 import com.mitteloupe.whoami.ui.main.route.History
@@ -27,7 +27,7 @@ class HomeDestinationToUiMapper(
         }
 
     private fun HomePresentationNavigationEvent.toUiDestination(): UiDestination = when (this) {
-        is OnSaveDetails -> history(highlightedIpAddress)
+        is OnSavedDetails -> history(highlightedIpAddress)
         OnViewHistory -> history(null)
         OnViewOpenSourceNotices -> openSourceNotices()
     }
