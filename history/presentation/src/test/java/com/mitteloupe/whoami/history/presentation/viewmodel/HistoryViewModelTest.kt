@@ -91,7 +91,7 @@ class HistoryViewModelTest :
                 (actualValue as HistoryRecords).highlightedIpAddress
             )
             assertThat(
-                (actualValue as HistoryRecords).historyRecords,
+                actualValue.historyRecords,
                 hasSize(expectedSavedRecords.size)
             )
             expectedSavedRecords.forEach { expectedRecord ->
@@ -107,7 +107,7 @@ class HistoryViewModelTest :
         val givenIpAddressRecord2 = domainHistoryRecord("1.1.1.1")
         val givenHistory = setOf(givenIpAddressRecord1, givenIpAddressRecord2)
         givenSuccessfulUseCaseExecution(getHistoryUseCase, givenHistory)
-        val highlightedIpAddress: String? = "0.0.0.0"
+        val highlightedIpAddress = "0.0.0.0"
 
         // When
         classUnderTest.onEnter(highlightedIpAddress)

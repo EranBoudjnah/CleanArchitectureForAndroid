@@ -10,11 +10,11 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.StateListDrawable
 import android.os.Build
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.view.menu.ActionMenuItemView
-import androidx.appcompat.view.menu.MenuItemImpl
 import androidx.core.content.res.ResourcesCompat
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlin.reflect.KClass
@@ -103,7 +103,7 @@ class WithDrawableIdMatcher(@param:DrawableRes private val expectedId: Int) :
         get() {
             val itemData = this::class.members.first {
                 it.name == "getItemData"
-            }.call() as MenuItemImpl
+            }.call() as MenuItem
 
             return itemData::class.members.first {
                 it.name == "getIcon"

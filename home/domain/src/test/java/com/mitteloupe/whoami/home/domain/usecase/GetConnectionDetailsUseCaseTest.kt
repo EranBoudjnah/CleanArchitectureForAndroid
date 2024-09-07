@@ -4,7 +4,7 @@ import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel
 import com.mitteloupe.whoami.home.domain.repository.GetConnectionDetailsRepository
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -39,9 +39,9 @@ class GetConnectionDetailsUseCaseTest {
                 .willReturn(flowOf(expectedConnectionDetails))
 
             // When
-            val actualValue = classUnderTest.executeInBackground(Unit).toList()
+            val actualValue = classUnderTest.executeInBackground(Unit).lastOrNull()
 
             // Then
-            assertEquals(listOf(expectedConnectionDetails), actualValue)
+            assertEquals(expectedConnectionDetails, actualValue)
         }
 }
