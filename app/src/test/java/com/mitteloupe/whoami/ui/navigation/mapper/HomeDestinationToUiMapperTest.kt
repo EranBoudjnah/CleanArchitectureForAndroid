@@ -5,10 +5,11 @@ import android.content.Intent
 import androidx.navigation.NavController
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.mitteloupe.whoami.analytics.Analytics
-import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
+import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledDestinationException
-import com.mitteloupe.whoami.home.presentation.navigation.ViewHistoryPresentationDestination
-import com.mitteloupe.whoami.home.presentation.navigation.ViewOpenSourceNoticesPresentationDestination
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSavedDetails
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewHistory
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewOpenSourceNotices
 import com.mitteloupe.whoami.ui.main.route.History
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.isA
@@ -43,9 +44,9 @@ class HomeDestinationToUiMapperTest {
     }
 
     @Test
-    fun `Given ViewHistory when toUi then returns history navigation`() {
+    fun `Given OnViewHistory when toUi then returns history navigation with no highlight`() {
         // Given
-        val presentationDestination = ViewHistoryPresentationDestination(null)
+        val presentationDestination = OnViewHistory
         val navController: NavController = mock()
         val uiDestination = classUnderTest.toUi(presentationDestination)
         val expectedDestination = History(null)
@@ -58,9 +59,25 @@ class HomeDestinationToUiMapperTest {
     }
 
     @Test
-    fun `Given ViewOpenSourceNotices when toUi then returns open source notices navigation`() {
+    fun `Given OnSavedDetails when toUi then returns history navigation with given highlight`() {
         // Given
-        val presentationDestination = ViewOpenSourceNoticesPresentationDestination
+        val ipAddress = "1.2.3.4"
+        val presentationDestination = OnSavedDetails(ipAddress)
+        val navController: NavController = mock()
+        val uiDestination = classUnderTest.toUi(presentationDestination)
+        val expectedDestination = History(ipAddress)
+
+        // When
+        uiDestination.navigate(navController)
+
+        // Then
+        verify(navController).navigate(expectedDestination)
+    }
+
+    @Test
+    fun `Given OnViewOpenSourceNotices when toUi then returns open source notices navigation`() {
+        // Given
+        val presentationDestination = OnViewOpenSourceNotices
         val uiDestination = classUnderTest.toUi(presentationDestination)
         val expectedIntent: Intent = mock()
         val navController: NavController = mock()
@@ -81,12 +98,12 @@ class HomeDestinationToUiMapperTest {
     @Test
     fun `Given unknown destination when toUi then throws meaningful illegal state exception`() {
         // Given
-        val presentationDestination: PresentationDestination = mock()
+        val presentationNavigationEvent: PresentationNavigationEvent = mock()
         var caughtException: Exception? = null
 
         // When
         try {
-            classUnderTest.toUi(presentationDestination)
+            classUnderTest.toUi(presentationNavigationEvent)
         } catch (exception: Exception) {
             caughtException = exception
         }
@@ -100,7 +117,7 @@ class HomeDestinationToUiMapperTest {
         assertThat(
             actualException.message,
             matchesPattern(
-                "^Navigation to PresentationDestination\\\$MockitoMock\\\$\\w+ was not handled.$"
+                "^Navigation to PresentationNavigationEvent\\\$MockitoMock\\\$\\w+ was not handled.$"
             )
         )
     }

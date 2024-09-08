@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationDestination
+import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
 import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
@@ -70,7 +70,7 @@ abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : PresentationNotific
         }
     }
 
-    private fun navigate(destination: PresentationDestination) {
+    private fun navigate(destination: PresentationNavigationEvent) {
         val uiDestination = destinationToUiMapper.toUi(destination)
         uiDestination.navigate(navController)
     }
