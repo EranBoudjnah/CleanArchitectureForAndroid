@@ -20,7 +20,7 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
 
     @Composable
     fun ViewModelObserver(navController: NavController) {
-        val navigation = viewModel.destination.collectAsState(
+        val navigation = viewModel.navigationEvent.collectAsState(
             initial = null,
             coroutineContextProvider.main
         )

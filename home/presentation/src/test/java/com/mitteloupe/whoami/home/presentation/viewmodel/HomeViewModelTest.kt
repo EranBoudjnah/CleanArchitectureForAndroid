@@ -175,7 +175,7 @@ class HomeViewModelTest :
                 domainConnectionDetails
             )
             val deferredNavigationEvent = async(start = UNDISPATCHED) {
-                classUnderTest.destination.first()
+                classUnderTest.navigationEvent.first()
             }
             val expectedNavigationEvent = OnSavedDetails(ipAddress)
 
@@ -190,7 +190,7 @@ class HomeViewModelTest :
     @Test
     fun `When onViewHistoryAction then emits OnViewHistory event`() = runTest {
         val deferredNavigationEvent = async(start = UNDISPATCHED) {
-            classUnderTest.destination.first()
+            classUnderTest.navigationEvent.first()
         }
         val expectedNavigationEvent = OnViewHistory
 
@@ -205,7 +205,7 @@ class HomeViewModelTest :
     @Test
     fun `When onOpenSourceNoticesAction then emits OnViewOpenSourceNotices`() = runTest {
         val deferredNavigationEvent = async(start = UNDISPATCHED) {
-            classUnderTest.destination.first()
+            classUnderTest.navigationEvent.first()
         }
         val expectedNavigationEvent = OnViewOpenSourceNotices
 
