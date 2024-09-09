@@ -21,7 +21,7 @@ abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotifi
     val notification: Flow<NOTIFICATION>
         field = MutableSharedFlow()
 
-    val destination: Flow<PresentationNavigationEvent>
+    val navigationEvent: Flow<PresentationNavigationEvent>
         field = MutableSharedFlow()
 
     protected fun updateViewState(newState: VIEW_STATE) {
@@ -38,13 +38,13 @@ abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotifi
 
     protected fun emitNavigationEvent(destination: PresentationNavigationEvent) {
         MainScope().launch {
-            this@BaseViewModel.destination.emit(destination)
+            this@BaseViewModel.navigationEvent.emit(destination)
         }
     }
 
     protected fun navigateBack() {
         MainScope().launch {
-            destination.emit(PresentationNavigationEvent.Back)
+            navigationEvent.emit(PresentationNavigationEvent.Back)
         }
     }
 

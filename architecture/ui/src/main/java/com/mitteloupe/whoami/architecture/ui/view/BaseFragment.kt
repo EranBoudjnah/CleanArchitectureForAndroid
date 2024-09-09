@@ -53,7 +53,7 @@ abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : PresentationNotific
                 viewState.collect(::applyViewState)
             }
             performOnStartedLifecycleEvent {
-                destination.collect(::navigate)
+                navigationEvent.collect(::navigate)
             }
         }
     }
