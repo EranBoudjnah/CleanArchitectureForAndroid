@@ -10,7 +10,7 @@ import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsToUiMapper
 import com.mitteloupe.whoami.home.ui.mapper.ErrorToUiMapper
 import com.mitteloupe.whoami.home.ui.mapper.HomeNotificationToUiMapper
 import com.mitteloupe.whoami.home.ui.mapper.HomeViewStateToUiMapper
-import com.mitteloupe.whoami.ui.navigation.mapper.HomeDestinationToUiMapper
+import com.mitteloupe.whoami.ui.navigation.mapper.HomeNavigationEventToDestinationMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +25,7 @@ object HomeUiModule {
 
     @Provides
     fun providesHomeDestinationToUiMapper(analytics: Analytics, @ActivityContext context: Context) =
-        HomeDestinationToUiMapper(analytics, context)
+        HomeNavigationEventToDestinationMapper(analytics, context)
 
     @Provides
     fun providesHomeNotificationToUiMapper(@ActivityContext context: Context) =
@@ -42,7 +42,7 @@ object HomeUiModule {
         homeViewModel: HomeViewModel,
         homeViewStateToUiMapper: HomeViewStateToUiMapper,
         connectionDetailsToUiMapper: ConnectionDetailsToUiMapper,
-        homeNavigationMapper: HomeDestinationToUiMapper,
+        homeNavigationMapper: HomeNavigationEventToDestinationMapper,
         homeNotificationMapper: HomeNotificationToUiMapper,
         errorToUiMapper: ErrorToUiMapper,
         coroutineContextProvider: CoroutineContextProvider,

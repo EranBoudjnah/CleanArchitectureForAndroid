@@ -12,7 +12,7 @@ import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.analytics.event.Click
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
-import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
+import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventToDestinationMapper
 import com.mitteloupe.whoami.architecture.ui.view.BaseFragment
 import com.mitteloupe.whoami.architecture.ui.view.ViewsProvider
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
@@ -38,7 +38,7 @@ class HistoryFragment :
 
     @Inject
     @Named(NAVIGATION_MAPPER_NAME)
-    override lateinit var destinationToUiMapper: DestinationToUiMapper
+    override lateinit var navigationEventToDestinationMapper: NavigationEventToDestinationMapper
 
     @Inject
     lateinit var recordDeletionToPresentationMapper: HistoryRecordDeletionToPresentationMapper

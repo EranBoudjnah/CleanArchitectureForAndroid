@@ -15,7 +15,7 @@ import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNa
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
 import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
-import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
+import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventToDestinationMapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -29,7 +29,7 @@ abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : PresentationNotific
 
     abstract val viewStateBinder: ViewStateBinder<VIEW_STATE, ViewsProvider>
 
-    abstract val destinationToUiMapper: DestinationToUiMapper
+    abstract val navigationEventToDestinationMapper: NavigationEventToDestinationMapper
 
     open val navController: NavController
         get() = findNavController()
@@ -71,7 +71,7 @@ abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : PresentationNotific
     }
 
     private fun navigate(destination: PresentationNavigationEvent) {
-        val uiDestination = destinationToUiMapper.toUi(destination)
+        val uiDestination = navigationEventToDestinationMapper.toUi(destination)
         uiDestination.navigate(navController)
     }
 }
