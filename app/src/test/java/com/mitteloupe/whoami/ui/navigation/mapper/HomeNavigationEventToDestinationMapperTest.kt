@@ -25,8 +25,8 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
 @RunWith(MockitoJUnitRunner::class)
-class HomeDestinationToUiMapperTest {
-    private lateinit var classUnderTest: HomeDestinationToUiMapper
+class HomeNavigationEventToDestinationMapperTest {
+    private lateinit var classUnderTest: HomeNavigationEventToDestinationMapper
 
     @Mock
     private lateinit var analytics: Analytics
@@ -39,8 +39,11 @@ class HomeDestinationToUiMapperTest {
 
     @Before
     fun setUp() {
-        classUnderTest =
-            HomeDestinationToUiMapper(analytics, activityContext, ossLicensesMenuIntentProvider)
+        classUnderTest = HomeNavigationEventToDestinationMapper(
+            analytics,
+            activityContext,
+            ossLicensesMenuIntentProvider
+        )
     }
 
     @Test

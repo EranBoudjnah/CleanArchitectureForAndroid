@@ -2,7 +2,7 @@ package com.mitteloupe.whoami.di
 
 import androidx.fragment.app.Fragment
 import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
-import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
+import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventToDestinationMapper
 import com.mitteloupe.whoami.architecture.ui.view.ViewsProvider
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
 import com.mitteloupe.whoami.history.ui.adapter.HistoryAdapter
@@ -10,7 +10,7 @@ import com.mitteloupe.whoami.history.ui.binder.HistoryViewStateBinder
 import com.mitteloupe.whoami.history.ui.mapper.HistoryRecordDeletionToPresentationMapper
 import com.mitteloupe.whoami.history.ui.mapper.HistoryRecordToUiMapper
 import com.mitteloupe.whoami.history.ui.view.HistoryFragment
-import com.mitteloupe.whoami.ui.navigation.mapper.HistoryDestinationToUiMapper
+import com.mitteloupe.whoami.ui.navigation.mapper.HistoryNavigationEventToDestinationMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,8 +22,8 @@ import javax.inject.Named
 object HistoryUiModule {
     @Provides
     @Named(HistoryFragment.NAVIGATION_MAPPER_NAME)
-    fun providesHistoryDestinationToUiMapper(): DestinationToUiMapper =
-        HistoryDestinationToUiMapper()
+    fun providesHistoryDestinationToUiMapper(): NavigationEventToDestinationMapper =
+        HistoryNavigationEventToDestinationMapper()
 
     @Provides
     fun providesHistoryRecordDeletionToPresentationMapper() =

@@ -3,14 +3,14 @@ package com.mitteloupe.whoami.ui.navigation.mapper
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent.Back
 import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledDestinationException
-import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
+import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventToDestinationMapper
 import com.mitteloupe.whoami.architecture.ui.navigation.model.UiDestination
 
-class HistoryDestinationToUiMapper : DestinationToUiMapper {
-    override fun toUi(presentationNavigationEvent: PresentationNavigationEvent): UiDestination =
-        when (presentationNavigationEvent) {
+class HistoryNavigationEventToDestinationMapper : NavigationEventToDestinationMapper {
+    override fun toUi(navigationEvent: PresentationNavigationEvent): UiDestination =
+        when (navigationEvent) {
             is Back -> backUiDestination()
-            else -> throw UnhandledDestinationException(presentationNavigationEvent)
+            else -> throw UnhandledDestinationException(navigationEvent)
         }
 
     private fun backUiDestination() = UiDestination { navController ->

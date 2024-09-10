@@ -6,7 +6,7 @@ import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledDestinationException
-import com.mitteloupe.whoami.architecture.ui.navigation.mapper.DestinationToUiMapper
+import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventToDestinationMapper
 import com.mitteloupe.whoami.architecture.ui.navigation.model.UiDestination
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSavedDetails
@@ -14,16 +14,16 @@ import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNaviga
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewOpenSourceNotices
 import com.mitteloupe.whoami.ui.main.route.History
 
-class HomeDestinationToUiMapper(
+class HomeNavigationEventToDestinationMapper(
     private val analytics: Analytics,
     private val activityContext: Context,
     private val ossLicensesMenuIntentProvider: Context.(Class<out Any>) -> Intent =
         { javaClass -> Intent(this, javaClass) }
-) : DestinationToUiMapper {
-    override fun toUi(presentationNavigationEvent: PresentationNavigationEvent): UiDestination =
-        when (presentationNavigationEvent) {
-            is HomePresentationNavigationEvent -> presentationNavigationEvent.toUiDestination()
-            else -> throw UnhandledDestinationException(presentationNavigationEvent)
+) : NavigationEventToDestinationMapper {
+    override fun toUi(navigationEvent: PresentationNavigationEvent): UiDestination =
+        when (navigationEvent) {
+            is HomePresentationNavigationEvent -> navigationEvent.toUiDestination()
+            else -> throw UnhandledDestinationException(navigationEvent)
         }
 
     private fun HomePresentationNavigationEvent.toUiDestination(): UiDestination = when (this) {
