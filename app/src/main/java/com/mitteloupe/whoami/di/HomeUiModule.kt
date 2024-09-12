@@ -3,6 +3,8 @@ package com.mitteloupe.whoami.di
 import android.content.Context
 import android.content.res.Resources
 import com.mitteloupe.whoami.analytics.Analytics
+import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
+import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventToDestinationMapper
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
 import com.mitteloupe.whoami.home.ui.di.HomeDependencies
@@ -38,6 +40,7 @@ object HomeUiModule {
     fun providesConnectionDetailsToUiMapper() = ConnectionDetailsToUiMapper()
 
     @Provides
+    @Suppress("UNCHECKED_CAST")
     fun providesHomeDependencies(
         homeViewModel: HomeViewModel,
         homeViewStateToUiMapper: HomeViewStateToUiMapper,
@@ -51,7 +54,7 @@ object HomeUiModule {
         homeViewModel,
         homeViewStateToUiMapper,
         connectionDetailsToUiMapper,
-        homeNavigationMapper,
+        homeNavigationMapper as NavigationEventToDestinationMapper<PresentationNavigationEvent>,
         homeNotificationMapper,
         errorToUiMapper,
         coroutineContextProvider,

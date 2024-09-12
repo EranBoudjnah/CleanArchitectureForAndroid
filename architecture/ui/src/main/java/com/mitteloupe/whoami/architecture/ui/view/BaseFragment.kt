@@ -19,6 +19,8 @@ import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventTo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+private typealias NavigationMapper = NavigationEventToDestinationMapper<PresentationNavigationEvent>
+
 abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : PresentationNotification> :
     Fragment,
     ViewsProvider {
@@ -29,7 +31,7 @@ abstract class BaseFragment<VIEW_STATE : Any, NOTIFICATION : PresentationNotific
 
     abstract val viewStateBinder: ViewStateBinder<VIEW_STATE, ViewsProvider>
 
-    abstract val navigationEventToDestinationMapper: NavigationEventToDestinationMapper
+    abstract val navigationEventToDestinationMapper: NavigationMapper
 
     open val navController: NavController
         get() = findNavController()

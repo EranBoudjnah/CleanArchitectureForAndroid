@@ -1,6 +1,7 @@
 package com.mitteloupe.whoami.di
 
 import androidx.fragment.app.Fragment
+import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventToDestinationMapper
 import com.mitteloupe.whoami.architecture.ui.view.ViewsProvider
@@ -17,12 +18,15 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
 import javax.inject.Named
 
+private typealias NavigationMapper = NavigationEventToDestinationMapper<PresentationNavigationEvent>
+
 @Module
 @InstallIn(FragmentComponent::class)
 object HistoryUiModule {
     @Provides
+    @JvmSuppressWildcards
     @Named(HistoryFragment.NAVIGATION_MAPPER_NAME)
-    fun providesHistoryDestinationToUiMapper(): NavigationEventToDestinationMapper =
+    fun providesHistoryDestinationToUiMapper(): NavigationMapper =
         HistoryNavigationEventToDestinationMapper()
 
     @Provides
