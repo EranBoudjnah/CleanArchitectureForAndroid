@@ -14,7 +14,7 @@ import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNotification>(
     private val viewModel: BaseViewModel<VIEW_STATE, NOTIFICATION>,
     private val coroutineContextProvider: CoroutineContextProvider,
-    private val navigationMapper: NavigationEventToDestinationMapper,
+    private val navigationMapper: NavigationEventToDestinationMapper<PresentationNavigationEvent>,
     private val notificationMapper: NotificationToUiMapper
 ) {
 

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.analytics.event.Click
+import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventToDestinationMapper
@@ -26,6 +27,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Named
 
+private typealias NavigationMapper = NavigationEventToDestinationMapper<PresentationNavigationEvent>
+
 @AndroidEntryPoint
 class HistoryFragment :
     BaseFragment<HistoryViewState, PresentationNotification>(R.layout.fragment_history),
@@ -37,8 +40,9 @@ class HistoryFragment :
     override lateinit var viewModel: HistoryViewModel
 
     @Inject
+    @JvmSuppressWildcards
     @Named(NAVIGATION_MAPPER_NAME)
-    override lateinit var navigationEventToDestinationMapper: NavigationEventToDestinationMapper
+    override lateinit var navigationEventToDestinationMapper: NavigationMapper
 
     @Inject
     lateinit var recordDeletionToPresentationMapper: HistoryRecordDeletionToPresentationMapper

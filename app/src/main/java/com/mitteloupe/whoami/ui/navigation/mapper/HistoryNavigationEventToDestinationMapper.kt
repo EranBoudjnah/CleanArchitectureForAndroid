@@ -6,8 +6,11 @@ import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledDesti
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventToDestinationMapper
 import com.mitteloupe.whoami.architecture.ui.navigation.model.UiDestination
 
-class HistoryNavigationEventToDestinationMapper : NavigationEventToDestinationMapper {
-    override fun toUi(navigationEvent: PresentationNavigationEvent): UiDestination =
+class HistoryNavigationEventToDestinationMapper :
+    NavigationEventToDestinationMapper<PresentationNavigationEvent>(
+        PresentationNavigationEvent::class
+    ) {
+    override fun mapTypedEvent(navigationEvent: PresentationNavigationEvent): UiDestination =
         when (navigationEvent) {
             is Back -> backUiDestination()
             else -> throw UnhandledDestinationException(navigationEvent)
