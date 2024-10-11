@@ -57,7 +57,7 @@ class ConnectionDataSourceImpl(
     override fun observeIsConnected(): Flow<ConnectionStateDataModel> {
         try {
             connectivityManager.unregisterNetworkCallback(networkCallback)
-        } catch (ignore: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
         }
         connectivityManager.registerNetworkCallback(networkRequestProvider(), networkCallback)
 
