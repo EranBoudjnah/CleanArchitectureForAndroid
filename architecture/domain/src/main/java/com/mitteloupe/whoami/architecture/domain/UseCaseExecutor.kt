@@ -26,7 +26,7 @@ class UseCaseExecutor(
         coroutineScope.launch {
             try {
                 useCase.execute(value, onResult)
-            } catch (ignore: CancellationException) {
+            } catch (_: CancellationException) {
             } catch (@Suppress("TooGenericExceptionCaught") throwable: Throwable) {
                 onException(
                     (throwable as? DomainException)

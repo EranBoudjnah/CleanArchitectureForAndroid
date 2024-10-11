@@ -6,6 +6,6 @@ fun doesNot(description: String, block: () -> Unit) {
     try {
         block()
         error("Unexpected: $description")
-    } catch (ignore: AssertionFailedError) {
+    } catch (_: AssertionFailedError) {
     }
 }
