@@ -36,15 +36,9 @@ abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotifi
         }
     }
 
-    protected fun emitNavigationEvent(destination: PresentationNavigationEvent) {
+    protected fun emitNavigationEvent(navigationEvent: PresentationNavigationEvent) {
         MainScope().launch {
-            this@BaseViewModel.navigationEvent.emit(destination)
-        }
-    }
-
-    protected fun navigateBack() {
-        MainScope().launch {
-            navigationEvent.emit(PresentationNavigationEvent.Back)
+            this@BaseViewModel.navigationEvent.emit(navigationEvent)
         }
     }
 
