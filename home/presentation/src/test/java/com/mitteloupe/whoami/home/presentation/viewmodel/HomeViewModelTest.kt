@@ -6,9 +6,9 @@ import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel.Disconnected
 import com.mitteloupe.whoami.home.domain.usecase.GetConnectionDetailsUseCase
 import com.mitteloupe.whoami.home.domain.usecase.SaveConnectionDetailsUseCase
+import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsPresentationMapper
 import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsToDomainMapper
-import com.mitteloupe.whoami.home.presentation.mapper.ConnectionStateToPresentationMapper
-import com.mitteloupe.whoami.home.presentation.mapper.ExceptionToPresentationMapper
+import com.mitteloupe.whoami.home.presentation.mapper.ExceptionPresentationMapper
 import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotification
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState.Loading
@@ -40,7 +40,7 @@ class HomeViewModelTest :
     private lateinit var getConnectionDetailsUseCase: GetConnectionDetailsUseCase
 
     @Mock
-    private lateinit var connectionStateToPresentationMapper: ConnectionStateToPresentationMapper
+    private lateinit var connectionDetailsPresentationMapper: ConnectionDetailsPresentationMapper
 
     @Mock
     private lateinit var saveConnectionDetailsUseCase: SaveConnectionDetailsUseCase
@@ -49,16 +49,16 @@ class HomeViewModelTest :
     private lateinit var connectionDetailsToDomainMapper: ConnectionDetailsToDomainMapper
 
     @Mock
-    private lateinit var exceptionToPresentationMapper: ExceptionToPresentationMapper
+    private lateinit var exceptionPresentationMapper: ExceptionPresentationMapper
 
     @Before
     fun setUp() {
         classUnderTest = HomeViewModel(
             getConnectionDetailsUseCase,
-            connectionStateToPresentationMapper,
+            connectionDetailsPresentationMapper,
             saveConnectionDetailsUseCase,
             connectionDetailsToDomainMapper,
-            exceptionToPresentationMapper,
+            exceptionPresentationMapper,
             useCaseExecutor
         )
     }
@@ -72,7 +72,7 @@ class HomeViewModelTest :
             givenConnectionState
         )
         val expectedViewState = HomeViewState.Disconnected
-        given { connectionStateToPresentationMapper.toPresentation(givenConnectionState) }
+        given { connectionDetailsPresentationMapper.toPresentation(givenConnectionState) }
             .willReturn(expectedViewState)
 
         // When

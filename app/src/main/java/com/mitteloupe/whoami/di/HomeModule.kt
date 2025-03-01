@@ -6,9 +6,9 @@ import com.mitteloupe.whoami.home.domain.repository.GetConnectionDetailsReposito
 import com.mitteloupe.whoami.home.domain.repository.SaveConnectionDetailsRepository
 import com.mitteloupe.whoami.home.domain.usecase.GetConnectionDetailsUseCase
 import com.mitteloupe.whoami.home.domain.usecase.SaveConnectionDetailsUseCase
+import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsPresentationMapper
 import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsToDomainMapper
-import com.mitteloupe.whoami.home.presentation.mapper.ConnectionStateToPresentationMapper
-import com.mitteloupe.whoami.home.presentation.mapper.ExceptionToPresentationMapper
+import com.mitteloupe.whoami.home.presentation.mapper.ExceptionPresentationMapper
 import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
 import dagger.Module
 import dagger.Provides
@@ -26,8 +26,8 @@ object HomeModule {
 
     @Provides
     fun providesConnectionStateToPresentationMapper(
-        exceptionToPresentationMapper: ExceptionToPresentationMapper
-    ) = ConnectionStateToPresentationMapper(exceptionToPresentationMapper)
+        exceptionPresentationMapper: ExceptionPresentationMapper
+    ) = ConnectionDetailsPresentationMapper(exceptionPresentationMapper)
 
     @Provides
     fun providesSaveConnectionDetailsUseCase(
@@ -39,22 +39,22 @@ object HomeModule {
     fun providesConnectionDetailsToDomainMapper() = ConnectionDetailsToDomainMapper()
 
     @Provides
-    fun providesExceptionToPresentationMapper() = ExceptionToPresentationMapper()
+    fun providesExceptionToPresentationMapper() = ExceptionPresentationMapper()
 
     @Provides
     fun providesHomeViewModel(
         getConnectionDetailsUseCase: GetConnectionDetailsUseCase,
-        connectionStateToPresentationMapper: ConnectionStateToPresentationMapper,
+        connectionDetailsPresentationMapper: ConnectionDetailsPresentationMapper,
         saveConnectionDetailsUseCase: SaveConnectionDetailsUseCase,
         connectionDetailsToDomainMapper: ConnectionDetailsToDomainMapper,
-        exceptionToPresentationMapper: ExceptionToPresentationMapper,
+        exceptionPresentationMapper: ExceptionPresentationMapper,
         useCaseExecutor: UseCaseExecutor
     ) = HomeViewModel(
         getConnectionDetailsUseCase,
-        connectionStateToPresentationMapper,
+        connectionDetailsPresentationMapper,
         saveConnectionDetailsUseCase,
         connectionDetailsToDomainMapper,
-        exceptionToPresentationMapper,
+        exceptionPresentationMapper,
         useCaseExecutor
     )
 }

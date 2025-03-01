@@ -14,7 +14,7 @@ import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
 
 @RunWith(Parameterized::class)
-class ExceptionToPresentationMapperTest(
+class ExceptionPresentationMapperTest(
     private val givenDomainException: DomainException,
     private val expectedPresentationError: ErrorPresentationModel
 ) {
@@ -40,11 +40,11 @@ class ExceptionToPresentationMapperTest(
         )
     }
 
-    private lateinit var classUnderTest: ExceptionToPresentationMapper
+    private lateinit var classUnderTest: ExceptionPresentationMapper
 
     @Before
     fun setUp() {
-        classUnderTest = ExceptionToPresentationMapper()
+        classUnderTest = ExceptionPresentationMapper()
     }
 
     @Test

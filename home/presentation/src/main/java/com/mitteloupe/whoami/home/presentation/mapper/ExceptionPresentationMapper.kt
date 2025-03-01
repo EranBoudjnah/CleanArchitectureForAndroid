@@ -9,7 +9,7 @@ import com.mitteloupe.whoami.home.presentation.model.ErrorPresentationModel.NoIp
 import com.mitteloupe.whoami.home.presentation.model.ErrorPresentationModel.RequestTimeout
 import com.mitteloupe.whoami.home.presentation.model.ErrorPresentationModel.Unknown
 
-class ExceptionToPresentationMapper {
+class ExceptionPresentationMapper {
     fun toPresentation(exception: DomainException) = when (exception) {
         is ReadFailedDomainException -> RequestTimeout
         is NoIpAddressDomainException -> NoIpAddress
