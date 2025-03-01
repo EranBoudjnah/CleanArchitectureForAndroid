@@ -6,8 +6,8 @@ import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataMode
 import com.mitteloupe.whoami.datasource.ipaddress.datasource.IpAddressDataSource
 import com.mitteloupe.whoami.datasource.ipaddressinformation.datasource.IpAddressInformationDataSource
 import com.mitteloupe.whoami.datasource.ipaddressinformation.model.IpAddressInformationDataModel
-import com.mitteloupe.whoami.home.data.mapper.ConnectionDetailsToDomainResolver
-import com.mitteloupe.whoami.home.data.mapper.ThrowableToDomainMapper
+import com.mitteloupe.whoami.home.data.mapper.ConnectionDetailsDomainResolver
+import com.mitteloupe.whoami.home.data.mapper.ThrowableDomainMapper
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -32,10 +32,10 @@ class ConnectionDetailsRepositoryTest {
     private lateinit var connectionDataSource: ConnectionDataSource
 
     @MockK
-    private lateinit var connectionDetailsToDomainResolver: ConnectionDetailsToDomainResolver
+    private lateinit var connectionDetailsDomainResolver: ConnectionDetailsDomainResolver
 
     @MockK
-    private lateinit var throwableToDomainMapper: ThrowableToDomainMapper
+    private lateinit var throwableDomainMapper: ThrowableDomainMapper
 
     @Before
     fun setUp() {
@@ -45,8 +45,8 @@ class ConnectionDetailsRepositoryTest {
             ipAddressDataSource,
             ipAddressInformationDataSource,
             connectionDataSource,
-            connectionDetailsToDomainResolver,
-            throwableToDomainMapper
+            connectionDetailsDomainResolver,
+            throwableDomainMapper
         )
     }
 
@@ -59,7 +59,7 @@ class ConnectionDetailsRepositoryTest {
         }
         val expectedState = ConnectionDetailsDomainModel.Unset
         every {
-            connectionDetailsToDomainResolver.toDomain(eq(givenState), any(), any())
+            connectionDetailsDomainResolver.toDomain(eq(givenState), any(), any())
         } returns expectedState
 
         // When
@@ -79,7 +79,7 @@ class ConnectionDetailsRepositoryTest {
             }
             val expectedState = ConnectionDetailsDomainModel.Disconnected
             every {
-                connectionDetailsToDomainResolver.toDomain(eq(givenState), any(), any())
+                connectionDetailsDomainResolver.toDomain(eq(givenState), any(), any())
             } returns expectedState
 
             // When
@@ -110,7 +110,7 @@ class ConnectionDetailsRepositoryTest {
         val ipAddress = "1.1.1.1"
 
         every {
-            connectionDetailsToDomainResolver.toDomain(eq(givenState), any(), any())
+            connectionDetailsDomainResolver.toDomain(eq(givenState), any(), any())
         } answers { call ->
             @Suppress("UNCHECKED_CAST")
             testIpAddressReadCorrectly(ipAddress, call.invocation.args[1] as () -> String)
@@ -141,11 +141,11 @@ class ConnectionDetailsRepositoryTest {
 
             val expectedState2 = ConnectionDetailsDomainModel.Disconnected
             every {
-                connectionDetailsToDomainResolver.toDomain(eq(givenState), any(), any())
+                connectionDetailsDomainResolver.toDomain(eq(givenState), any(), any())
             } throws throwable andThen expectedState2
 
             val expectedDomainException = UnknownDomainException(throwable)
-            every { throwableToDomainMapper.toDomain(throwable) } returns expectedDomainException
+            every { throwableDomainMapper.toDomain(throwable) } returns expectedDomainException
             val expectedState1 = ConnectionDetailsDomainModel.Error(expectedDomainException)
 
             // When

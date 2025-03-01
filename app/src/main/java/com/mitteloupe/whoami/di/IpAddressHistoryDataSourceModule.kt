@@ -3,8 +3,8 @@ package com.mitteloupe.whoami.di
 import android.content.SharedPreferences
 import com.mitteloupe.whoami.datasource.history.datasource.IpAddressHistoryDataSource
 import com.mitteloupe.whoami.datasource.history.datasource.IpAddressHistoryDataSourceImpl
-import com.mitteloupe.whoami.datasource.history.mapper.NewIpAddressRecordToLocalMapper
-import com.mitteloupe.whoami.datasource.history.mapper.SavedIpAddressRecordToDataMapper
+import com.mitteloupe.whoami.datasource.history.mapper.NewIpAddressRecordLocalMapper
+import com.mitteloupe.whoami.datasource.history.mapper.SavedIpAddressRecordDataMapper
 import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordLocalModel
 import com.mitteloupe.whoami.datasource.json.JsonDecoder
 import com.mitteloupe.whoami.datasource.json.JsonEncoder
@@ -23,11 +23,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object IpAddressHistoryDataSourceModule {
     @Provides
-    fun providesNewIpAddressRecordToSavedMapper(nowProvider: NowProvider) =
-        NewIpAddressRecordToLocalMapper(nowProvider)
+    fun providesNewIpAddressRecordLocalMapper(nowProvider: NowProvider) =
+        NewIpAddressRecordLocalMapper(nowProvider)
 
     @Provides
-    fun providesSavedIpAddressRecordToDataMapper() = SavedIpAddressRecordToDataMapper()
+    fun providesSavedIpAddressRecordDataMapper() = SavedIpAddressRecordDataMapper()
 
     @Provides
     fun providesJsonAdapter(
@@ -58,14 +58,14 @@ object IpAddressHistoryDataSourceModule {
     @Provides
     @Singleton
     fun providesIpAddressHistoryDataSource(
-        newIpAddressRecordToLocalMapper: NewIpAddressRecordToLocalMapper,
-        savedIpAddressRecordToDataMapper: SavedIpAddressRecordToDataMapper,
+        newIpAddressRecordLocalMapper: NewIpAddressRecordLocalMapper,
+        savedIpAddressRecordDataMapper: SavedIpAddressRecordDataMapper,
         sharedPreferences: SharedPreferences,
         jsonEncoder: JsonEncoder<Map<String, SavedIpAddressHistoryRecordLocalModel>>,
         jsonDecoder: JsonDecoder<Map<String, SavedIpAddressHistoryRecordLocalModel>>
     ): IpAddressHistoryDataSource = IpAddressHistoryDataSourceImpl(
-        newIpAddressRecordToLocalMapper,
-        savedIpAddressRecordToDataMapper,
+        newIpAddressRecordLocalMapper,
+        savedIpAddressRecordDataMapper,
         sharedPreferences,
         jsonEncoder,
         jsonDecoder

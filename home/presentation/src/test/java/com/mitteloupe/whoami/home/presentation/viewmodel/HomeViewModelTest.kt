@@ -6,8 +6,8 @@ import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel.Disconnected
 import com.mitteloupe.whoami.home.domain.usecase.GetConnectionDetailsUseCase
 import com.mitteloupe.whoami.home.domain.usecase.SaveConnectionDetailsUseCase
+import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsDomainMapper
 import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsPresentationMapper
-import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsToDomainMapper
 import com.mitteloupe.whoami.home.presentation.mapper.ExceptionPresentationMapper
 import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotification
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
@@ -46,7 +46,7 @@ class HomeViewModelTest :
     private lateinit var saveConnectionDetailsUseCase: SaveConnectionDetailsUseCase
 
     @Mock
-    private lateinit var connectionDetailsToDomainMapper: ConnectionDetailsToDomainMapper
+    private lateinit var connectionDetailsDomainMapper: ConnectionDetailsDomainMapper
 
     @Mock
     private lateinit var exceptionPresentationMapper: ExceptionPresentationMapper
@@ -57,7 +57,7 @@ class HomeViewModelTest :
             getConnectionDetailsUseCase,
             connectionDetailsPresentationMapper,
             saveConnectionDetailsUseCase,
-            connectionDetailsToDomainMapper,
+            connectionDetailsDomainMapper,
             exceptionPresentationMapper,
             useCaseExecutor
         )
@@ -89,7 +89,7 @@ class HomeViewModelTest :
             val ipAddress = "1.3.3.7"
             val givenConnectionDetails = viewStateConnected(ipAddress)
             val domainConnectionDetails = domainConnectionDetails(ipAddress)
-            given { connectionDetailsToDomainMapper.toDomain(givenConnectionDetails) }
+            given { connectionDetailsDomainMapper.toDomain(givenConnectionDetails) }
                 .willReturn(domainConnectionDetails)
             givenSuccessfulNoResultUseCaseExecution(
                 saveConnectionDetailsUseCase,
@@ -119,7 +119,7 @@ class HomeViewModelTest :
         val ipAddress = "1.3.3.7"
         val givenConnectionDetails = viewStateConnected(ipAddress)
         val domainConnectionDetails = domainConnectionDetails(ipAddress)
-        given { connectionDetailsToDomainMapper.toDomain(givenConnectionDetails) }
+        given { connectionDetailsDomainMapper.toDomain(givenConnectionDetails) }
             .willReturn(domainConnectionDetails)
         givenSuccessfulNoResultUseCaseExecution(
             saveConnectionDetailsUseCase,
@@ -143,7 +143,7 @@ class HomeViewModelTest :
         val ipAddress = "192.168.0.1"
         val givenConnectionDetails = viewStateConnected(ipAddress)
         val domainConnectionDetails = domainConnectionDetails(ipAddress)
-        given { connectionDetailsToDomainMapper.toDomain(givenConnectionDetails) }
+        given { connectionDetailsDomainMapper.toDomain(givenConnectionDetails) }
             .willReturn(domainConnectionDetails)
         givenSuccessfulNoResultUseCaseExecution(
             saveConnectionDetailsUseCase,
@@ -168,7 +168,7 @@ class HomeViewModelTest :
             val ipAddress = "1.1.1.1"
             val givenConnectionDetails = viewStateConnected(ipAddress)
             val domainConnectionDetails = domainConnectionDetails(ipAddress)
-            given { connectionDetailsToDomainMapper.toDomain(givenConnectionDetails) }
+            given { connectionDetailsDomainMapper.toDomain(givenConnectionDetails) }
                 .willReturn(domainConnectionDetails)
             givenSuccessfulNoResultUseCaseExecution(
                 saveConnectionDetailsUseCase,

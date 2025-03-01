@@ -4,8 +4,8 @@ import com.mitteloupe.whoami.coroutine.currentValue
 import com.mitteloupe.whoami.datasource.history.datasource.IpAddressHistoryDataSource
 import com.mitteloupe.whoami.datasource.history.model.HistoryRecordDeletionIdentifierDataModel
 import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordDataModel
-import com.mitteloupe.whoami.history.data.mapper.HistoryRecordDeletionToDataMapper
-import com.mitteloupe.whoami.history.data.mapper.SavedIpAddressRecordToDomainMapper
+import com.mitteloupe.whoami.history.data.mapper.HistoryRecordDeletionDataMapper
+import com.mitteloupe.whoami.history.data.mapper.SavedIpAddressRecordDomainMapper
 import com.mitteloupe.whoami.history.domain.model.HistoryRecordDeletionDomainModel
 import com.mitteloupe.whoami.history.domain.model.SavedIpAddressRecordDomainModel
 import kotlinx.coroutines.flow.flowOf
@@ -29,17 +29,17 @@ class ConnectionHistoryRepositoryTest {
     private lateinit var ipAddressHistoryDataSource: IpAddressHistoryDataSource
 
     @Mock
-    private lateinit var connectionDetailsToDataMapper: SavedIpAddressRecordToDomainMapper
+    private lateinit var savedIpAddressRecordDomainMapper: SavedIpAddressRecordDomainMapper
 
     @Mock
-    private lateinit var recordDeletionToDataMapper: HistoryRecordDeletionToDataMapper
+    private lateinit var historyRecordDeletionDataMapper: HistoryRecordDeletionDataMapper
 
     @Before
     fun setUp() {
         classUnderTest = ConnectionHistoryRepository(
             ipAddressHistoryDataSource,
-            connectionDetailsToDataMapper,
-            recordDeletionToDataMapper
+            savedIpAddressRecordDomainMapper,
+            historyRecordDeletionDataMapper
         )
     }
 
@@ -48,11 +48,11 @@ class ConnectionHistoryRepositoryTest {
         // Given
         val dataHistoryRecord1 = dataHistoryRecord("1.1.1.1")
         val domainHistoryRecord1 = domainHistoryRecord("M.A.P.1")
-        given(connectionDetailsToDataMapper.toDomain(dataHistoryRecord1))
+        given(savedIpAddressRecordDomainMapper.toDomain(dataHistoryRecord1))
             .willReturn(domainHistoryRecord1)
         val dataHistoryRecord2 = dataHistoryRecord("2.2.2.2")
         val domainHistoryRecord2 = domainHistoryRecord("M.A.P.2")
-        given(connectionDetailsToDataMapper.toDomain(dataHistoryRecord2))
+        given(savedIpAddressRecordDomainMapper.toDomain(dataHistoryRecord2))
             .willReturn(domainHistoryRecord2)
         val givenHistory = setOf(dataHistoryRecord1, dataHistoryRecord2)
         given(ipAddressHistoryDataSource.allRecords()).willReturn(flowOf(givenHistory))
@@ -71,7 +71,7 @@ class ConnectionHistoryRepositoryTest {
         val givenIpAddress = "1.1.1.1"
         val givenRequest = HistoryRecordDeletionDomainModel(givenIpAddress)
         val dataRequest = HistoryRecordDeletionIdentifierDataModel(givenIpAddress)
-        given(recordDeletionToDataMapper.toData(givenRequest)).willReturn(dataRequest)
+        given(historyRecordDeletionDataMapper.toData(givenRequest)).willReturn(dataRequest)
 
         // When
         classUnderTest.delete(givenRequest)

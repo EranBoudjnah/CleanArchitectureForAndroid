@@ -69,15 +69,15 @@ fun HomeDependencies.Home(
     val connectedState = lastConnectedState.value
 
     val connectionDetails = remember(connectedState) {
-        mutableStateOf(connectedState?.let(connectionDetailsToUiMapper::toUi))
+        mutableStateOf(connectedState?.let(connectionDetailsUiMapper::toUi))
     }
     val errorMessage = remember(viewStateValue) {
         mutableStateOf(
-            (viewStateValue as? HomeViewState.Error)?.let(errorToUiMapper::toUi).orEmpty()
+            (viewStateValue as? HomeViewState.Error)?.let(errorUiMapper::toUi).orEmpty()
         )
     }
     HomeContents(
-        viewState = homeViewStateToUiMapper.toUi(viewStateValue),
+        viewState = homeViewStateUiMapper.toUi(viewStateValue),
         connectionDetails = connectionDetails.value,
         errorMessage = errorMessage.value,
         analytics = analytics,

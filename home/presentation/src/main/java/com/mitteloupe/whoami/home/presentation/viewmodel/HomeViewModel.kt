@@ -4,8 +4,8 @@ import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
 import com.mitteloupe.whoami.home.domain.usecase.GetConnectionDetailsUseCase
 import com.mitteloupe.whoami.home.domain.usecase.SaveConnectionDetailsUseCase
+import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsDomainMapper
 import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsPresentationMapper
-import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsToDomainMapper
 import com.mitteloupe.whoami.home.presentation.mapper.ExceptionPresentationMapper
 import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotification
 import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotification.ConnectionSaved
@@ -20,7 +20,7 @@ class HomeViewModel(
     private val getConnectionDetailsUseCase: GetConnectionDetailsUseCase,
     private val connectionDetailsPresentationMapper: ConnectionDetailsPresentationMapper,
     private val saveConnectionDetailsUseCase: SaveConnectionDetailsUseCase,
-    private val connectionDetailsToDomainMapper: ConnectionDetailsToDomainMapper,
+    private val connectionDetailsDomainMapper: ConnectionDetailsDomainMapper,
     private val exceptionPresentationMapper: ExceptionPresentationMapper,
     useCaseExecutor: UseCaseExecutor
 ) : BaseViewModel<HomeViewState, HomePresentationNotification>(useCaseExecutor, Loading) {
@@ -39,7 +39,7 @@ class HomeViewModel(
     }
 
     fun onSaveDetailsAction(connectionDetails: HomeViewState.Connected) {
-        val domainConnectionDetails = connectionDetailsToDomainMapper.toDomain(connectionDetails)
+        val domainConnectionDetails = connectionDetailsDomainMapper.toDomain(connectionDetails)
         saveConnectionDetailsUseCase(
             value = domainConnectionDetails,
             onResult = {

@@ -6,7 +6,7 @@ import androidx.core.view.isVisible
 import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
 import com.mitteloupe.whoami.history.ui.adapter.HistoryAdapter
-import com.mitteloupe.whoami.history.ui.mapper.HistoryRecordToUiMapper
+import com.mitteloupe.whoami.history.ui.mapper.HistoryRecordUiMapper
 import com.mitteloupe.whoami.history.ui.model.HistoryRecordUiModel
 import com.mitteloupe.whoami.history.ui.view.HistoryViewsProvider
 
@@ -14,7 +14,7 @@ private const val HISTORY_RECORDS_BUNDLE_KEY = "historyRecords"
 
 class HistoryViewStateBinder(
     userEventListener: HistoryAdapter.UserEventListener,
-    private val historyRecordToUiMapper: HistoryRecordToUiMapper
+    private val historyRecordUiMapper: HistoryRecordUiMapper
 ) : ViewStateBinder<HistoryViewState, HistoryViewsProvider> {
     private val historyAdapter = HistoryAdapter(userEventListener)
     private val historyItems: MutableList<HistoryRecordUiModel> = mutableListOf()
@@ -41,7 +41,7 @@ class HistoryViewStateBinder(
 
             is HistoryViewState.HistoryRecords -> {
                 val historyItems = viewState.historyRecords.map { record ->
-                    historyRecordToUiMapper.toUi(record, viewState.highlightedIpAddress)
+                    historyRecordUiMapper.toUi(record, viewState.highlightedIpAddress)
                 }
                 renderHistoryRecords(historyItems)
             }

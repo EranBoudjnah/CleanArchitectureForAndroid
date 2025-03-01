@@ -2,8 +2,8 @@ package com.mitteloupe.whoami.datasource.history.datasource
 
 import android.content.SharedPreferences
 import com.mitteloupe.whoami.coroutine.currentValue
-import com.mitteloupe.whoami.datasource.history.mapper.NewIpAddressRecordToLocalMapper
-import com.mitteloupe.whoami.datasource.history.mapper.SavedIpAddressRecordToDataMapper
+import com.mitteloupe.whoami.datasource.history.mapper.NewIpAddressRecordLocalMapper
+import com.mitteloupe.whoami.datasource.history.mapper.SavedIpAddressRecordDataMapper
 import com.mitteloupe.whoami.datasource.history.model.HistoryRecordDeletionIdentifierDataModel
 import com.mitteloupe.whoami.datasource.history.model.NewIpAddressHistoryRecordDataModel
 import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordDataModel
@@ -35,10 +35,10 @@ class IpAddressHistoryDataSourceImplTest {
     private lateinit var classUnderTest: IpAddressHistoryDataSourceImpl
 
     @Mock
-    private lateinit var newIpAddressRecordToLocalMapper: NewIpAddressRecordToLocalMapper
+    private lateinit var newIpAddressRecordLocalMapper: NewIpAddressRecordLocalMapper
 
     @Mock
-    private lateinit var savedIpAddressRecordToDataMapper: SavedIpAddressRecordToDataMapper
+    private lateinit var savedIpAddressRecordDataMapper: SavedIpAddressRecordDataMapper
 
     private lateinit var sharedPreferences: SharedPreferences
 
@@ -56,8 +56,8 @@ class IpAddressHistoryDataSourceImplTest {
         }
 
         classUnderTest = IpAddressHistoryDataSourceImpl(
-            newIpAddressRecordToLocalMapper,
-            savedIpAddressRecordToDataMapper,
+            newIpAddressRecordLocalMapper,
+            savedIpAddressRecordDataMapper,
             sharedPreferences,
             jsonEncoder,
             jsonDecoder
@@ -88,10 +88,10 @@ class IpAddressHistoryDataSourceImplTest {
             timeZone = null
         )
         val localRecord = localSavedIpAddressHistoryRecord(ipAddress = ipAddress)
-        given(newIpAddressRecordToLocalMapper.toLocal(givenRecord))
+        given(newIpAddressRecordLocalMapper.toLocal(givenRecord))
             .willReturn(localRecord)
         val expectedRecord = dataSavedIpAddressHistoryRecord(ipAddress)
-        givenLocalToDataMapped(localRecord, expectedRecord)
+        givenMappedToData(localRecord, expectedRecord)
         classUnderTest.save(givenRecord)
         val expectedCollectionSize = 1
 
@@ -124,9 +124,9 @@ class IpAddressHistoryDataSourceImplTest {
         given(jsonDecoder.decode(recordsString)).willReturn(decodedRecords)
         val deletionIdentifier = HistoryRecordDeletionIdentifierDataModel(ipAddressToDelete)
         val dataSavedIpAddressHistoryRecord1 = dataSavedIpAddressHistoryRecord("0.0.0.0")
-        givenLocalToDataMapped(localSavedIpAddressHistoryRecord1, dataSavedIpAddressHistoryRecord1)
+        givenMappedToData(localSavedIpAddressHistoryRecord1, dataSavedIpAddressHistoryRecord1)
         val dataSavedIpAddressHistoryRecord3 = dataSavedIpAddressHistoryRecord("2.2.2.2")
-        givenLocalToDataMapped(localSavedIpAddressHistoryRecord3, dataSavedIpAddressHistoryRecord3)
+        givenMappedToData(localSavedIpAddressHistoryRecord3, dataSavedIpAddressHistoryRecord3)
 
         // When
         classUnderTest.delete(deletionIdentifier)
@@ -140,11 +140,11 @@ class IpAddressHistoryDataSourceImplTest {
         assertEquals(2, actualRecords.size)
     }
 
-    private fun givenLocalToDataMapped(
+    private fun givenMappedToData(
         localRecord: SavedIpAddressHistoryRecordLocalModel,
         expectedRecord: SavedIpAddressHistoryRecordDataModel
     ) {
-        given(savedIpAddressRecordToDataMapper.toData(localRecord))
+        given(savedIpAddressRecordDataMapper.toData(localRecord))
             .willReturn(expectedRecord)
     }
 

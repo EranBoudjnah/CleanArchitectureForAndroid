@@ -4,9 +4,9 @@ import com.mitteloupe.whoami.datasource.connection.datasource.ConnectionDataSour
 import com.mitteloupe.whoami.datasource.history.datasource.IpAddressHistoryDataSource
 import com.mitteloupe.whoami.datasource.ipaddress.datasource.IpAddressDataSource
 import com.mitteloupe.whoami.datasource.ipaddressinformation.datasource.IpAddressInformationDataSource
-import com.mitteloupe.whoami.home.data.mapper.ConnectionDetailsToDataMapper
-import com.mitteloupe.whoami.home.data.mapper.ConnectionDetailsToDomainResolver
-import com.mitteloupe.whoami.home.data.mapper.ThrowableToDomainMapper
+import com.mitteloupe.whoami.home.data.mapper.ConnectionDetailsDataMapper
+import com.mitteloupe.whoami.home.data.mapper.ConnectionDetailsDomainResolver
+import com.mitteloupe.whoami.home.data.mapper.ThrowableDomainMapper
 import com.mitteloupe.whoami.home.data.repository.ConnectionDetailsRepository
 import com.mitteloupe.whoami.home.data.repository.ConnectionHistoryRepository
 import com.mitteloupe.whoami.home.domain.repository.GetConnectionDetailsRepository
@@ -21,10 +21,10 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object HomeDataModule {
     @Provides
-    fun providesConnectionDetailsToDomainResolver() = ConnectionDetailsToDomainResolver()
+    fun providesConnectionDetailsDomainResolver() = ConnectionDetailsDomainResolver()
 
     @Provides
-    fun providesThrowableToDomainMapper() = ThrowableToDomainMapper()
+    fun providesThrowableDomainMapper() = ThrowableDomainMapper()
 
     @Provides
     @Reusable
@@ -32,14 +32,14 @@ object HomeDataModule {
         ipAddressDataSource: IpAddressDataSource,
         ipAddressInformationDataSource: IpAddressInformationDataSource,
         connectionDataSource: ConnectionDataSource,
-        connectionDetailsToDomainResolver: ConnectionDetailsToDomainResolver,
-        throwableToDomainMapper: ThrowableToDomainMapper
+        connectionDetailsDomainResolver: ConnectionDetailsDomainResolver,
+        throwableDomainMapper: ThrowableDomainMapper
     ) = ConnectionDetailsRepository(
         ipAddressDataSource,
         ipAddressInformationDataSource,
         connectionDataSource,
-        connectionDetailsToDomainResolver,
-        throwableToDomainMapper
+        connectionDetailsDomainResolver,
+        throwableDomainMapper
     )
 
     @Provides
@@ -50,7 +50,7 @@ object HomeDataModule {
     @Provides
     fun providesSaveConnectionDetailsRepository(
         ipAddressHistoryDataSource: IpAddressHistoryDataSource,
-        connectionDetailsToDataMapper: ConnectionDetailsToDataMapper
+        connectionDetailsDataMapper: ConnectionDetailsDataMapper
     ): SaveConnectionDetailsRepository =
-        ConnectionHistoryRepository(ipAddressHistoryDataSource, connectionDetailsToDataMapper)
+        ConnectionHistoryRepository(ipAddressHistoryDataSource, connectionDetailsDataMapper)
 }

@@ -2,7 +2,7 @@ package com.mitteloupe.whoami.home.data.repository
 
 import com.mitteloupe.whoami.datasource.history.datasource.IpAddressHistoryDataSource
 import com.mitteloupe.whoami.datasource.history.model.NewIpAddressHistoryRecordDataModel
-import com.mitteloupe.whoami.home.data.mapper.ConnectionDetailsToDataMapper
+import com.mitteloupe.whoami.home.data.mapper.ConnectionDetailsDataMapper
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -18,14 +18,14 @@ class ConnectionHistoryRepositoryTest {
     private lateinit var ipAddressHistoryDataSource: IpAddressHistoryDataSource
 
     @MockK
-    private lateinit var connectionDetailsToDataMapper: ConnectionDetailsToDataMapper
+    private lateinit var connectionDetailsDataMapper: ConnectionDetailsDataMapper
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
 
         classUnderTest =
-            ConnectionHistoryRepository(ipAddressHistoryDataSource, connectionDetailsToDataMapper)
+            ConnectionHistoryRepository(ipAddressHistoryDataSource, connectionDetailsDataMapper)
     }
 
     @Test
@@ -52,7 +52,7 @@ class ConnectionHistoryRepositoryTest {
             postCode = null,
             timeZone = null
         )
-        every { connectionDetailsToDataMapper.toData(details) } returns dataRecord
+        every { connectionDetailsDataMapper.toData(details) } returns dataRecord
 
         // When
         classUnderTest.saveConnectionDetails(details)

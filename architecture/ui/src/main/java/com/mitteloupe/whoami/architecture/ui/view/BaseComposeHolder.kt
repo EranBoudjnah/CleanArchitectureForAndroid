@@ -7,15 +7,15 @@ import androidx.navigation.NavController
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
-import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventToDestinationMapper
-import com.mitteloupe.whoami.architecture.ui.notification.mapper.NotificationToUiMapper
+import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventDestinationMapper
+import com.mitteloupe.whoami.architecture.ui.notification.mapper.NotificationUiMapper
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 
 abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNotification>(
     private val viewModel: BaseViewModel<VIEW_STATE, NOTIFICATION>,
     private val coroutineContextProvider: CoroutineContextProvider,
-    private val navigationMapper: NavigationEventToDestinationMapper<PresentationNavigationEvent>,
-    private val notificationMapper: NotificationToUiMapper
+    private val navigationMapper: NavigationEventDestinationMapper<PresentationNavigationEvent>,
+    private val notificationMapper: NotificationUiMapper
 ) {
 
     @Composable
