@@ -4,15 +4,15 @@ import android.content.Context
 import android.content.res.Resources
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
-import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventToDestinationMapper
+import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventDestinationMapper
 import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
 import com.mitteloupe.whoami.home.ui.di.HomeDependencies
-import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsToUiMapper
-import com.mitteloupe.whoami.home.ui.mapper.ErrorToUiMapper
-import com.mitteloupe.whoami.home.ui.mapper.HomeNotificationToUiMapper
-import com.mitteloupe.whoami.home.ui.mapper.HomeViewStateToUiMapper
-import com.mitteloupe.whoami.ui.navigation.mapper.HomeNavigationEventToDestinationMapper
+import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsUiMapper
+import com.mitteloupe.whoami.home.ui.mapper.ErrorUiMapper
+import com.mitteloupe.whoami.home.ui.mapper.HomeNotificationUiMapper
+import com.mitteloupe.whoami.home.ui.mapper.HomeViewStateUiMapper
+import com.mitteloupe.whoami.ui.navigation.mapper.HomeNavigationEventDestinationMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,40 +23,42 @@ import dagger.hilt.android.qualifiers.ActivityContext
 @InstallIn(ActivityComponent::class)
 object HomeUiModule {
     @Provides
-    fun providesHomeViewStateToUiMapper() = HomeViewStateToUiMapper()
+    fun providesHomeViewStateUiMapper() = HomeViewStateUiMapper()
 
     @Provides
-    fun providesHomeDestinationToUiMapper(analytics: Analytics, @ActivityContext context: Context) =
-        HomeNavigationEventToDestinationMapper(analytics, context)
+    fun providesHomeNavigationEventDestinationMapper(
+        analytics: Analytics,
+        @ActivityContext context: Context
+    ) = HomeNavigationEventDestinationMapper(analytics, context)
 
     @Provides
-    fun providesHomeNotificationToUiMapper(@ActivityContext context: Context) =
-        HomeNotificationToUiMapper(context)
+    fun providesHomeNotificationUiMapper(@ActivityContext context: Context) =
+        HomeNotificationUiMapper(context)
 
     @Provides
-    fun providesErrorToUiMapper(resources: Resources) = ErrorToUiMapper(resources)
+    fun providesErrorUiMapper(resources: Resources) = ErrorUiMapper(resources)
 
     @Provides
-    fun providesConnectionDetailsToUiMapper() = ConnectionDetailsToUiMapper()
+    fun providesConnectionDetailsUiMapper() = ConnectionDetailsUiMapper()
 
     @Provides
     @Suppress("UNCHECKED_CAST")
     fun providesHomeDependencies(
         homeViewModel: HomeViewModel,
-        homeViewStateToUiMapper: HomeViewStateToUiMapper,
-        connectionDetailsToUiMapper: ConnectionDetailsToUiMapper,
-        homeNavigationMapper: HomeNavigationEventToDestinationMapper,
-        homeNotificationMapper: HomeNotificationToUiMapper,
-        errorToUiMapper: ErrorToUiMapper,
+        homeViewStateUiMapper: HomeViewStateUiMapper,
+        connectionDetailsUiMapper: ConnectionDetailsUiMapper,
+        homeNavigationMapper: HomeNavigationEventDestinationMapper,
+        homeNotificationMapper: HomeNotificationUiMapper,
+        errorUiMapper: ErrorUiMapper,
         coroutineContextProvider: CoroutineContextProvider,
         analytics: Analytics
     ) = HomeDependencies(
         homeViewModel,
-        homeViewStateToUiMapper,
-        connectionDetailsToUiMapper,
-        homeNavigationMapper as NavigationEventToDestinationMapper<PresentationNavigationEvent>,
+        homeViewStateUiMapper,
+        connectionDetailsUiMapper,
+        homeNavigationMapper as NavigationEventDestinationMapper<PresentationNavigationEvent>,
         homeNotificationMapper,
-        errorToUiMapper,
+        errorUiMapper,
         coroutineContextProvider,
         analytics
     )

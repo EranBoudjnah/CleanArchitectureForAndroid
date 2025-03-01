@@ -13,7 +13,7 @@ import com.mitteloupe.whoami.analytics.event.Click
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.ui.binder.ViewStateBinder
-import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventToDestinationMapper
+import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventDestinationMapper
 import com.mitteloupe.whoami.architecture.ui.view.BaseFragment
 import com.mitteloupe.whoami.architecture.ui.view.ViewsProvider
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
@@ -21,13 +21,13 @@ import com.mitteloupe.whoami.history.presentation.viewmodel.HistoryViewModel
 import com.mitteloupe.whoami.history.ui.R
 import com.mitteloupe.whoami.history.ui.adapter.HistoryAdapter
 import com.mitteloupe.whoami.history.ui.binder.HistoryViewStateBinder
-import com.mitteloupe.whoami.history.ui.mapper.HistoryRecordDeletionToPresentationMapper
+import com.mitteloupe.whoami.history.ui.mapper.HistoryRecordDeletionPresentationMapper
 import com.mitteloupe.whoami.history.ui.model.HistoryRecordUiModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Named
 
-private typealias NavigationMapper = NavigationEventToDestinationMapper<PresentationNavigationEvent>
+private typealias NavigationMapper = NavigationEventDestinationMapper<PresentationNavigationEvent>
 
 @AndroidEntryPoint
 class HistoryFragment :
@@ -42,10 +42,10 @@ class HistoryFragment :
     @Inject
     @JvmSuppressWildcards
     @Named(NAVIGATION_MAPPER_NAME)
-    override lateinit var navigationEventToDestinationMapper: NavigationMapper
+    override lateinit var navigationEventDestinationMapper: NavigationMapper
 
     @Inject
-    lateinit var recordDeletionToPresentationMapper: HistoryRecordDeletionToPresentationMapper
+    lateinit var recordDeletionPresentationMapper: HistoryRecordDeletionPresentationMapper
 
     @Inject
     lateinit var analytics: Analytics
@@ -109,7 +109,7 @@ class HistoryFragment :
     }
 
     override fun onDeleteClick(record: HistoryRecordUiModel) {
-        val presentationRequest = recordDeletionToPresentationMapper.toDeletionPresentation(record)
+        val presentationRequest = recordDeletionPresentationMapper.toDeletionPresentation(record)
         viewModel.onDeleteAction(presentationRequest)
     }
 

@@ -1,7 +1,7 @@
 package com.mitteloupe.whoami.datasource.ipaddress.datasource
 
 import com.mitteloupe.whoami.datasource.ipaddress.exception.NoIpAddressDataException
-import com.mitteloupe.whoami.datasource.ipaddress.mapper.IpAddressToDataMapper
+import com.mitteloupe.whoami.datasource.ipaddress.mapper.IpAddressDataMapper
 import com.mitteloupe.whoami.datasource.ipaddress.model.IpAddressApiModel
 import com.mitteloupe.whoami.datasource.ipaddress.service.IpAddressService
 import com.mitteloupe.whoami.datasource.remote.exception.RequestTimeoutDataException
@@ -29,12 +29,12 @@ class IpAddressDataSourceImplTest {
     private lateinit var ipAddressService: IpAddressService
 
     @Mock
-    private lateinit var ipAddressToDataMapper: IpAddressToDataMapper
+    private lateinit var ipAddressDataMapper: IpAddressDataMapper
 
     @Before
     fun setUp() {
         lazyIpAddressService = lazy { ipAddressService }
-        classUnderTest = IpAddressDataSourceImpl(lazyIpAddressService, ipAddressToDataMapper)
+        classUnderTest = IpAddressDataSourceImpl(lazyIpAddressService, ipAddressDataMapper)
     }
 
     @Test
@@ -49,7 +49,7 @@ class IpAddressDataSourceImplTest {
             on { execute() } doReturn givenResponse
         }
         given { ipAddressService.ipAddress() }.willReturn(givenServerResponse)
-        given { ipAddressToDataMapper.toData(givenIpAddressResponse) }.willReturn(ipAddress)
+        given { ipAddressDataMapper.toData(givenIpAddressResponse) }.willReturn(ipAddress)
 
         // When
         val actualValue = classUnderTest.ipAddress()

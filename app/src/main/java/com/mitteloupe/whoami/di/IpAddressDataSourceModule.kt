@@ -2,7 +2,7 @@ package com.mitteloupe.whoami.di
 
 import com.mitteloupe.whoami.datasource.ipaddress.datasource.IpAddressDataSource
 import com.mitteloupe.whoami.datasource.ipaddress.datasource.IpAddressDataSourceImpl
-import com.mitteloupe.whoami.datasource.ipaddress.mapper.IpAddressToDataMapper
+import com.mitteloupe.whoami.datasource.ipaddress.mapper.IpAddressDataMapper
 import com.mitteloupe.whoami.datasource.ipaddress.service.IpAddressService
 import com.mitteloupe.whoami.di.NetworkModule.IP_ADDRESS
 import dagger.Module
@@ -22,12 +22,12 @@ object IpAddressDataSourceModule {
         retrofit.create()
 
     @Provides
-    fun providesIpAddressToDataMapper() = IpAddressToDataMapper()
+    fun providesIpAddressDataMapper() = IpAddressDataMapper()
 
     @Provides
     fun providesIpAddressDataSource(
         ipAddressServiceProvider: Provider<IpAddressService>,
-        ipAddressToDataMapper: IpAddressToDataMapper
+        ipAddressDataMapper: IpAddressDataMapper
     ): IpAddressDataSource =
-        IpAddressDataSourceImpl(lazy { ipAddressServiceProvider.get() }, ipAddressToDataMapper)
+        IpAddressDataSourceImpl(lazy { ipAddressServiceProvider.get() }, ipAddressDataMapper)
 }

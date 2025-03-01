@@ -6,8 +6,8 @@ import com.mitteloupe.whoami.architecture.presentation.notification.Presentation
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
 import com.mitteloupe.whoami.history.domain.usecase.DeleteHistoryRecordUseCase
 import com.mitteloupe.whoami.history.domain.usecase.GetHistoryUseCase
-import com.mitteloupe.whoami.history.presentation.mapper.DeleteHistoryRecordRequestToDomainMapper
-import com.mitteloupe.whoami.history.presentation.mapper.SavedIpAddressRecordToPresentationMapper
+import com.mitteloupe.whoami.history.presentation.mapper.DeleteHistoryRecordRequestDomainMapper
+import com.mitteloupe.whoami.history.presentation.mapper.SavedIpAddressRecordPresentationMapper
 import com.mitteloupe.whoami.history.presentation.model.HistoryRecordDeletionPresentationModel
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.HistoryRecords
@@ -16,9 +16,9 @@ import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.NoChang
 
 class HistoryViewModel(
     private val getHistoryUseCase: GetHistoryUseCase,
-    private val savedIpAddressRecordToPresentationMapper: SavedIpAddressRecordToPresentationMapper,
+    private val savedIpAddressRecordPresentationMapper: SavedIpAddressRecordPresentationMapper,
     private val deleteHistoryRecordUseCase: DeleteHistoryRecordUseCase,
-    private val deleteHistoryRecordRequestToDomainMapper: DeleteHistoryRecordRequestToDomainMapper,
+    private val deleteHistoryRecordRequestDomainMapper: DeleteHistoryRecordRequestDomainMapper,
     useCaseExecutor: UseCaseExecutor
 ) : BaseViewModel<HistoryViewState, PresentationNotification>(useCaseExecutor, NoChange) {
     fun onEnter(highlightedIpAddress: String?) {
@@ -29,7 +29,7 @@ class HistoryViewModel(
                     HistoryRecords(
                         highlightedIpAddress = highlightedIpAddress,
                         historyRecords = result
-                            .map(savedIpAddressRecordToPresentationMapper::toPresentation)
+                            .map(savedIpAddressRecordPresentationMapper::toPresentation)
                     )
                 )
             },
@@ -41,7 +41,7 @@ class HistoryViewModel(
 
     fun onDeleteAction(deletionRequest: HistoryRecordDeletionPresentationModel) {
         val domainDeletionRequest =
-            deleteHistoryRecordRequestToDomainMapper.toDomain(deletionRequest)
+            deleteHistoryRecordRequestDomainMapper.toDomain(deletionRequest)
         deleteHistoryRecordUseCase(
             value = domainDeletionRequest,
             onResult = {},

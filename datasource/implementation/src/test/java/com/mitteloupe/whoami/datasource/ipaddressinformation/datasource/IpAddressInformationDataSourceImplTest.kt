@@ -1,7 +1,7 @@
 package com.mitteloupe.whoami.datasource.ipaddressinformation.datasource
 
 import com.mitteloupe.whoami.datasource.ipaddressinformation.exception.NoIpAddressInformationDataException
-import com.mitteloupe.whoami.datasource.ipaddressinformation.mapper.IpAddressInformationToDataMapper
+import com.mitteloupe.whoami.datasource.ipaddressinformation.mapper.IpAddressInformationDataMapper
 import com.mitteloupe.whoami.datasource.ipaddressinformation.model.IpAddressInformationApiModel
 import com.mitteloupe.whoami.datasource.ipaddressinformation.model.IpAddressInformationDataModel
 import com.mitteloupe.whoami.datasource.ipaddressinformation.service.IpAddressInformationService
@@ -30,7 +30,7 @@ class IpAddressInformationDataSourceImplTest {
     private lateinit var ipAddressInformationService: IpAddressInformationService
 
     @Mock
-    private lateinit var ipAddressInformationToDataMapper: IpAddressInformationToDataMapper
+    private lateinit var ipAddressInformationDataMapper: IpAddressInformationDataMapper
 
     @Before
     fun setUp() {
@@ -38,7 +38,7 @@ class IpAddressInformationDataSourceImplTest {
 
         classUnderTest = IpAddressInformationDataSourceImpl(
             lazyIpAddressInformationService,
-            ipAddressInformationToDataMapper
+            ipAddressInformationDataMapper
         )
     }
 
@@ -79,7 +79,7 @@ class IpAddressInformationDataSourceImplTest {
             postCode = postCode,
             timeZone = timeZone
         )
-        given { ipAddressInformationToDataMapper.toData(givenIpAddressResponse) }
+        given { ipAddressInformationDataMapper.toData(givenIpAddressResponse) }
             .willReturn(expectedIpAddressInformation)
 
         // When

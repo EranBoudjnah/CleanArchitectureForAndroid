@@ -7,8 +7,8 @@ import com.mitteloupe.whoami.history.domain.model.HistoryRecordDeletionDomainMod
 import com.mitteloupe.whoami.history.domain.model.SavedIpAddressRecordDomainModel
 import com.mitteloupe.whoami.history.domain.usecase.DeleteHistoryRecordUseCase
 import com.mitteloupe.whoami.history.domain.usecase.GetHistoryUseCase
-import com.mitteloupe.whoami.history.presentation.mapper.DeleteHistoryRecordRequestToDomainMapper
-import com.mitteloupe.whoami.history.presentation.mapper.SavedIpAddressRecordToPresentationMapper
+import com.mitteloupe.whoami.history.presentation.mapper.DeleteHistoryRecordRequestDomainMapper
+import com.mitteloupe.whoami.history.presentation.mapper.SavedIpAddressRecordPresentationMapper
 import com.mitteloupe.whoami.history.presentation.model.HistoryRecordDeletionPresentationModel
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.HistoryRecords
@@ -42,21 +42,21 @@ class HistoryViewModelTest :
     private lateinit var getHistoryUseCase: GetHistoryUseCase
 
     @Mock
-    private lateinit var ipRecordToPresentationMapper: SavedIpAddressRecordToPresentationMapper
+    private lateinit var savedRecordPresentationMapper: SavedIpAddressRecordPresentationMapper
 
     @Mock
     private lateinit var deleteHistoryRecordUseCase: DeleteHistoryRecordUseCase
 
     @Mock
-    private lateinit var deleteRecordRequestToDomainMapper: DeleteHistoryRecordRequestToDomainMapper
+    private lateinit var deleteRecordRequestDomainMapper: DeleteHistoryRecordRequestDomainMapper
 
     @Before
     fun setUp() {
         classUnderTest = HistoryViewModel(
             getHistoryUseCase,
-            ipRecordToPresentationMapper,
+            savedRecordPresentationMapper,
             deleteHistoryRecordUseCase,
-            deleteRecordRequestToDomainMapper,
+            deleteRecordRequestDomainMapper,
             useCaseExecutor
         )
     }
@@ -126,7 +126,7 @@ class HistoryViewModelTest :
         val givenIpAddress = "0.0.0.0"
         val givenDeletionRequest = HistoryRecordDeletionPresentationModel(givenIpAddress)
         val domainDeletionRequest = HistoryRecordDeletionDomainModel(givenIpAddress)
-        given(deleteRecordRequestToDomainMapper.toDomain(givenDeletionRequest))
+        given(deleteRecordRequestDomainMapper.toDomain(givenDeletionRequest))
             .willReturn(domainDeletionRequest)
 
         // When
@@ -134,10 +134,10 @@ class HistoryViewModelTest :
 
         // Then
         verify(useCaseExecutor).execute(
-            eq(deleteHistoryRecordUseCase),
-            eq(domainDeletionRequest),
-            any(),
-            any()
+            useCase = eq(deleteHistoryRecordUseCase),
+            value = eq(domainDeletionRequest),
+            onResult = any(),
+            onException = any()
         )
     }
 
@@ -146,38 +146,38 @@ class HistoryViewModelTest :
         givenIpAddressRecord2: SavedIpAddressRecordDomainModel
     ): Collection<SavedIpAddressRecordPresentationModel> {
         val expectedIpAddressRecord1 = presentationHistoryRecord("0_0_0_0")
-        given(ipRecordToPresentationMapper.toPresentation(givenIpAddressRecord1))
+        given(savedRecordPresentationMapper.toPresentation(givenIpAddressRecord1))
             .willReturn(expectedIpAddressRecord1)
 
         val expectedIpAddressRecord2 = presentationHistoryRecord("1-1-1-1")
-        given(ipRecordToPresentationMapper.toPresentation(givenIpAddressRecord2))
+        given(savedRecordPresentationMapper.toPresentation(givenIpAddressRecord2))
             .willReturn(expectedIpAddressRecord2)
 
         return setOf(expectedIpAddressRecord1, expectedIpAddressRecord2)
     }
 
     private fun domainHistoryRecord(ipAddress: String) = SavedIpAddressRecordDomainModel(
-        ipAddress,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        321L
+        ipAddress = ipAddress,
+        city = null,
+        region = null,
+        countryCode = null,
+        geolocation = null,
+        internetServiceProviderName = null,
+        postCode = null,
+        timeZone = null,
+        savedAtTimestampMilliseconds = 321L
     )
 
     private fun presentationHistoryRecord(ipAddress: String) =
         SavedIpAddressRecordPresentationModel(
-            ipAddress,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            123L
+            ipAddress = ipAddress,
+            city = null,
+            region = null,
+            countryCode = null,
+            geolocation = null,
+            internetServiceProviderName = null,
+            postCode = null,
+            timeZone = null,
+            savedAtTimestampMilliseconds = 123L
         )
 }

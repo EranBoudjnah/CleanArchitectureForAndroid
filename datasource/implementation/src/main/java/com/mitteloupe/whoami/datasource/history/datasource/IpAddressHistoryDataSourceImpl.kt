@@ -2,8 +2,8 @@ package com.mitteloupe.whoami.datasource.history.datasource
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.mitteloupe.whoami.datasource.history.mapper.NewIpAddressRecordToLocalMapper
-import com.mitteloupe.whoami.datasource.history.mapper.SavedIpAddressRecordToDataMapper
+import com.mitteloupe.whoami.datasource.history.mapper.NewIpAddressRecordLocalMapper
+import com.mitteloupe.whoami.datasource.history.mapper.SavedIpAddressRecordDataMapper
 import com.mitteloupe.whoami.datasource.history.model.HistoryRecordDeletionIdentifierDataModel
 import com.mitteloupe.whoami.datasource.history.model.NewIpAddressHistoryRecordDataModel
 import com.mitteloupe.whoami.datasource.history.model.SavedIpAddressHistoryRecordLocalModel
@@ -17,8 +17,8 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.runBlocking
 
 class IpAddressHistoryDataSourceImpl(
-    private val newIpAddressRecordToLocalMapper: NewIpAddressRecordToLocalMapper,
-    private val savedIpAddressRecordToDataMapper: SavedIpAddressRecordToDataMapper,
+    private val newIpAddressRecordLocalMapper: NewIpAddressRecordLocalMapper,
+    private val savedIpAddressRecordDataMapper: SavedIpAddressRecordDataMapper,
     private val sharedPreferences: SharedPreferences,
     private val jsonEncoder: JsonEncoder<Map<String, SavedIpAddressHistoryRecordLocalModel>>,
     private val jsonDecoder: JsonDecoder<Map<String, SavedIpAddressHistoryRecordLocalModel>>
@@ -38,7 +38,7 @@ class IpAddressHistoryDataSourceImpl(
     }
 
     override fun save(record: NewIpAddressHistoryRecordDataModel) {
-        val savedRecord = newIpAddressRecordToLocalMapper.toLocal(record)
+        val savedRecord = newIpAddressRecordLocalMapper.toLocal(record)
         historyRecords[record.ipAddress] = savedRecord
         sharedPreferences.edit {
             putString(KEY_HISTORY_RECORDS, jsonEncoder.encode(historyRecords))
@@ -52,7 +52,7 @@ class IpAddressHistoryDataSourceImpl(
     }
 
     override fun allRecords() = historyRecordsFlow.map { historyRecords ->
-        historyRecords.values.map(savedIpAddressRecordToDataMapper::toData)
+        historyRecords.values.map(savedIpAddressRecordDataMapper::toData)
     }
 
     private fun FlowCollector<Map<String, SavedIpAddressHistoryRecordLocalModel>>.emitRecords() {
