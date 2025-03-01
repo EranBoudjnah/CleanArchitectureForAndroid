@@ -22,10 +22,10 @@ import org.mockito.junit.MockitoJUnit
 import org.mockito.kotlin.given
 
 @RunWith(Parameterized::class)
-class ConnectionStateToPresentationMapperTest(
+class ConnectionDetailsToPresentationMapperTest(
     private val givenConnectionDetails: ConnectionDetailsDomainModel,
     private val expectedViewState: HomeViewState,
-    private val stubMapper: ExceptionToPresentationMapper.() -> Unit
+    private val stubMapper: ExceptionPresentationMapper.() -> Unit
 ) {
     companion object {
         @JvmStatic
@@ -59,7 +59,7 @@ class ConnectionStateToPresentationMapperTest(
         private fun testCase(
             connectionDetails: ConnectionDetailsDomainModel,
             viewState: HomeViewState,
-            stubMapper: ExceptionToPresentationMapper.() -> Unit = {}
+            stubMapper: ExceptionPresentationMapper.() -> Unit = {}
         ) = arrayOf(connectionDetails, viewState, stubMapper)
 
         private fun connectedTestCase(
@@ -109,20 +109,20 @@ class ConnectionStateToPresentationMapperTest(
     @get:Rule
     val mockitoRule: MethodRule = MockitoJUnit.rule()
 
-    private lateinit var classUnderTest: ConnectionStateToPresentationMapper
+    private lateinit var classUnderTest: ConnectionDetailsPresentationMapper
 
     @Mock
-    lateinit var exceptionToPresentationMapper: ExceptionToPresentationMapper
+    lateinit var exceptionPresentationMapper: ExceptionPresentationMapper
 
     @Before
     fun setUp() {
-        classUnderTest = ConnectionStateToPresentationMapper(exceptionToPresentationMapper)
+        classUnderTest = ConnectionDetailsPresentationMapper(exceptionPresentationMapper)
     }
 
     @Test
     fun `When toPresentation`() {
         // Given
-        exceptionToPresentationMapper.stubMapper()
+        exceptionPresentationMapper.stubMapper()
 
         // When
         val actualValue = classUnderTest.toPresentation(givenConnectionDetails)

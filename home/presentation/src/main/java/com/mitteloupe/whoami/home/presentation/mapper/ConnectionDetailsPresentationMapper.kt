@@ -7,8 +7,8 @@ import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel.Erro
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel.Unset
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 
-class ConnectionStateToPresentationMapper(
-    private val exceptionToPresentationMapper: ExceptionToPresentationMapper
+class ConnectionDetailsPresentationMapper(
+    private val exceptionPresentationMapper: ExceptionPresentationMapper
 ) {
     fun toPresentation(connectionDetails: ConnectionDetailsDomainModel) = when (connectionDetails) {
         is Connected -> HomeViewState.Connected(
@@ -26,7 +26,7 @@ class ConnectionStateToPresentationMapper(
         Unset -> HomeViewState.Loading
         is Error -> {
             HomeViewState.Error(
-                exceptionToPresentationMapper.toPresentation(connectionDetails.exception)
+                exceptionPresentationMapper.toPresentation(connectionDetails.exception)
             )
         }
     }

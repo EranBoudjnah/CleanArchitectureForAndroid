@@ -4,9 +4,9 @@ import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
 import com.mitteloupe.whoami.home.domain.usecase.GetConnectionDetailsUseCase
 import com.mitteloupe.whoami.home.domain.usecase.SaveConnectionDetailsUseCase
+import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsPresentationMapper
 import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsToDomainMapper
-import com.mitteloupe.whoami.home.presentation.mapper.ConnectionStateToPresentationMapper
-import com.mitteloupe.whoami.home.presentation.mapper.ExceptionToPresentationMapper
+import com.mitteloupe.whoami.home.presentation.mapper.ExceptionPresentationMapper
 import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotification
 import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotification.ConnectionSaved
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
@@ -18,10 +18,10 @@ import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNaviga
 
 class HomeViewModel(
     private val getConnectionDetailsUseCase: GetConnectionDetailsUseCase,
-    private val connectionStateToPresentationMapper: ConnectionStateToPresentationMapper,
+    private val connectionDetailsPresentationMapper: ConnectionDetailsPresentationMapper,
     private val saveConnectionDetailsUseCase: SaveConnectionDetailsUseCase,
     private val connectionDetailsToDomainMapper: ConnectionDetailsToDomainMapper,
-    private val exceptionToPresentationMapper: ExceptionToPresentationMapper,
+    private val exceptionPresentationMapper: ExceptionPresentationMapper,
     useCaseExecutor: UseCaseExecutor
 ) : BaseViewModel<HomeViewState, HomePresentationNotification>(useCaseExecutor, Loading) {
     fun onEnter() {
@@ -29,11 +29,11 @@ class HomeViewModel(
         getConnectionDetailsUseCase(
             onResult = { result ->
                 updateViewState(
-                    connectionStateToPresentationMapper.toPresentation(result)
+                    connectionDetailsPresentationMapper.toPresentation(result)
                 )
             },
             onException = { exception ->
-                updateViewState(Error(exceptionToPresentationMapper.toPresentation(exception)))
+                updateViewState(Error(exceptionPresentationMapper.toPresentation(exception)))
             }
         )
     }
@@ -49,7 +49,7 @@ class HomeViewModel(
                 )
             },
             onException = { exception ->
-                updateViewState(Error(exceptionToPresentationMapper.toPresentation(exception)))
+                updateViewState(Error(exceptionPresentationMapper.toPresentation(exception)))
             }
         )
     }
