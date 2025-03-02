@@ -17,7 +17,6 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
     private val navigationMapper: NavigationEventDestinationMapper<PresentationNavigationEvent>,
     private val notificationMapper: NotificationUiMapper
 ) {
-
     @Composable
     fun ViewModelObserver(navController: NavController) {
         val navigation = viewModel.navigationEvent.collectAsState(

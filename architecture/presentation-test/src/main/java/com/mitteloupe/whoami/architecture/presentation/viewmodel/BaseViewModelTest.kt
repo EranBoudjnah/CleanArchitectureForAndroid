@@ -5,11 +5,11 @@ import com.mitteloupe.whoami.architecture.domain.exception.DomainException
 import com.mitteloupe.whoami.architecture.domain.usecase.UseCase
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.coroutine.currentValue
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.TestCoroutineScheduler
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -28,8 +28,10 @@ abstract class BaseViewModelTest<
     NOTIFICATION : PresentationNotification,
     VIEW_MODEL : BaseViewModel<VIEW_STATE, NOTIFICATION>
     > {
-    @OptIn(DelicateCoroutinesApi::class, ExperimentalCoroutinesApi::class)
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
+    private val testScheduler = TestCoroutineScheduler()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val testDispatcher = UnconfinedTestDispatcher(testScheduler)
 
     protected lateinit var classUnderTest: VIEW_MODEL
 
@@ -41,7 +43,7 @@ abstract class BaseViewModelTest<
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun coroutineSetUp() {
-        Dispatchers.setMain(mainThreadSurrogate)
+        Dispatchers.setMain(testDispatcher)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

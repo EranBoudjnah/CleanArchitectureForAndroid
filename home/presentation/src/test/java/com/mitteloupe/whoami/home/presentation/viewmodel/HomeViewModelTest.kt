@@ -18,7 +18,6 @@ import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNaviga
 import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -64,7 +63,7 @@ class HomeViewModelTest :
     }
 
     @Test
-    fun `Given disconnected when onEnter then presents disconnected state`() = runBlocking {
+    fun `Given disconnected when onEnter then presents disconnected state`() = runTest {
         // Given
         val givenConnectionState = Disconnected
         givenSuccessfulUseCaseExecution(
