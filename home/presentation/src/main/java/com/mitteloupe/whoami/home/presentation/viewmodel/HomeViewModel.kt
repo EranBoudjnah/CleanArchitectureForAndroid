@@ -51,8 +51,8 @@ class HomeViewModel(
         )
     }
 
-    private fun presentConnectionDetails(result: ConnectionDetailsDomainModel) {
-        updateViewState(connectionDetailsPresentationMapper.toPresentation(result))
+    private fun presentConnectionDetails(connectionDetails: ConnectionDetailsDomainModel) {
+        updateViewState(connectionDetailsPresentationMapper.toPresentation(connectionDetails))
     }
 
     private fun saveConnectionDetails(connectionDetails: ConnectionDetailsDomainModel.Connected) {
