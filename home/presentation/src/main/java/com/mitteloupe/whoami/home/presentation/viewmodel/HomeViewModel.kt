@@ -47,7 +47,7 @@ class HomeViewModel(
     private fun fetchConnectionDetails() {
         getConnectionDetailsUseCase(
             onResult = ::presentConnectionDetails,
-            onException = ::presentException
+            onException = ::presentError
         )
     }
 
@@ -59,7 +59,7 @@ class HomeViewModel(
         saveConnectionDetailsUseCase(
             value = connectionDetails,
             onResult = { presentSaveDetailsResult(connectionDetails.ipAddress) },
-            onException = ::presentException
+            onException = ::presentError
         )
     }
 
@@ -68,7 +68,7 @@ class HomeViewModel(
         emitNavigationEvent(OnSavedDetails(highlightedIpAddress = ipAddress))
     }
 
-    private fun presentException(exception: DomainException) {
+    private fun presentError(exception: DomainException) {
         updateViewState(Error(exceptionPresentationMapper.toPresentation(exception)))
     }
 }
