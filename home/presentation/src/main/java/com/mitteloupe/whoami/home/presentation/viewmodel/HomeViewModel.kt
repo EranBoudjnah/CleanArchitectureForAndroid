@@ -55,9 +55,7 @@ class HomeViewModel(
         updateViewState(connectionDetailsPresentationMapper.toPresentation(result))
     }
 
-    private fun HomeViewModel.saveConnectionDetails(
-        connectionDetails: ConnectionDetailsDomainModel.Connected
-    ) {
+    private fun saveConnectionDetails(connectionDetails: ConnectionDetailsDomainModel.Connected) {
         saveConnectionDetailsUseCase(
             value = connectionDetails,
             onResult = { presentSaveDetailsResult(connectionDetails.ipAddress) },
