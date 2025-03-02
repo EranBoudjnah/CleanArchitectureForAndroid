@@ -1,7 +1,9 @@
 package com.mitteloupe.whoami.home.presentation.viewmodel
 
 import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
+import com.mitteloupe.whoami.architecture.domain.exception.DomainException
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
+import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel
 import com.mitteloupe.whoami.home.domain.usecase.GetConnectionDetailsUseCase
 import com.mitteloupe.whoami.home.domain.usecase.SaveConnectionDetailsUseCase
 import com.mitteloupe.whoami.home.presentation.mapper.ConnectionDetailsDomainMapper
@@ -26,32 +28,12 @@ class HomeViewModel(
 ) : BaseViewModel<HomeViewState, HomePresentationNotification>(useCaseExecutor, Loading) {
     fun onEnter() {
         updateViewState(Loading)
-        getConnectionDetailsUseCase(
-            onResult = { result ->
-                updateViewState(
-                    connectionDetailsPresentationMapper.toPresentation(result)
-                )
-            },
-            onException = { exception ->
-                updateViewState(Error(exceptionPresentationMapper.toPresentation(exception)))
-            }
-        )
+        fetchConnectionDetails()
     }
 
     fun onSaveDetailsAction(connectionDetails: HomeViewState.Connected) {
         val domainConnectionDetails = connectionDetailsDomainMapper.toDomain(connectionDetails)
-        saveConnectionDetailsUseCase(
-            value = domainConnectionDetails,
-            onResult = {
-                notify(ConnectionSaved(connectionDetails.ipAddress))
-                emitNavigationEvent(
-                    OnSavedDetails(highlightedIpAddress = connectionDetails.ipAddress)
-                )
-            },
-            onException = { exception ->
-                updateViewState(Error(exceptionPresentationMapper.toPresentation(exception)))
-            }
-        )
+        saveConnectionDetails(domainConnectionDetails)
     }
 
     fun onViewHistoryAction() {
@@ -60,5 +42,35 @@ class HomeViewModel(
 
     fun onOpenSourceNoticesAction() {
         emitNavigationEvent(OnViewOpenSourceNotices)
+    }
+
+    private fun fetchConnectionDetails() {
+        getConnectionDetailsUseCase(
+            onResult = ::presentConnectionDetails,
+            onException = ::presentException
+        )
+    }
+
+    private fun presentConnectionDetails(result: ConnectionDetailsDomainModel) {
+        updateViewState(connectionDetailsPresentationMapper.toPresentation(result))
+    }
+
+    private fun HomeViewModel.saveConnectionDetails(
+        connectionDetails: ConnectionDetailsDomainModel.Connected
+    ) {
+        saveConnectionDetailsUseCase(
+            value = connectionDetails,
+            onResult = { presentSaveDetailsResult(connectionDetails.ipAddress) },
+            onException = ::presentException
+        )
+    }
+
+    private fun presentSaveDetailsResult(ipAddress: String) {
+        notify(ConnectionSaved(ipAddress))
+        emitNavigationEvent(OnSavedDetails(highlightedIpAddress = ipAddress))
+    }
+
+    private fun presentException(exception: DomainException) {
+        updateViewState(Error(exceptionPresentationMapper.toPresentation(exception)))
     }
 }
