@@ -15,10 +15,10 @@ import androidx.fragment.app.commit
 @Composable
 fun FragmentContainer(
     containerId: Int,
-    modifier: Modifier = Modifier,
     fragmentManager: FragmentManager,
     commit: FragmentTransaction.(containerId: Int) -> Unit,
-    onFragmentViewCreated: (containerId: Int) -> Unit
+    onFragmentViewCreated: (containerId: Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var initialized by rememberSaveable { mutableStateOf(false) }
 
@@ -38,13 +38,4 @@ fun FragmentContainer(
             }
         }
     )
-}
-
-private fun FragmentManager.onContainerAvailable(view: FragmentContainerView) {
-    val method = FragmentManager::class.java.getDeclaredMethod(
-        "onContainerAvailable",
-        FragmentContainerView::class.java
-    )
-    method.isAccessible = true
-    method.invoke(this, view)
 }

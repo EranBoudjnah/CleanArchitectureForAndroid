@@ -20,18 +20,12 @@ fun DetailsBlock(
     modifier: Modifier = Modifier,
     detailsContainer: DetailsUiModel = DetailsUiModel(
         listOf(
-            R.string.home_city_label to
-                connectionDetails.cityIconLabel,
-            R.string.home_region_label to
-                connectionDetails.regionIconLabel,
-            R.string.home_country_label to
-                connectionDetails.countryIconLabel,
-            R.string.home_geolocation_label to
-                connectionDetails.geolocationIconLabel,
-            R.string.home_post_code_label to
-                connectionDetails.postCode,
-            R.string.home_time_zone_label to
-                connectionDetails.timeZone,
+            R.string.home_city_label to connectionDetails.cityIconLabel,
+            R.string.home_region_label to connectionDetails.regionIconLabel,
+            R.string.home_country_label to connectionDetails.countryIconLabel,
+            R.string.home_geolocation_label to connectionDetails.geolocationIconLabel,
+            R.string.home_post_code_label to connectionDetails.postCode,
+            R.string.home_time_zone_label to connectionDetails.timeZone,
             R.string.home_internet_service_provider_label to
                 connectionDetails.internetServiceProviderName
         ).map { resourceIdLabelPair ->

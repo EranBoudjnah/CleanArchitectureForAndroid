@@ -14,7 +14,7 @@ import com.mitteloupe.whoami.home.ui.content.DisconnectedContent
 import com.mitteloupe.whoami.home.ui.view.spring.enterSpring
 
 @Composable
-fun DisconnectedContentContainer(visible: Boolean) {
+fun DisconnectedContentContainer(visible: Boolean, modifier: Modifier = Modifier) {
     AnimatedVisibility(
         visible = visible,
         enter = expandVertically(
@@ -23,7 +23,7 @@ fun DisconnectedContentContainer(visible: Boolean) {
             animationSpec = enterSpring(IntOffset.VisibilityThreshold)
         )
     ) {
-        DisconnectedContent(modifier = Modifier.fillMaxWidth())
+        DisconnectedContent(modifier = modifier.fillMaxWidth())
     }
 }
 

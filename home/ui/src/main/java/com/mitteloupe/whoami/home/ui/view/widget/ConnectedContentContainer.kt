@@ -21,7 +21,11 @@ import com.mitteloupe.whoami.home.ui.model.IconLabelUiModel
 import com.mitteloupe.whoami.home.ui.view.spring.enterSpring
 
 @Composable
-fun ConnectedContentContainer(visible: Boolean, connectionDetails: ConnectionDetailsUiModel?) {
+fun ConnectedContentContainer(
+    visible: Boolean,
+    connectionDetails: ConnectionDetailsUiModel?,
+    modifier: Modifier = Modifier
+) {
     AnimatedVisibility(
         visible = visible,
         enter = expandVertically(
@@ -34,7 +38,7 @@ fun ConnectedContentContainer(visible: Boolean, connectionDetails: ConnectionDet
         if (connectionDetails != null) {
             ConnectedContent(
                 connectionDetails = connectionDetails,
-                modifier = Modifier.fillMaxWidth()
+                modifier = modifier.fillMaxWidth()
             )
         }
     }

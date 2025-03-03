@@ -37,7 +37,8 @@ import com.mitteloupe.whoami.home.ui.view.widget.LoadingAnimationContainer
 @Composable
 fun HomeDependencies.Home(
     navController: NavController,
-    color: Color = MaterialTheme.colorScheme.background
+    color: Color = MaterialTheme.colorScheme.background,
+    modifier: Modifier = Modifier
 ) {
     fun relaySavingToViewModel(viewState: State<HomeViewState>) {
         val connectionDetails = viewState.value
@@ -81,7 +82,8 @@ fun HomeDependencies.Home(
         onSaveDetailsClick = { relaySavingToViewModel(viewState) },
         onViewHistoryClick = { homeViewModel.onViewHistoryAction() },
         onOpenSourceNoticesClick = { homeViewModel.onOpenSourceNoticesAction() },
-        color = color
+        color = color,
+        modifier = modifier
     )
 }
 
@@ -94,10 +96,11 @@ private fun HomeContents(
     onSaveDetailsClick: () -> Unit,
     onViewHistoryClick: () -> Unit,
     onOpenSourceNoticesClick: () -> Unit,
-    color: Color
+    color: Color,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color)
             .verticalScroll(rememberScrollState())
