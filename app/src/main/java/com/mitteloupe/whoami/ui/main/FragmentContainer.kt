@@ -39,12 +39,3 @@ fun FragmentContainer(
         }
     )
 }
-
-private fun FragmentManager.onContainerAvailable(view: FragmentContainerView) {
-    val method = FragmentManager::class.java.getDeclaredMethod(
-        "onContainerAvailable",
-        FragmentContainerView::class.java
-    )
-    method.isAccessible = true
-    method.invoke(this, view)
-}
