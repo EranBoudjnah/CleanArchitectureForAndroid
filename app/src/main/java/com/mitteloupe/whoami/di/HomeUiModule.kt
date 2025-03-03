@@ -5,7 +5,6 @@ import android.content.res.Resources
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventDestinationMapper
-import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
 import com.mitteloupe.whoami.home.ui.di.HomeDependencies
 import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsUiMapper
@@ -50,7 +49,6 @@ object HomeUiModule {
         homeNavigationMapper: HomeNavigationEventDestinationMapper,
         homeNotificationMapper: HomeNotificationUiMapper,
         errorUiMapper: ErrorUiMapper,
-        coroutineContextProvider: CoroutineContextProvider,
         analytics: Analytics
     ) = HomeDependencies(
         homeViewModel,
@@ -59,7 +57,6 @@ object HomeUiModule {
         homeNavigationMapper as NavigationEventDestinationMapper<PresentationNavigationEvent>,
         homeNotificationMapper,
         errorUiMapper,
-        coroutineContextProvider,
         analytics
     )
 }

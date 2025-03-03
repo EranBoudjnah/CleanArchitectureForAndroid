@@ -5,7 +5,6 @@ import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNa
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventDestinationMapper
 import com.mitteloupe.whoami.architecture.ui.notification.mapper.NotificationUiMapper
 import com.mitteloupe.whoami.architecture.ui.view.BaseComposeHolder
-import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 import com.mitteloupe.whoami.home.presentation.model.HomePresentationNotification
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
@@ -22,11 +21,9 @@ data class HomeDependencies(
     private val homeNavigationMapper: NavigationMapper,
     private val homeNotificationMapper: NotificationUiMapper,
     val errorUiMapper: ErrorUiMapper,
-    val coroutineContextProvider: CoroutineContextProvider,
     val analytics: Analytics
 ) : BaseComposeHolder<HomeViewState, HomePresentationNotification>(
     homeViewModel,
-    coroutineContextProvider,
     homeNavigationMapper,
     homeNotificationMapper
 )
