@@ -17,11 +17,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun LoadingAnimation(
+    modifier: Modifier = Modifier,
     circleColor: Color = MaterialTheme.colorScheme.primary,
     size: Dp = 64.dp,
     thickness: Dp = 4.dp,
@@ -44,7 +46,7 @@ fun LoadingAnimation(
     }
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(size = size)
             .scale(scale = circleScaleAnimated.value)
             .border(
@@ -53,4 +55,10 @@ fun LoadingAnimation(
                 shape = CircleShape
             )
     ) {}
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun Preview() {
+    LoadingAnimation()
 }

@@ -25,10 +25,11 @@ fun HomeFooter(
     analytics: Analytics,
     onSaveDetailsClick: () -> Unit,
     onViewHistoryClick: () -> Unit,
-    onOpenSourceNoticesClick: () -> Unit
+    onOpenSourceNoticesClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(start = 16.dp, top = 24.dp, end = 16.dp, bottom = 16.dp)
     ) {

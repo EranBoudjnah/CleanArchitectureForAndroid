@@ -20,31 +20,27 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
         val navigation = viewModel.navigationEvent.collectAsState(initial = null)
 
         navigation.value?.let { navigationValue ->
-            Navigate(navigationValue, navController)
+            Navigator(navigationValue, navController)
         }
 
         val notification = viewModel.notification.collectAsState(initial = null)
 
         notification.value?.let { notificationValue ->
-            Notify(notification = notificationValue)
+            Notifier(notification = notificationValue)
         }
     }
 
     @Composable
-    fun Notify(notification: PresentationNotification) {
-        notificationMapper.toUi(notification).let { uiNotification ->
-            LaunchedEffect(notification) {
-                uiNotification.present()
-            }
+    fun Notifier(notification: PresentationNotification) {
+        LaunchedEffect(notification) {
+            notificationMapper.toUi(notification).present()
         }
     }
 
     @Composable
-    fun Navigate(navigation: PresentationNavigationEvent, navController: NavController) {
-        navigationMapper.toUi(navigation).let { uiDestination ->
-            LaunchedEffect(navigation) {
-                uiDestination.navigate(navController)
-            }
+    fun Navigator(navigation: PresentationNavigationEvent, navController: NavController) {
+        LaunchedEffect(navigation) {
+            navigationMapper.toUi(navigation).navigate(navController)
         }
     }
 }

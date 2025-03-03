@@ -15,10 +15,10 @@ import androidx.fragment.app.commit
 @Composable
 fun FragmentContainer(
     containerId: Int,
-    modifier: Modifier = Modifier,
     fragmentManager: FragmentManager,
     commit: FragmentTransaction.(containerId: Int) -> Unit,
-    onFragmentViewCreated: (containerId: Int) -> Unit
+    onFragmentViewCreated: (containerId: Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var initialized by rememberSaveable { mutableStateOf(false) }
 
