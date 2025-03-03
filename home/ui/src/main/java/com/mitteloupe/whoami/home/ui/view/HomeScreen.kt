@@ -54,10 +54,7 @@ fun HomeDependencies.Home(
 
     ViewModelObserver(navController)
 
-    val viewState = homeViewModel.viewState.collectAsState(
-        HomeViewState.Loading,
-        coroutineContextProvider.main
-    )
+    val viewState = homeViewModel.viewState.collectAsState(HomeViewState.Loading)
 
     val lastConnectedState = remember { mutableStateOf<HomeViewState.Connected?>(null) }
     val viewStateValue = viewState.value

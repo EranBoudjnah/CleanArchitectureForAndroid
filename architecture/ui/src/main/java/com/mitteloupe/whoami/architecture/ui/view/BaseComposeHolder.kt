@@ -9,29 +9,21 @@ import com.mitteloupe.whoami.architecture.presentation.notification.Presentation
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventDestinationMapper
 import com.mitteloupe.whoami.architecture.ui.notification.mapper.NotificationUiMapper
-import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
 
 abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNotification>(
     private val viewModel: BaseViewModel<VIEW_STATE, NOTIFICATION>,
-    private val coroutineContextProvider: CoroutineContextProvider,
     private val navigationMapper: NavigationEventDestinationMapper<PresentationNavigationEvent>,
     private val notificationMapper: NotificationUiMapper
 ) {
     @Composable
     fun ViewModelObserver(navController: NavController) {
-        val navigation = viewModel.navigationEvent.collectAsState(
-            initial = null,
-            coroutineContextProvider.main
-        )
+        val navigation = viewModel.navigationEvent.collectAsState(initial = null)
 
         navigation.value?.let { navigationValue ->
             Navigate(navigationValue, navController)
         }
 
-        val notification = viewModel.notification.collectAsState(
-            initial = null,
-            coroutineContextProvider.main
-        )
+        val notification = viewModel.notification.collectAsState(initial = null)
 
         notification.value?.let { notificationValue ->
             Notify(notification = notificationValue)
