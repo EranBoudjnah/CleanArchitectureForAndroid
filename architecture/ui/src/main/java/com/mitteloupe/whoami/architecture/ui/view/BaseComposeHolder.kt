@@ -17,17 +17,15 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
 ) {
     @Composable
     fun ViewModelObserver(navController: NavController) {
-        val navigation = viewModel.navigationEvent.collectAsState(initial = null)
+        viewModel.navigationEvent.collectAsState(initial = null)
+            .value?.let { navigationValue ->
+                Navigator(navigationValue, navController)
+            }
 
-        navigation.value?.let { navigationValue ->
-            Navigator(navigationValue, navController)
-        }
-
-        val notification = viewModel.notification.collectAsState(initial = null)
-
-        notification.value?.let { notificationValue ->
-            Notifier(notification = notificationValue)
-        }
+        viewModel.notification.collectAsState(initial = null)
+            .value?.let { notificationValue ->
+                Notifier(notification = notificationValue)
+            }
     }
 
     @Composable
