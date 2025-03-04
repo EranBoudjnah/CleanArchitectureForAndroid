@@ -9,8 +9,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -40,8 +40,7 @@ fun HomeDependencies.Home(
     color: Color = MaterialTheme.colorScheme.background,
     modifier: Modifier = Modifier
 ) {
-    fun relaySavingToViewModel(viewState: State<HomeViewState>) {
-        val connectionDetails = viewState.value
+    fun relaySavingToViewModel(connectionDetails: HomeViewState) {
         require(connectionDetails is HomeViewState.Connected) {
             "Unexpected click, not connected."
         }
@@ -55,27 +54,24 @@ fun HomeDependencies.Home(
 
     ViewModelObserver(navController)
 
-    val viewState = homeViewModel.viewState.collectAsState(HomeViewState.Loading)
+    val viewState by homeViewModel.viewState.collectAsState(HomeViewState.Loading)
 
     val lastConnectedState = remember { mutableStateOf<HomeViewState.Connected?>(null) }
-    val viewStateValue = viewState.value
 
-    if (viewStateValue is HomeViewState.Connected) {
-        lastConnectedState.value = viewStateValue
-    }
+    (viewState as? HomeViewState.Connected)?.let { lastConnectedState.value = it }
 
     val connectedState = lastConnectedState.value
 
     val connectionDetails = remember(connectedState) {
         mutableStateOf(connectedState?.let(connectionDetailsUiMapper::toUi))
     }
-    val errorMessage = remember(viewStateValue) {
+    val errorMessage = remember(viewState) {
         mutableStateOf(
-            (viewStateValue as? HomeViewState.Error)?.let(errorUiMapper::toUi).orEmpty()
+            (viewState as? HomeViewState.Error)?.let(errorUiMapper::toUi).orEmpty()
         )
     }
     HomeContents(
-        viewState = homeViewStateUiMapper.toUi(viewStateValue),
+        viewState = homeViewStateUiMapper.toUi(viewState),
         connectionDetails = connectionDetails.value,
         errorMessage = errorMessage.value,
         analytics = analytics,
