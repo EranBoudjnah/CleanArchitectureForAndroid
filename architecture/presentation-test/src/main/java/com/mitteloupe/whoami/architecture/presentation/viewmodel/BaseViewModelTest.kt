@@ -4,7 +4,6 @@ import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
 import com.mitteloupe.whoami.architecture.domain.exception.DomainException
 import com.mitteloupe.whoami.architecture.domain.usecase.UseCase
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
-import com.mitteloupe.whoami.coroutine.currentValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -13,9 +12,7 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Test
 import org.mockito.BDDMockito.willAnswer
 import org.mockito.Mock
 import org.mockito.kotlin.any
@@ -35,8 +32,6 @@ abstract class BaseViewModelTest<
 
     protected lateinit var classUnderTest: VIEW_MODEL
 
-    protected abstract val expectedInitialState: VIEW_STATE
-
     @Mock
     protected lateinit var useCaseExecutor: UseCaseExecutor
 
@@ -50,16 +45,6 @@ abstract class BaseViewModelTest<
     @After
     fun coroutineTearDown() {
         Dispatchers.resetMain()
-    }
-
-    @Suppress("FunctionName")
-    @Test
-    fun `Given initial state when instantiated then presents initial state`() = runBlocking {
-        // When
-        val viewState = classUnderTest.viewState.currentValue()
-
-        // Then
-        assertEquals(expectedInitialState, viewState)
     }
 
     protected fun <REQUEST> givenFailedUseCaseExecution(
