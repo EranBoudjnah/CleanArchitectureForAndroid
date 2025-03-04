@@ -12,7 +12,6 @@ import com.mitteloupe.whoami.history.presentation.model.HistoryRecordDeletionPre
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.HistoryRecords
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.Loading
-import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.NoChange
 
 class HistoryViewModel(
     private val getHistoryUseCase: GetHistoryUseCase,
@@ -20,7 +19,7 @@ class HistoryViewModel(
     private val deleteHistoryRecordUseCase: DeleteHistoryRecordUseCase,
     private val deleteHistoryRecordRequestDomainMapper: DeleteHistoryRecordRequestDomainMapper,
     useCaseExecutor: UseCaseExecutor
-) : BaseViewModel<HistoryViewState, PresentationNotification>(useCaseExecutor, NoChange) {
+) : BaseViewModel<HistoryViewState, PresentationNotification>(useCaseExecutor) {
     fun onEnter(highlightedIpAddress: String?) {
         updateViewState(Loading)
         getHistoryUseCase(

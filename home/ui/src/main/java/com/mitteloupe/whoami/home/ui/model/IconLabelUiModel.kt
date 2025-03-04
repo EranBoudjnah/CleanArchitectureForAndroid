@@ -1,5 +1,8 @@
 package com.mitteloupe.whoami.home.ui.model
 
+import android.os.Parcelable
 import androidx.annotation.DrawableRes
+import kotlinx.parcelize.Parcelize
 
-data class IconLabelUiModel(@DrawableRes val iconResourceId: Int, val label: String)
+@Parcelize
+data class IconLabelUiModel(@DrawableRes val iconResourceId: Int, val label: String) : Parcelable

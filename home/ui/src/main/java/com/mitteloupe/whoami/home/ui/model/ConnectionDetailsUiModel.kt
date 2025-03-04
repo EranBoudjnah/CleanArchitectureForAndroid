@@ -1,5 +1,9 @@
 package com.mitteloupe.whoami.home.ui.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class ConnectionDetailsUiModel(
     val ipAddress: String,
     val cityIconLabel: IconLabelUiModel?,
@@ -9,4 +13,4 @@ data class ConnectionDetailsUiModel(
     val postCode: IconLabelUiModel?,
     val timeZone: IconLabelUiModel?,
     val internetServiceProviderName: IconLabelUiModel?
-)
+) : Parcelable
