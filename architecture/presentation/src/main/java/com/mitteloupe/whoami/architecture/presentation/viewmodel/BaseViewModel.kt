@@ -8,15 +8,13 @@ import com.mitteloupe.whoami.architecture.presentation.notification.Presentation
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel<VIEW_STATE : Any, NOTIFICATION : PresentationNotification>(
-    private val useCaseExecutor: UseCaseExecutor,
-    initialViewState: VIEW_STATE
+    private val useCaseExecutor: UseCaseExecutor
 ) {
     val viewState: Flow<VIEW_STATE>
-        field = MutableStateFlow(initialViewState)
+        field = MutableSharedFlow()
 
     val notification: Flow<NOTIFICATION>
         field = MutableSharedFlow()

@@ -23,6 +23,7 @@ dependencies {
 
     testImplementation(libs.test.junit)
     testImplementation(libs.test.mockito.kotlin)
+    testImplementation(libs.test.kotlinx.coroutines)
     testImplementation(libs.test.hamcrest)
     testImplementation(projects.architecture.presentationTest)
     testImplementation(projects.coroutineTest)

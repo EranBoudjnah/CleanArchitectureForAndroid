@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -56,24 +56,22 @@ fun HomeDependencies.Home(
 
     val viewState by homeViewModel.viewState.collectAsState(HomeViewState.Loading)
 
-    val lastConnectedState = remember { mutableStateOf<HomeViewState.Connected?>(null) }
-
-    (viewState as? HomeViewState.Connected)?.let { lastConnectedState.value = it }
-
-    val connectedState = lastConnectedState.value
-
-    val connectionDetails = remember(connectedState) {
-        mutableStateOf(connectedState?.let(connectionDetailsUiMapper::toUi))
-    }
-    val errorMessage = remember(viewState) {
+    val connectionDetails by rememberSaveable(viewState) {
         mutableStateOf(
-            (viewState as? HomeViewState.Error)?.let(errorUiMapper::toUi).orEmpty()
+            (viewState as? HomeViewState.Connected)?.let(connectionDetailsUiMapper::toUi)
         )
     }
+    val errorMessage by rememberSaveable(viewState) {
+        mutableStateOf((viewState as? HomeViewState.Error)?.let(errorUiMapper::toUi).orEmpty())
+    }
+    val uiState by rememberSaveable(viewState) {
+        mutableStateOf(homeViewStateUiMapper.toUi(viewState))
+    }
+
     HomeContents(
-        viewState = homeViewStateUiMapper.toUi(viewState),
-        connectionDetails = connectionDetails.value,
-        errorMessage = errorMessage.value,
+        viewState = uiState,
+        connectionDetails = connectionDetails,
+        errorMessage = errorMessage,
         analytics = analytics,
         onSaveDetailsClick = { relaySavingToViewModel(viewState) },
         onViewHistoryClick = { homeViewModel.onViewHistoryAction() },

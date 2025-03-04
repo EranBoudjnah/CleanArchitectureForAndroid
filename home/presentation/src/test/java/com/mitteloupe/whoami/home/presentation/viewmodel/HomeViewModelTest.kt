@@ -1,7 +1,6 @@
 package com.mitteloupe.whoami.home.presentation.viewmodel
 
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModelTest
-import com.mitteloupe.whoami.coroutine.currentValue
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel.Disconnected
 import com.mitteloupe.whoami.home.domain.usecase.GetConnectionDetailsUseCase
@@ -18,6 +17,8 @@ import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNaviga
 import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -33,8 +34,6 @@ import org.mockito.kotlin.verify
 @RunWith(MockitoJUnitRunner::class)
 class HomeViewModelTest :
     BaseViewModelTest<HomeViewState, HomePresentationNotification, HomeViewModel>() {
-    override val expectedInitialState: HomeViewState = Loading
-
     @Mock
     private lateinit var getConnectionDetailsUseCase: GetConnectionDetailsUseCase
 
@@ -73,13 +72,17 @@ class HomeViewModelTest :
         val expectedViewState = HomeViewState.Disconnected
         given { connectionDetailsPresentationMapper.toPresentation(givenConnectionState) }
             .willReturn(expectedViewState)
+        val deferredViewState = async(start = UNDISPATCHED) {
+            classUnderTest.viewState.take(2).toList()
+        }
 
         // When
         classUnderTest.onEnter()
-        val actualValue = classUnderTest.viewState.currentValue()
+        val actualValue = deferredViewState.await()
 
         // Then
-        assertEquals(expectedViewState, actualValue)
+        assertEquals(Loading, actualValue[0])
+        assertEquals(expectedViewState, actualValue[1])
     }
 
     @Test

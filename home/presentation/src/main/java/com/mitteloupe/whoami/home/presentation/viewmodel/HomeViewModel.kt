@@ -25,7 +25,7 @@ class HomeViewModel(
     private val connectionDetailsDomainMapper: ConnectionDetailsDomainMapper,
     private val exceptionPresentationMapper: ExceptionPresentationMapper,
     useCaseExecutor: UseCaseExecutor
-) : BaseViewModel<HomeViewState, HomePresentationNotification>(useCaseExecutor, Loading) {
+) : BaseViewModel<HomeViewState, HomePresentationNotification>(useCaseExecutor) {
     fun onEnter() {
         updateViewState(Loading)
         fetchConnectionDetails()

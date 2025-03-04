@@ -2,7 +2,6 @@ package com.mitteloupe.whoami.history.presentation.viewmodel
 
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModelTest
-import com.mitteloupe.whoami.coroutine.currentValue
 import com.mitteloupe.whoami.history.domain.model.HistoryRecordDeletionDomainModel
 import com.mitteloupe.whoami.history.domain.model.SavedIpAddressRecordDomainModel
 import com.mitteloupe.whoami.history.domain.usecase.DeleteHistoryRecordUseCase
@@ -12,11 +11,15 @@ import com.mitteloupe.whoami.history.presentation.mapper.SavedIpAddressRecordPre
 import com.mitteloupe.whoami.history.presentation.model.HistoryRecordDeletionPresentationModel
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState
 import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.HistoryRecords
-import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.NoChange
+import com.mitteloupe.whoami.history.presentation.model.HistoryViewState.Loading
 import com.mitteloupe.whoami.history.presentation.model.SavedIpAddressRecordPresentationModel
+import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
-import org.hamcrest.CoreMatchers.instanceOf
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.hamcrest.core.IsIterableContaining.hasItem
@@ -36,8 +39,6 @@ private const val STATE_SETTLING_DELAY_MILLISECONDS = 10L
 @RunWith(MockitoJUnitRunner::class)
 class HistoryViewModelTest :
     BaseViewModelTest<HistoryViewState, PresentationNotification, HistoryViewModel>() {
-    override val expectedInitialState: HistoryViewState = NoChange
-
     @Mock
     private lateinit var getHistoryUseCase: GetHistoryUseCase
 
@@ -74,49 +75,54 @@ class HistoryViewModelTest :
             val givenHistory = setOf(givenIpAddressRecord1, givenIpAddressRecord2)
             givenSuccessfulUseCaseExecution(getHistoryUseCase, givenHistory)
             val highlightedIpAddress: String? = null
-            val expectedViewState = HistoryRecords(
-                highlightedIpAddress = highlightedIpAddress,
-                historyRecords = expectedSavedRecords
-            )
+
+            val deferredViewState = async(start = UNDISPATCHED) {
+                classUnderTest.viewState.take(2).toList()
+            }
 
             // When
             classUnderTest.onEnter(highlightedIpAddress)
             delay(STATE_SETTLING_DELAY_MILLISECONDS)
-            val actualValue = classUnderTest.viewState.currentValue()
+            val actualValue = deferredViewState.await()
 
             // Then
-            assertThat(actualValue, instanceOf(expectedViewState::class.java))
+            assertEquals(Loading, actualValue[0])
+            val actualHistoryRecords = actualValue[1] as HistoryRecords
             assertEquals(
                 highlightedIpAddress,
-                (actualValue as HistoryRecords).highlightedIpAddress
+                actualHistoryRecords.highlightedIpAddress
             )
             assertThat(
-                actualValue.historyRecords,
+                actualHistoryRecords.historyRecords,
                 hasSize(expectedSavedRecords.size)
             )
             expectedSavedRecords.forEach { expectedRecord ->
-                assertThat(actualValue.historyRecords, hasItem(expectedRecord))
+                assertThat(actualHistoryRecords.historyRecords, hasItem(expectedRecord))
             }
         }
     }
 
     @Test
-    fun `Given history, highlighted IP when onEnter then presents history with IP`() = runBlocking {
+    fun `Given history, highlighted IP when onEnter then presents history with IP`() = runTest {
         // Given
         val givenIpAddressRecord1 = domainHistoryRecord("0.0.0.0")
         val givenIpAddressRecord2 = domainHistoryRecord("1.1.1.1")
         val givenHistory = setOf(givenIpAddressRecord1, givenIpAddressRecord2)
         givenSuccessfulUseCaseExecution(getHistoryUseCase, givenHistory)
         val highlightedIpAddress = "0.0.0.0"
+        val deferredViewState = async(start = UNDISPATCHED) {
+            classUnderTest.viewState.take(2).toList()
+        }
 
         // When
         classUnderTest.onEnter(highlightedIpAddress)
-        val actualValue = classUnderTest.viewState.currentValue()
+        val actualValue = deferredViewState.await()
 
         // Then
+        assertEquals(Loading, actualValue[0])
         assertEquals(
             highlightedIpAddress,
-            (actualValue as HistoryRecords).highlightedIpAddress
+            (actualValue[1] as HistoryRecords).highlightedIpAddress
         )
     }
 

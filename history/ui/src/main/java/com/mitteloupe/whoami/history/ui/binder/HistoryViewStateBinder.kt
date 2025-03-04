@@ -37,8 +37,6 @@ class HistoryViewStateBinder(
 
     override fun HistoryViewsProvider.bindState(viewState: HistoryViewState) {
         when (viewState) {
-            HistoryViewState.NoChange -> Unit
-
             is HistoryViewState.HistoryRecords -> {
                 val historyItems = viewState.historyRecords.map { record ->
                     historyRecordUiMapper.toUi(record, viewState.highlightedIpAddress)
