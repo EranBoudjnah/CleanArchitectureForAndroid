@@ -29,14 +29,14 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
     }
 
     @Composable
-    fun Notifier(notification: PresentationNotification) {
+    private fun Notifier(notification: PresentationNotification) {
         LaunchedEffect(notification) {
             notificationMapper.toUi(notification).present()
         }
     }
 
     @Composable
-    fun Navigator(navigation: PresentationNavigationEvent, navController: NavController) {
+    private fun Navigator(navigation: PresentationNavigationEvent, navController: NavController) {
         LaunchedEffect(navigation) {
             navigationMapper.toUi(navigation).navigate(navController)
         }
