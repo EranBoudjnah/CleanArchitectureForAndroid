@@ -12,8 +12,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import com.mitteloupe.whoami.home.ui.content.ErrorContent
-import com.mitteloupe.whoami.home.ui.model.ErrorUiModel
 import com.mitteloupe.whoami.home.ui.view.spring.enterSpring
+import com.mitteloupe.whoami.home.ui.view.widget.preview.ErrorPreviewModel
 import com.mitteloupe.whoami.home.ui.view.widget.preview.ErrorPreviewParameterProvider
 
 @Composable
@@ -35,6 +35,8 @@ fun ErrorContentContainer(visible: Boolean, errorText: String, modifier: Modifie
 
 @Preview(showBackground = true)
 @Composable
-private fun Preview(@PreviewParameter(ErrorPreviewParameterProvider::class) error: ErrorUiModel) {
+private fun Preview(
+    @PreviewParameter(ErrorPreviewParameterProvider::class) error: ErrorPreviewModel
+) {
     ErrorContentContainer(visible = true, errorText = error.message)
 }
