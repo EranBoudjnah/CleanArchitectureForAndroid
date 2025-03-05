@@ -12,13 +12,11 @@ import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsUiMapper
 import com.mitteloupe.whoami.home.ui.mapper.ErrorUiMapper
 import com.mitteloupe.whoami.home.ui.mapper.HomeViewStateUiMapper
 
-private typealias NavigationMapper = NavigationEventDestinationMapper<PresentationNavigationEvent>
-
 data class HomeDependencies(
     val homeViewModel: HomeViewModel,
     val homeViewStateUiMapper: HomeViewStateUiMapper,
     val connectionDetailsUiMapper: ConnectionDetailsUiMapper,
-    private val homeNavigationMapper: NavigationMapper,
+    private val homeNavigationMapper: NavigationEventDestinationMapper<PresentationNavigationEvent>,
     private val homeNotificationMapper: NotificationUiMapper,
     val errorUiMapper: ErrorUiMapper,
     val analytics: Analytics
