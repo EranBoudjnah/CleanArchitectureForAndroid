@@ -40,7 +40,7 @@ class ConnectionDetailsUiMapperTest(
                 city = "London",
                 region = "London",
                 countryCode = "GB",
-                countryName = "Great Britain",
+                countryName = "United Kingdom",
                 geolocation = "1.0,1.0",
                 formattedGeolocation = "1.0, 1.0",
                 internetServiceProviderName = "Royal WiFi",
@@ -119,17 +119,9 @@ class ConnectionDetailsUiMapperTest(
 
     private lateinit var classUnderTest: ConnectionDetailsUiMapper
 
-    private lateinit var toCountryName: String.() -> String
-
     @Before
     fun setUp() {
-        toCountryName = {
-            assertEquals(this, presentationConnectionDetails.countryCode)
-            val countryIconLabel = expectedUiConnectionDetails.countryIconLabel
-            requireNotNull(countryIconLabel)
-            countryIconLabel.label
-        }
-        classUnderTest = ConnectionDetailsUiMapper(toCountryName)
+        classUnderTest = ConnectionDetailsUiMapper()
     }
 
     @Test
