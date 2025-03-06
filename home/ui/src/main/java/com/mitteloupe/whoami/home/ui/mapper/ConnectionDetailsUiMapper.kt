@@ -7,12 +7,7 @@ import com.mitteloupe.whoami.home.ui.model.ConnectionDetailsUiModel
 import com.mitteloupe.whoami.home.ui.model.IconLabelUiModel
 import java.util.Locale
 
-class ConnectionDetailsUiMapper(
-    private val toCountryName: String.() -> String = {
-        val countryLocale = Locale("", this)
-        countryLocale.displayCountry
-    }
-) {
+class ConnectionDetailsUiMapper {
     fun toUi(connectionDetails: HomeViewState.Connected) = ConnectionDetailsUiModel(
         ipAddress = connectionDetails.ipAddress,
         cityIconLabel = connectionDetails.city.labelAndIcon(R.drawable.icon_city),
@@ -30,4 +25,6 @@ class ConnectionDetailsUiMapper(
     private fun String?.labelAndIcon(@DrawableRes iconResourceId: Int) = this?.let {
         IconLabelUiModel(iconResourceId, this)
     }
+
+    private fun String.toCountryName() = Locale("", this).displayCountry
 }
