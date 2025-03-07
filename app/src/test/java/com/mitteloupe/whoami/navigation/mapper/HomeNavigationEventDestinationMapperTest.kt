@@ -1,4 +1,4 @@
-package com.mitteloupe.whoami.ui.navigation.mapper
+package com.mitteloupe.whoami.navigation.mapper
 
 import android.content.Context
 import android.content.Intent

@@ -1,4 +1,4 @@
-package com.mitteloupe.whoami.ui.navigation.mapper
+package com.mitteloupe.whoami.navigation.mapper
 
 import androidx.navigation.NavController
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent

@@ -11,7 +11,7 @@ import com.mitteloupe.whoami.history.ui.binder.HistoryViewStateBinder
 import com.mitteloupe.whoami.history.ui.mapper.HistoryRecordDeletionPresentationMapper
 import com.mitteloupe.whoami.history.ui.mapper.HistoryRecordUiMapper
 import com.mitteloupe.whoami.history.ui.view.HistoryFragment
-import com.mitteloupe.whoami.ui.navigation.mapper.HistoryNavigationEventDestinationMapper
+import com.mitteloupe.whoami.navigation.mapper.HistoryNavigationEventDestinationMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
