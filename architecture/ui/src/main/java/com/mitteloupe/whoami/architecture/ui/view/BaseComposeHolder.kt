@@ -13,7 +13,7 @@ import com.mitteloupe.whoami.architecture.ui.notification.mapper.NotificationUiM
 abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNotification>(
     private val viewModel: BaseViewModel<VIEW_STATE, NOTIFICATION>,
     private val navigationMapper: NavigationEventDestinationMapper<PresentationNavigationEvent>,
-    private val notificationMapper: NotificationUiMapper
+    private val notificationMapper: NotificationUiMapper<NOTIFICATION>
 ) {
     @Composable
     fun ViewModelObserver(navController: NavController) {
@@ -29,7 +29,7 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
     }
 
     @Composable
-    private fun Notifier(notification: PresentationNotification) {
+    private fun Notifier(notification: NOTIFICATION) {
         LaunchedEffect(notification) {
             notificationMapper.toUi(notification).present()
         }

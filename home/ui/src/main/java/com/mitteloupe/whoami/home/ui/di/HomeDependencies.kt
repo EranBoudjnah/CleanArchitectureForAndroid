@@ -17,7 +17,7 @@ data class HomeDependencies(
     val homeViewStateUiMapper: HomeViewStateUiMapper,
     val connectionDetailsUiMapper: ConnectionDetailsUiMapper,
     private val homeNavigationMapper: NavigationEventDestinationMapper<PresentationNavigationEvent>,
-    private val homeNotificationMapper: NotificationUiMapper,
+    private val homeNotificationMapper: NotificationUiMapper<HomePresentationNotification>,
     val errorUiMapper: ErrorUiMapper,
     val analytics: Analytics
 ) : BaseComposeHolder<HomeViewState, HomePresentationNotification>(
