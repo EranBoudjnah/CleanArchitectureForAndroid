@@ -14,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,11 +34,7 @@ import com.mitteloupe.whoami.home.ui.view.widget.HomeFooter
 import com.mitteloupe.whoami.home.ui.view.widget.LoadingAnimationContainer
 
 @Composable
-fun HomeDependencies.Home(
-    navController: NavController,
-    color: Color = MaterialTheme.colorScheme.background,
-    modifier: Modifier = Modifier
-) {
+fun HomeDependencies.Home(navController: NavController, modifier: Modifier = Modifier) {
     fun relaySavingToViewModel(connectionDetails: HomeViewState) {
         require(connectionDetails is HomeViewState.Connected) {
             "Unexpected click, not connected."
@@ -76,7 +71,6 @@ fun HomeDependencies.Home(
         onSaveDetailsClick = { relaySavingToViewModel(viewState) },
         onViewHistoryClick = { homeViewModel.onViewHistoryAction() },
         onOpenSourceNoticesClick = { homeViewModel.onOpenSourceNoticesAction() },
-        color = color,
         modifier = modifier
     )
 }
@@ -90,13 +84,12 @@ private fun HomeContents(
     onSaveDetailsClick: () -> Unit,
     onViewHistoryClick: () -> Unit,
     onOpenSourceNoticesClick: () -> Unit,
-    color: Color,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(color)
+            .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
     ) {
         Text(
@@ -144,8 +137,7 @@ private fun PreviewLoading() {
         },
         onSaveDetailsClick = {},
         onViewHistoryClick = {},
-        onOpenSourceNoticesClick = {},
-        color = MaterialTheme.colorScheme.background
+        onOpenSourceNoticesClick = {}
     )
 }
 
@@ -162,8 +154,7 @@ private fun PreviewDisconnected() {
         },
         onSaveDetailsClick = {},
         onViewHistoryClick = {},
-        onOpenSourceNoticesClick = {},
-        color = MaterialTheme.colorScheme.background
+        onOpenSourceNoticesClick = {}
     )
 }
 
@@ -192,8 +183,7 @@ private fun PreviewConnected() {
         },
         onSaveDetailsClick = {},
         onViewHistoryClick = {},
-        onOpenSourceNoticesClick = {},
-        color = MaterialTheme.colorScheme.background
+        onOpenSourceNoticesClick = {}
     )
 }
 
@@ -210,7 +200,6 @@ private fun PreviewError() {
         },
         onSaveDetailsClick = {},
         onViewHistoryClick = {},
-        onOpenSourceNoticesClick = {},
-        color = MaterialTheme.colorScheme.background
+        onOpenSourceNoticesClick = {}
     )
 }
