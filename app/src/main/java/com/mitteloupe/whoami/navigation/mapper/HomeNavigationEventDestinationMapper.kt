@@ -1,4 +1,4 @@
-package com.mitteloupe.whoami.ui.navigation.mapper
+package com.mitteloupe.whoami.navigation.mapper
 
 import android.content.Context
 import android.content.Intent
@@ -21,13 +21,11 @@ class HomeNavigationEventDestinationMapper(
     HomePresentationNavigationEvent::class
 ) {
     override fun mapTypedEvent(navigationEvent: HomePresentationNavigationEvent): UiDestination =
-        navigationEvent.toUiDestination()
-
-    private fun HomePresentationNavigationEvent.toUiDestination(): UiDestination = when (this) {
-        is OnSavedDetails -> history(highlightedIpAddress)
-        OnViewHistory -> history(null)
-        OnViewOpenSourceNotices -> openSourceNotices()
-    }
+        when (navigationEvent) {
+            is OnSavedDetails -> history(navigationEvent.highlightedIpAddress)
+            OnViewHistory -> history(null)
+            OnViewOpenSourceNotices -> openSourceNotices()
+        }
 
     private fun history(highlightedIpAddress: String?): UiDestination =
         UiDestination { navController -> navController.navigate(History(highlightedIpAddress)) }

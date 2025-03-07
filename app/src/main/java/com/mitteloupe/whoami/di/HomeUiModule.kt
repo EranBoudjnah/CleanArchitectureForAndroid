@@ -11,7 +11,7 @@ import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsUiMapper
 import com.mitteloupe.whoami.home.ui.mapper.ErrorUiMapper
 import com.mitteloupe.whoami.home.ui.mapper.HomeNotificationUiMapper
 import com.mitteloupe.whoami.home.ui.mapper.HomeViewStateUiMapper
-import com.mitteloupe.whoami.ui.navigation.mapper.HomeNavigationEventDestinationMapper
+import com.mitteloupe.whoami.navigation.mapper.HomeNavigationEventDestinationMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
