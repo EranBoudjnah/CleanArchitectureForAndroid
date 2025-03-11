@@ -27,5 +27,5 @@ dependencies {
     testImplementation(libs.test.mockito.kotlin)
     testImplementation(libs.test.hamcrest)
     testImplementation(libs.test.kotlinx.coroutines)
-    testImplementation(project(":coroutine-test"))
+    testImplementation(projects.coroutineTest)
 }

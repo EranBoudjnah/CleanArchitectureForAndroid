@@ -14,16 +14,16 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "WhoAmI"
-include(":app")
-include(":datasource:architecture")
-include(":datasource:implementation")
-include(":datasource:source")
+include("app")
+include("datasource:architecture")
+include("datasource:implementation")
+include("datasource:source")
 
-include(":analytics")
-include(":time")
-include(":coroutine")
-include(":coroutine-test")
-include(":widget")
+include("analytics")
+include("time")
+include("coroutine")
+include("coroutine-test")
+include("widget")
 
 setOf(
     "ui",
@@ -32,15 +32,15 @@ setOf(
     "presentation-test",
     "domain"
 ).forEach { module ->
-    include(":architecture:$module")
+    include("architecture:$module")
 }
 
 setOf("ui", "presentation", "domain", "data").forEach { layer ->
-    include(":home:$layer")
+    include("home:$layer")
 }
 
 setOf("ui", "presentation", "domain", "data").forEach { layer ->
-    include(":history:$layer")
+    include("history:$layer")
 }
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
