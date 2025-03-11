@@ -23,6 +23,6 @@ dependencies {
 
     testImplementation(libs.test.junit)
     testImplementation(libs.test.mockito.kotlin)
-    testImplementation(project(":coroutine-test"))
+    testImplementation(projects.coroutineTest)
     testImplementation(libs.test.kotlinx.coroutines)
 }
