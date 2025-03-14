@@ -19,6 +19,16 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
+private val defaultIpAddressInformation = IpAddressInformationDataModel(
+    city = "Paris",
+    region = "Paris",
+    country = "France",
+    geolocation = "0.0,0.0",
+    internetServiceProviderName = "Le ISP",
+    postCode = "12345",
+    timeZone = "GMT +1"
+)
+
 class ConnectionDetailsRepositoryTest {
     private lateinit var classUnderTest: ConnectionDetailsRepository
 
@@ -88,7 +98,9 @@ class ConnectionDetailsRepositoryTest {
         givenConnectionState(givenState)
         val givenIpAddress = "1.2.3.4"
         givenIpAddress(givenIpAddress)
-        givenConnectionDetails(givenIpAddress)
+        every {
+            ipAddressInformationDataSource.ipAddressInformation(givenIpAddress)
+        } returns defaultIpAddressInformation
         val expectedState = ConnectionDetailsDomainModel.Connected(
             ipAddress = givenIpAddress,
             city = "Paris",
@@ -117,13 +129,13 @@ class ConnectionDetailsRepositoryTest {
             givenConnectionState(givenState)
             val givenIpAddress = "1.1.1.1"
             givenIpAddress(givenIpAddress)
-            givenConnectionDetails(givenIpAddress)
             val throwable = Throwable()
+            every {
+                ipAddressInformationDataSource.ipAddressInformation(givenIpAddress)
+            } throws throwable andThen defaultIpAddressInformation
 
             val expectedState2 = ConnectionDetailsDomainModel.Disconnected
-            every {
-                connectionDetailsDomainResolver.toDomain(eq(givenState), eq(givenIpAddress), any())
-            } throws throwable andThen expectedState2
+            givenConnectionDetailsDomainResolverMaps(givenState, expectedState2)
 
             val expectedDomainException = UnknownDomainException(throwable)
             every { throwableDomainMapper.toDomain(throwable) } returns expectedDomainException
@@ -153,22 +165,5 @@ class ConnectionDetailsRepositoryTest {
 
     private fun givenIpAddress(givenIpAddress: String) {
         every { ipAddressDataSource.ipAddress() } returns givenIpAddress
-    }
-
-    private fun givenConnectionDetails(
-        givenIpAddress: String,
-        expectedIpAddressInformation: IpAddressInformationDataModel = IpAddressInformationDataModel(
-            city = "Paris",
-            region = "Paris",
-            country = "France",
-            geolocation = "0.0,0.0",
-            internetServiceProviderName = "Le ISP",
-            postCode = "12345",
-            timeZone = "GMT +1"
-        )
-    ) {
-        every {
-            ipAddressInformationDataSource.ipAddressInformation(givenIpAddress)
-        } returns expectedIpAddressInformation
     }
 }
