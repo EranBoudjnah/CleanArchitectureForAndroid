@@ -4,7 +4,6 @@ import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataMode
 import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataModel.Connected
 import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataModel.Disconnected
 import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataModel.Unset
-import com.mitteloupe.whoami.datasource.ipaddressinformation.exception.NoIpAddressInformationDataException
 import com.mitteloupe.whoami.datasource.ipaddressinformation.model.IpAddressInformationDataModel
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel
 import org.junit.Assert.assertEquals
@@ -20,7 +19,7 @@ private const val IP_ADDRESS = "1.2.3.4"
 class ConnectionDetailsDomainResolverTest(
     @Suppress("unused") private val testTitle: String,
     private val connectionState: ConnectionStateDataModel,
-    private val ipAddressInformationProvider: (String) -> IpAddressInformationDataModel,
+    private val ipAddressInformation: IpAddressInformationDataModel,
     private val expectedDomainModel: ConnectionDetailsDomainModel
 ) {
     companion object {
@@ -48,21 +47,6 @@ class ConnectionDetailsDomainResolverTest(
                 timeZone = "GMT"
             ),
             testCase(
-                testTitle = "connected with information exception",
-                connectionState = Connected,
-                ipAddressInformationProvider = { throw NoIpAddressInformationDataException() },
-                expectedDomainModel = ConnectionDetailsDomainModel.Connected(
-                    ipAddress = IP_ADDRESS,
-                    city = null,
-                    region = null,
-                    countryCode = null,
-                    geolocation = null,
-                    internetServiceProviderName = null,
-                    postCode = null,
-                    timeZone = null
-                )
-            ),
-            testCase(
                 testTitle = "disconnected",
                 connectionState = Disconnected,
                 expectedDomainModel = ConnectionDetailsDomainModel.Disconnected
@@ -86,18 +70,15 @@ class ConnectionDetailsDomainResolverTest(
         ) = testCase(
             "connected with $testTitle",
             Connected,
-            { ipAddress ->
-                assertEquals(IP_ADDRESS, ipAddress)
-                IpAddressInformationDataModel(
-                    city = city,
-                    region = region,
-                    country = countryCode,
-                    geolocation = geolocation,
-                    internetServiceProviderName = internetServiceProviderName,
-                    postCode = postCode,
-                    timeZone = timeZone
-                )
-            },
+            IpAddressInformationDataModel(
+                city = city,
+                region = region,
+                country = countryCode,
+                geolocation = geolocation,
+                internetServiceProviderName = internetServiceProviderName,
+                postCode = postCode,
+                timeZone = timeZone
+            ),
             ConnectionDetailsDomainModel.Connected(
                 ipAddress = IP_ADDRESS,
                 city = city,
@@ -113,21 +94,25 @@ class ConnectionDetailsDomainResolverTest(
         private fun testCase(
             testTitle: String,
             connectionState: ConnectionStateDataModel,
-            ipAddressInformationProvider: (String) -> IpAddressInformationDataModel = {
-                throw UnsupportedOperationException("No attempt to fetch information was expected")
-            },
+            ipAddressInformation: IpAddressInformationDataModel = IpAddressInformationDataModel(
+                city = null,
+                region = null,
+                country = null,
+                geolocation = null,
+                internetServiceProviderName = null,
+                postCode = null,
+                timeZone = null
+            ),
             expectedDomainModel: ConnectionDetailsDomainModel
         ) = arrayOf(
             testTitle,
             connectionState,
-            ipAddressInformationProvider,
+            ipAddressInformation,
             expectedDomainModel
         )
     }
 
     private lateinit var classUnderTest: ConnectionDetailsDomainResolver
-
-    private lateinit var ipAddressProvider: () -> String
 
     @Before
     fun setUp() {
@@ -136,14 +121,11 @@ class ConnectionDetailsDomainResolverTest(
 
     @Test
     fun `When toDomain`() {
-        // Given
-        ipAddressProvider = { IP_ADDRESS }
-
         // When
         val actualValue = classUnderTest.toDomain(
             connectionState,
-            ipAddressProvider,
-            ipAddressInformationProvider
+            IP_ADDRESS,
+            ipAddressInformation
         )
 
         // Then

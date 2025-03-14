@@ -1,8 +1,12 @@
 package com.mitteloupe.whoami.home.data.repository
 
 import com.mitteloupe.whoami.datasource.connection.datasource.ConnectionDataSource
+import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataModel.Connected
+import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataModel.Disconnected
+import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataModel.Unset
 import com.mitteloupe.whoami.datasource.ipaddress.datasource.IpAddressDataSource
 import com.mitteloupe.whoami.datasource.ipaddressinformation.datasource.IpAddressInformationDataSource
+import com.mitteloupe.whoami.datasource.ipaddressinformation.exception.NoIpAddressInformationDataException
 import com.mitteloupe.whoami.home.data.mapper.ConnectionDetailsDomainResolver
 import com.mitteloupe.whoami.home.data.mapper.ThrowableDomainMapper
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel
@@ -23,13 +27,21 @@ class ConnectionDetailsRepository(
     private val throwableDomainMapper: ThrowableDomainMapper
 ) : GetConnectionDetailsRepository {
     override fun connectionDetails(): Flow<ConnectionDetailsDomainModel> =
-        connectionDataSource.observeIsConnected().map { connected ->
+        connectionDataSource.observeIsConnected().map { connectionState ->
+            val (optionalIpAddress, ipAddressInformation) = when (connectionState) {
+                Connected -> {
+                    val ipAddress = ipAddressDataSource.ipAddress()
+                    ipAddress to try {
+                        ipAddressInformationDataSource.ipAddressInformation(ipAddress)
+                    } catch (_: NoIpAddressInformationDataException) {
+                        null
+                    }
+                }
+
+                Disconnected, Unset -> null to null
+            }
             connectionDetailsDomainResolver
-                .toDomain(
-                    connected,
-                    { ipAddressDataSource.ipAddress() },
-                    ipAddressInformationDataSource::ipAddressInformation
-                )
+                .toDomain(connectionState, optionalIpAddress, ipAddressInformation)
         }.retryWhen { cause, _ ->
             emit(Error(throwableDomainMapper.toDomain(cause)))
             delay(RETRY_DELAY_MILLISECONDS)
