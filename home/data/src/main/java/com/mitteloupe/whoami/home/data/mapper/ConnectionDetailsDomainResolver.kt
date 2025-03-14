@@ -4,23 +4,17 @@ import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataMode
 import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataModel.Connected
 import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataModel.Disconnected
 import com.mitteloupe.whoami.datasource.connection.model.ConnectionStateDataModel.Unset
-import com.mitteloupe.whoami.datasource.ipaddressinformation.exception.NoIpAddressInformationDataException
 import com.mitteloupe.whoami.datasource.ipaddressinformation.model.IpAddressInformationDataModel
 import com.mitteloupe.whoami.home.domain.model.ConnectionDetailsDomainModel
 
 class ConnectionDetailsDomainResolver {
     fun toDomain(
         connectionState: ConnectionStateDataModel,
-        ipAddressProvider: () -> String,
-        ipAddressInformationProvider: (ipAddress: String) -> IpAddressInformationDataModel
+        ipAddress: String?,
+        ipAddressInformation: IpAddressInformationDataModel?
     ): ConnectionDetailsDomainModel = when (connectionState) {
         Connected -> {
-            val ipAddress = ipAddressProvider()
-            val ipAddressInformation = try {
-                ipAddressInformationProvider(ipAddress)
-            } catch (_: NoIpAddressInformationDataException) {
-                null
-            }
+            requireNotNull(ipAddress)
             ConnectionDetailsDomainModel.Connected(
                 ipAddress = ipAddress,
                 city = ipAddressInformation?.city,

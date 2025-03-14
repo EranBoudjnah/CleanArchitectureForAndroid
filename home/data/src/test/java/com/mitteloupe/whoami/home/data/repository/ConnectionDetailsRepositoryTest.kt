@@ -54,13 +54,9 @@ class ConnectionDetailsRepositoryTest {
     fun `Given unset connection when connectionDetails then returns unset state`() = runBlocking {
         // Given
         val givenState = ConnectionStateDataModel.Unset
-        every { connectionDataSource.observeIsConnected() } returns flow {
-            emit(givenState)
-        }
+        givenConnectionState(givenState)
         val expectedState = ConnectionDetailsDomainModel.Unset
-        every {
-            connectionDetailsDomainResolver.toDomain(eq(givenState), any(), any())
-        } returns expectedState
+        givenConnectionDetailsDomainResolverMaps(givenState, expectedState)
 
         // When
         val actualValue = classUnderTest.connectionDetails().toList()
@@ -74,13 +70,9 @@ class ConnectionDetailsRepositoryTest {
         runBlocking {
             // Given
             val givenState = ConnectionStateDataModel.Disconnected
-            every { connectionDataSource.observeIsConnected() } returns flow {
-                emit(givenState)
-            }
+            givenConnectionState(givenState)
             val expectedState = ConnectionDetailsDomainModel.Disconnected
-            every {
-                connectionDetailsDomainResolver.toDomain(eq(givenState), any(), any())
-            } returns expectedState
+            givenConnectionDetailsDomainResolverMaps(givenState, expectedState)
 
             // When
             val actualValue = classUnderTest.connectionDetails().toList()
@@ -93,11 +85,12 @@ class ConnectionDetailsRepositoryTest {
     fun `Given connected when connectionDetails then returns connected state`() = runBlocking {
         // Given
         val givenState = ConnectionStateDataModel.Connected
-        every { connectionDataSource.observeIsConnected() } returns flow {
-            emit(givenState)
-        }
+        givenConnectionState(givenState)
+        val givenIpAddress = "1.2.3.4"
+        givenIpAddress(givenIpAddress)
+        givenConnectionDetails(givenIpAddress)
         val expectedState = ConnectionDetailsDomainModel.Connected(
-            ipAddress = "1.2.3.4",
+            ipAddress = givenIpAddress,
             city = "Paris",
             region = "Paris",
             countryCode = "France",
@@ -107,20 +100,7 @@ class ConnectionDetailsRepositoryTest {
             timeZone = "GMT +1"
         )
 
-        val ipAddress = "1.1.1.1"
-
-        every {
-            connectionDetailsDomainResolver.toDomain(eq(givenState), any(), any())
-        } answers { call ->
-            @Suppress("UNCHECKED_CAST")
-            testIpAddressReadCorrectly(ipAddress, call.invocation.args[1] as () -> String)
-            @Suppress("UNCHECKED_CAST")
-            testConnectionDetailsReadCorrectly(
-                ipAddress,
-                call.invocation.args[2] as (String) -> IpAddressInformationDataModel
-            )
-            expectedState
-        }
+        givenConnectionDetailsDomainResolverMaps(givenState, expectedState)
 
         // When
         val actualValue = classUnderTest.connectionDetails().toList()
@@ -134,14 +114,15 @@ class ConnectionDetailsRepositoryTest {
         runBlocking {
             // Given
             val givenState = ConnectionStateDataModel.Connected
-            every { connectionDataSource.observeIsConnected() } returns flow {
-                emit(givenState)
-            }
+            givenConnectionState(givenState)
+            val givenIpAddress = "1.1.1.1"
+            givenIpAddress(givenIpAddress)
+            givenConnectionDetails(givenIpAddress)
             val throwable = Throwable()
 
             val expectedState2 = ConnectionDetailsDomainModel.Disconnected
             every {
-                connectionDetailsDomainResolver.toDomain(eq(givenState), any(), any())
+                connectionDetailsDomainResolver.toDomain(eq(givenState), eq(givenIpAddress), any())
             } throws throwable andThen expectedState2
 
             val expectedDomainException = UnknownDomainException(throwable)
@@ -155,26 +136,28 @@ class ConnectionDetailsRepositoryTest {
             assertEquals(listOf(expectedState1, expectedState2), actualValue)
         }
 
-    private fun testIpAddressReadCorrectly(
-        expectedIpAddress: String,
-        ipAddressProvider: () -> String
-    ) {
-        // Given
-        every { ipAddressDataSource.ipAddress() } returns expectedIpAddress
-
-        // When
-        val actualIpAddress = ipAddressProvider()
-
-        // Then
-        assertEquals(expectedIpAddress, actualIpAddress)
+    private fun givenConnectionState(givenState: ConnectionStateDataModel) {
+        every { connectionDataSource.observeIsConnected() } returns flow {
+            emit(givenState)
+        }
     }
 
-    private fun testConnectionDetailsReadCorrectly(
-        ipAddress: String,
-        ipAddressInformationProvider: (String) -> IpAddressInformationDataModel
+    private fun givenConnectionDetailsDomainResolverMaps(
+        givenState: ConnectionStateDataModel,
+        expectedState: ConnectionDetailsDomainModel
     ) {
-        // Given
-        val expectedIpAddressInformation = IpAddressInformationDataModel(
+        every {
+            connectionDetailsDomainResolver.toDomain(eq(givenState), any(), any())
+        } returns expectedState
+    }
+
+    private fun givenIpAddress(givenIpAddress: String) {
+        every { ipAddressDataSource.ipAddress() } returns givenIpAddress
+    }
+
+    private fun givenConnectionDetails(
+        givenIpAddress: String,
+        expectedIpAddressInformation: IpAddressInformationDataModel = IpAddressInformationDataModel(
             city = "Paris",
             region = "Paris",
             country = "France",
@@ -183,14 +166,9 @@ class ConnectionDetailsRepositoryTest {
             postCode = "12345",
             timeZone = "GMT +1"
         )
+    ) {
         every {
-            ipAddressInformationDataSource.ipAddressInformation(ipAddress)
+            ipAddressInformationDataSource.ipAddressInformation(givenIpAddress)
         } returns expectedIpAddressInformation
-
-        // When
-        val actualIpAddressInformation = ipAddressInformationProvider(ipAddress)
-
-        // Then
-        assertEquals(expectedIpAddressInformation, actualIpAddressInformation)
     }
 }
