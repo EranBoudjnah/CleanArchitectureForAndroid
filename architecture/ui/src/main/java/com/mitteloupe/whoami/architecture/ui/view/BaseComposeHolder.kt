@@ -12,7 +12,7 @@ import com.mitteloupe.whoami.architecture.ui.notification.mapper.NotificationUiM
 
 abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNotification>(
     private val viewModel: BaseViewModel<VIEW_STATE, NOTIFICATION>,
-    private val navigationMapper: NavigationEventDestinationMapper<PresentationNavigationEvent>,
+    private val navigationMapper: NavigationEventDestinationMapper<*>,
     private val notificationMapper: NotificationUiMapper<NOTIFICATION>
 ) {
     @Composable

@@ -3,8 +3,8 @@ package com.mitteloupe.whoami.di
 import android.content.Context
 import android.content.res.Resources
 import com.mitteloupe.whoami.analytics.Analytics
-import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventDestinationMapper
+import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent
 import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
 import com.mitteloupe.whoami.home.ui.di.HomeDependencies
 import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsUiMapper
@@ -25,10 +25,12 @@ object HomeUiModule {
     fun providesHomeViewStateUiMapper() = HomeViewStateUiMapper()
 
     @Provides
+    @JvmSuppressWildcards
     fun providesHomeNavigationEventDestinationMapper(
         analytics: Analytics,
         @ActivityContext context: Context
-    ) = HomeNavigationEventDestinationMapper(analytics, context)
+    ): NavigationEventDestinationMapper<HomePresentationNavigationEvent> =
+        HomeNavigationEventDestinationMapper(analytics, context)
 
     @Provides
     fun providesHomeNotificationUiMapper(@ActivityContext context: Context) =
@@ -41,12 +43,12 @@ object HomeUiModule {
     fun providesConnectionDetailsUiMapper() = ConnectionDetailsUiMapper()
 
     @Provides
-    @Suppress("UNCHECKED_CAST")
     fun providesHomeDependencies(
         homeViewModel: HomeViewModel,
         homeViewStateUiMapper: HomeViewStateUiMapper,
         connectionDetailsUiMapper: ConnectionDetailsUiMapper,
-        homeNavigationMapper: HomeNavigationEventDestinationMapper,
+        homeNavigationMapper: @JvmSuppressWildcards
+        NavigationEventDestinationMapper<HomePresentationNavigationEvent>,
         homeNotificationMapper: HomeNotificationUiMapper,
         errorUiMapper: ErrorUiMapper,
         analytics: Analytics
@@ -54,7 +56,7 @@ object HomeUiModule {
         homeViewModel,
         homeViewStateUiMapper,
         connectionDetailsUiMapper,
-        homeNavigationMapper as NavigationEventDestinationMapper<PresentationNavigationEvent>,
+        homeNavigationMapper,
         homeNotificationMapper,
         errorUiMapper,
         analytics
