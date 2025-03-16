@@ -22,7 +22,7 @@ class HomeNavigationEventDestinationMapper(
 ) {
     override fun mapTypedEvent(navigationEvent: HomePresentationNavigationEvent): UiDestination =
         when (navigationEvent) {
-            is OnSavedDetails -> history(navigationEvent.highlightedIpAddress)
+            is OnSavedDetails -> history(navigationEvent.savedIpAddress)
             OnViewHistory -> history(null)
             OnViewOpenSourceNotices -> openSourceNotices()
         }

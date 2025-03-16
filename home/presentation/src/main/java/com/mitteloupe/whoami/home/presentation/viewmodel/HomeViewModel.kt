@@ -65,7 +65,7 @@ class HomeViewModel(
 
     private fun presentSaveDetailsResult(ipAddress: String) {
         notify(ConnectionSaved(ipAddress))
-        emitNavigationEvent(OnSavedDetails(highlightedIpAddress = ipAddress))
+        emitNavigationEvent(OnSavedDetails(savedIpAddress = ipAddress))
     }
 
     private fun presentError(exception: DomainException) {
