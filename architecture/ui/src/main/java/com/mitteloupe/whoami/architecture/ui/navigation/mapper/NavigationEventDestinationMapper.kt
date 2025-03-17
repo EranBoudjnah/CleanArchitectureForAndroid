@@ -1,7 +1,7 @@
 package com.mitteloupe.whoami.architecture.ui.navigation.mapper
 
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
-import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledDestinationException
+import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledNavigationException
 import com.mitteloupe.whoami.architecture.ui.navigation.model.UiDestination
 import kotlin.reflect.KClass
 
@@ -15,7 +15,7 @@ abstract class NavigationEventDestinationMapper<in EVENT : PresentationNavigatio
         }
 
         else -> {
-            mapGenericEvent(navigationEvent) ?: throw UnhandledDestinationException(
+            mapGenericEvent(navigationEvent) ?: throw UnhandledNavigationException(
                 navigationEvent
             )
         }
