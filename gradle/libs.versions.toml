@@ -33,7 +33,6 @@ kotlin = "2.1.10"
 plugin-oss-licenses = "0.10.6"
 ktlint = "12.2.0"
 detekt = "1.23.8"
-kotlin-plugin-serialization = "2.1.10"
 kotlinx-serialization-json = "1.8.0"
 minSdk = "22"
 targetSdk = "35"
@@ -106,4 +105,4 @@ hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization",version.ref = "kotlin-plugin-serialization" }
+kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization",version.ref = "kotlin" }
