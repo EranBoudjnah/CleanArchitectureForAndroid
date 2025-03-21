@@ -15,19 +15,17 @@ class HomeNotificationUiMapper(
     override fun toUi(notification: HomePresentationNotification): UiNotification =
         when (notification) {
             is ConnectionSaved -> {
-                ConnectionSavedUiNotification(context, notification.ipAddress, notificationToast)
+                connectionSavedUiNotification(context, notification.ipAddress, notificationToast)
             }
         }
 
-    private class ConnectionSavedUiNotification(
-        private val context: Context,
-        private val ipAddress: String,
-        private val notificationToast: (Context, String) -> Unit
-    ) : UiNotification {
-        override fun present() {
-            val text = context.getString(R.string.home_details_saved_notification, ipAddress)
+    private fun connectionSavedUiNotification(
+        context: Context,
+        ipAddress: String,
+        notificationToast: (Context, String) -> Unit
+    ) = UiNotification {
+        val text = context.getString(R.string.home_details_saved_notification, ipAddress)
 
-            notificationToast(context, text)
-        }
+        notificationToast(context, text)
     }
 }
