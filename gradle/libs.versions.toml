@@ -1,6 +1,6 @@
 [versions]
 ksp = "2.1.20-1.0.31"
-android = "8.9.0"
+android = "8.9.1"
 material = "1.12.0"
 androidx-appcompat = "1.7.0"
 androidx-core-ktx = "1.15.0"
