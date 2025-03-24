@@ -5,7 +5,7 @@ import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNa
 sealed interface HomePresentationNavigationEvent : PresentationNavigationEvent {
     data object OnViewHistory : HomePresentationNavigationEvent
 
-    data class OnSavedDetails(val savedIpAddress: String?) : HomePresentationNavigationEvent
+    data class OnSavedDetails(val savedIpAddress: String) : HomePresentationNavigationEvent
 
     data object OnViewOpenSourceNotices : HomePresentationNavigationEvent
 }
