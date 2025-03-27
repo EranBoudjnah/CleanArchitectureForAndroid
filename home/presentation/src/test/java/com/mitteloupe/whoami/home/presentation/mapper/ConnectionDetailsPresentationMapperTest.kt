@@ -112,7 +112,7 @@ class ConnectionDetailsPresentationMapperTest(
     private lateinit var classUnderTest: ConnectionDetailsPresentationMapper
 
     @Mock
-    lateinit var exceptionPresentationMapper: ExceptionPresentationMapper
+    private lateinit var exceptionPresentationMapper: ExceptionPresentationMapper
 
     @Before
     fun setUp() {
