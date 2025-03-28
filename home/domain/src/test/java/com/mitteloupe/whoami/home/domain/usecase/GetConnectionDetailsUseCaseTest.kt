@@ -19,10 +19,10 @@ class GetConnectionDetailsUseCaseTest {
     private lateinit var classUnderTest: GetConnectionDetailsUseCase
 
     @Mock
-    lateinit var getConnectionDetailsRepository: GetConnectionDetailsRepository
+    private lateinit var getConnectionDetailsRepository: GetConnectionDetailsRepository
 
     @Mock
-    lateinit var coroutineContextProvider: CoroutineContextProvider
+    private lateinit var coroutineContextProvider: CoroutineContextProvider
 
     @Before
     fun setUp() {

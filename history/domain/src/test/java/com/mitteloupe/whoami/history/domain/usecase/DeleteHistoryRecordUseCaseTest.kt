@@ -18,7 +18,7 @@ class DeleteHistoryRecordUseCaseTest {
     private lateinit var deleteHistoryRecordRepository: DeleteHistoryRecordRepository
 
     @Mock
-    lateinit var coroutineContextProvider: CoroutineContextProvider
+    private lateinit var coroutineContextProvider: CoroutineContextProvider
 
     @Before
     fun setUp() {
