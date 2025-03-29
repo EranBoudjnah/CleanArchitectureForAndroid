@@ -73,7 +73,7 @@ class HistoryViewModelTest :
                 givenIpAddressRecord2 = givenIpAddressRecord2
             )
             val givenHistory = setOf(givenIpAddressRecord1, givenIpAddressRecord2)
-            givenSuccessfulUseCaseExecution(getHistoryUseCase, givenHistory)
+            getHistoryUseCase.givenSuccessfulExecution(givenHistory)
             val highlightedIpAddress: String? = null
 
             val deferredViewState = async(start = UNDISPATCHED) {
@@ -108,7 +108,7 @@ class HistoryViewModelTest :
         val givenIpAddressRecord1 = domainHistoryRecord("0.0.0.0")
         val givenIpAddressRecord2 = domainHistoryRecord("1.1.1.1")
         val givenHistory = setOf(givenIpAddressRecord1, givenIpAddressRecord2)
-        givenSuccessfulUseCaseExecution(getHistoryUseCase, givenHistory)
+        getHistoryUseCase.givenSuccessfulExecution(givenHistory)
         val highlightedIpAddress = "0.0.0.0"
         val deferredViewState = async(start = UNDISPATCHED) {
             classUnderTest.viewState.take(2).toList()

@@ -65,10 +65,7 @@ class HomeViewModelTest :
     fun `Given disconnected when onEnter then presents disconnected state`() = runTest {
         // Given
         val givenConnectionState = Disconnected
-        givenSuccessfulUseCaseExecution(
-            getConnectionDetailsUseCase,
-            givenConnectionState
-        )
+        getConnectionDetailsUseCase.givenSuccessfulExecution(givenConnectionState)
         val expectedViewState = HomeViewState.Disconnected
         given { connectionDetailsPresentationMapper.toPresentation(givenConnectionState) }
             .willReturn(expectedViewState)
@@ -93,10 +90,7 @@ class HomeViewModelTest :
             val domainConnectionDetails = domainConnectionDetails(ipAddress)
             given { connectionDetailsDomainMapper.toDomain(givenConnectionDetails) }
                 .willReturn(domainConnectionDetails)
-            givenSuccessfulNoResultUseCaseExecution(
-                saveConnectionDetailsUseCase,
-                domainConnectionDetails
-            )
+            saveConnectionDetailsUseCase.givenSuccessfulNoResultExecution(domainConnectionDetails)
             val deferredNotification = async(start = UNDISPATCHED) {
                 classUnderTest.notification.first()
             }
@@ -123,10 +117,7 @@ class HomeViewModelTest :
         val domainConnectionDetails = domainConnectionDetails(ipAddress)
         given { connectionDetailsDomainMapper.toDomain(givenConnectionDetails) }
             .willReturn(domainConnectionDetails)
-        givenSuccessfulNoResultUseCaseExecution(
-            saveConnectionDetailsUseCase,
-            domainConnectionDetails
-        )
+        saveConnectionDetailsUseCase.givenSuccessfulNoResultExecution(domainConnectionDetails)
 
         // When
         classUnderTest.onSaveDetailsAction(givenConnectionDetails)
@@ -147,10 +138,7 @@ class HomeViewModelTest :
         val domainConnectionDetails = domainConnectionDetails(ipAddress)
         given { connectionDetailsDomainMapper.toDomain(givenConnectionDetails) }
             .willReturn(domainConnectionDetails)
-        givenSuccessfulNoResultUseCaseExecution(
-            saveConnectionDetailsUseCase,
-            domainConnectionDetails
-        )
+        saveConnectionDetailsUseCase.givenSuccessfulNoResultExecution(domainConnectionDetails)
         val deferredNotification = async(start = UNDISPATCHED) {
             classUnderTest.notification.first()
         }
@@ -172,10 +160,7 @@ class HomeViewModelTest :
             val domainConnectionDetails = domainConnectionDetails(ipAddress)
             given { connectionDetailsDomainMapper.toDomain(givenConnectionDetails) }
                 .willReturn(domainConnectionDetails)
-            givenSuccessfulNoResultUseCaseExecution(
-                saveConnectionDetailsUseCase,
-                domainConnectionDetails
-            )
+            saveConnectionDetailsUseCase.givenSuccessfulNoResultExecution(domainConnectionDetails)
             val deferredNavigationEvent = async(start = UNDISPATCHED) {
                 classUnderTest.navigationEvent.first()
             }
