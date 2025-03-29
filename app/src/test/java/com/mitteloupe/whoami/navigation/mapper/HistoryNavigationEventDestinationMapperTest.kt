@@ -19,7 +19,7 @@ class HistoryNavigationEventDestinationMapperTest(
     companion object {
         @JvmStatic
         @Parameters(name = "Given {0}")
-        fun data(): Collection<Array<*>> = listOf(
+        fun data(): Iterable<Array<*>> = setOf(
             testCase(Back) { navController ->
                 verify(navController).navigateUp()
             }

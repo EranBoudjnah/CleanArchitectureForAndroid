@@ -17,7 +17,7 @@ class IpAddressInformationDataMapperTest(
     companion object {
         @JvmStatic
         @Parameters(name = "Given {0} then returns {1}")
-        fun data(): Collection<Array<*>> = listOf(
+        fun data(): Iterable<Array<*>> = setOf(
             testCase(
                 city = "New York",
                 region = "New York",

@@ -30,7 +30,7 @@ class HomeNotificationUiMapperTest(
 
         @JvmStatic
         @Parameters(name = "Given {0}")
-        fun data(): Collection<Array<*>> = listOf(
+        fun data(): Iterable<Array<*>> = setOf(
             testCase(
                 "connection saved notification then presents toast",
                 ConnectionSaved(SAVED_CONNECTION_IP_ADDRESS),
