@@ -17,7 +17,7 @@ class HistoryRecordDeletionDataMapperTest(
     companion object {
         @JvmStatic
         @Parameters(name = "Given {0} then returns {2}")
-        fun data(): Collection<Array<*>> = listOf(
+        fun data(): Iterable<Array<*>> = setOf(
             testCase(ipAddress = "1.2.3.4"),
             testCase(ipAddress = "4.3.2.1")
         )

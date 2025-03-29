@@ -21,7 +21,7 @@ class SavedIpAddressRecordDataMapperTest(
     companion object {
         @JvmStatic
         @Parameters(name = "Given {0}, time then returns {2}")
-        fun data(): Collection<Array<*>> = listOf(
+        fun data(): Iterable<Array<*>> = setOf(
             testCase(
                 testTitle = "all nulls",
                 ipAddress = "1.1.1.1",

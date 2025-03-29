@@ -20,7 +20,7 @@ class ConnectionDetailsUiMapperTest(
     companion object {
         @JvmStatic
         @Parameters(name = "Given {0}")
-        fun data(): Collection<Array<*>> = listOf(
+        fun data(): Iterable<Array<*>> = setOf(
             testCase(
                 testTitle = "case 1",
                 ipAddress = "1.2.3.4",

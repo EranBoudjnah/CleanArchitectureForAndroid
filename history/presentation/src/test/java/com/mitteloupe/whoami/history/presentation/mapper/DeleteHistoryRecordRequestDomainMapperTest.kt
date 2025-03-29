@@ -18,7 +18,7 @@ class DeleteHistoryRecordRequestDomainMapperTest(
     companion object {
         @JvmStatic
         @Parameters(name = "Given {0} then returns {2}")
-        fun data(): Collection<Array<*>> = listOf(
+        fun data(): Iterable<Array<*>> = setOf(
             testCase(
                 testTitle = "case 1",
                 ipAddress = "1.1.1.1"

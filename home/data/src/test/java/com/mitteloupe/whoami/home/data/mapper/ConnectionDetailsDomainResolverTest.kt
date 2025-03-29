@@ -25,7 +25,7 @@ class ConnectionDetailsDomainResolverTest(
     companion object {
         @JvmStatic
         @Parameters(name = "Given {0} then returns {3}")
-        fun data(): Collection<Array<*>> = listOf(
+        fun data(): Iterable<Array<*>> = setOf(
             connectedWithTestCase(
                 testTitle = "no information",
                 city = null,
