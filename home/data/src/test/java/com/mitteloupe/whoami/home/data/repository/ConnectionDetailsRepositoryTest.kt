@@ -134,12 +134,11 @@ class ConnectionDetailsRepositoryTest {
                 ipAddressInformationDataSource.ipAddressInformation(givenIpAddress)
             } throws throwable andThen defaultIpAddressInformation
 
-            val expectedState2 = ConnectionDetailsDomainModel.Disconnected
-            givenConnectionDetailsDomainResolverMaps(givenState, expectedState2)
-
             val expectedDomainException = UnknownDomainException(throwable)
             every { throwableDomainMapper.toDomain(throwable) } returns expectedDomainException
             val expectedState1 = ConnectionDetailsDomainModel.Error(expectedDomainException)
+            val expectedState2 = ConnectionDetailsDomainModel.Disconnected
+            givenConnectionDetailsDomainResolverMaps(givenState, expectedState2)
 
             // When
             val actualValue = classUnderTest.connectionDetails().toList()
