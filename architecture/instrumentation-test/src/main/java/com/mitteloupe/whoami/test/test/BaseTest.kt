@@ -15,6 +15,7 @@ import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource as EspressoIdlingResource
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
 import com.mitteloupe.whoami.test.idlingresource.findAndCloseAppNotRespondingDialog
@@ -37,7 +38,9 @@ import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.rules.RuleChain
-import org.junit.rules.TestRule
+
+typealias TypedAndroidComposeTestRule<ACTIVITY> =
+    AndroidComposeTestRule<ActivityScenarioRule<ACTIVITY>, ACTIVITY>
 
 abstract class BaseTest {
     private val hiltAndroidRule by lazy { HiltAndroidRule(this) }
@@ -113,7 +116,7 @@ abstract class BaseTest {
         composeIdlingResources.forEach(composeTestRule::registerIdlingResource)
     }
 
-    sealed class AppLauncher {
+    abstract class AppLauncher {
         abstract fun launch()
 
         data class FromIntent(private val intent: Intent) : AppLauncher() {
@@ -130,8 +133,8 @@ abstract class BaseTest {
             }
         }
 
-        data class FromComposable(
-            private val composeContentTestRule: AndroidComposeTestRule<TestRule, ComponentActivity>,
+        data class FromComposable<ACTIVITY : ComponentActivity>(
+            private val composeContentTestRule: TypedAndroidComposeTestRule<ACTIVITY>,
             private val composable: @Composable () -> Unit
         ) : AppLauncher() {
             override fun launch() {
