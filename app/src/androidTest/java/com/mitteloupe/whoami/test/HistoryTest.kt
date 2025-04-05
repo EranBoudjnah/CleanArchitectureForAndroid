@@ -2,9 +2,7 @@ package com.mitteloupe.whoami.test
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import com.mitteloupe.whoami.analytics.Analytics
-import com.mitteloupe.whoami.coroutine.CoroutineContextProvider
-import com.mitteloupe.whoami.launcher.historyScreenLauncher
+import com.mitteloupe.whoami.launcher.FromScreen
 import com.mitteloupe.whoami.localstore.KEY_VALUE_NO_HISTORY
 import com.mitteloupe.whoami.localstore.KEY_VALUE_SAVED_HISTORY
 import com.mitteloupe.whoami.screen.HistoryScreen
@@ -13,6 +11,7 @@ import com.mitteloupe.whoami.test.test.BaseTest
 import com.mitteloupe.whoami.test.test.doesNot
 import com.mitteloupe.whoami.test.test.retry
 import com.mitteloupe.whoami.ui.main.MainActivity
+import com.mitteloupe.whoami.ui.main.route.History
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import org.junit.Test
@@ -23,17 +22,11 @@ class HistoryTest : BaseTest() {
     override val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     override val startActivityLauncher: AppLauncher by lazy {
-        historyScreenLauncher(highlightedIpAddress = null)
+        FromScreen(composeTestRule, History(highlightedIpAddress = null))
     }
 
     @Inject
     lateinit var historyScreen: HistoryScreen
-
-    @Inject
-    lateinit var coroutineContextProvider: CoroutineContextProvider
-
-    @Inject
-    lateinit var analytics: Analytics
 
     @Test
     @LocalStore(
