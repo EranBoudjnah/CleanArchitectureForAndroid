@@ -59,19 +59,15 @@ abstract class BaseTest {
     @Inject
     lateinit var composeIdlingResources: @JvmSuppressWildcards Collection<ComposeIdlingResource>
 
-    private val webServerRule by lazy {
-        WebServerRule(
-            lazy { listOf(mockDispatcher) },
-            lazy { responseStore }
-        ) { mockWebServerProvider.serverUrl }
-    }
+    private val webServerRule = WebServerRule(
+        lazy { listOf(mockDispatcher) },
+        lazy { responseStore }
+    ) { mockWebServerProvider.serverUrl }
 
-    private val localStoreRule by lazy {
-        LocalStoreRule(
-            lazy { sharedPreferences },
-            lazy { keyValueStore }
-        )
-    }
+    private val localStoreRule = LocalStoreRule(
+        lazy { sharedPreferences },
+        lazy { keyValueStore }
+    )
 
     abstract val composeTestRule: ComposeContentTestRule
 
