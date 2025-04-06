@@ -69,14 +69,13 @@ abstract class BaseTest {
         lazy { keyValueStore }
     )
 
-    abstract val composeTestRule: ComposeContentTestRule
+    protected abstract val composeTestRule: ComposeContentTestRule
+
+    @SuppressLint("UnsafeOptInUsageError")
+    private val grantPermissionRule = SdkAwareGrantPermissionRule.grant(WRITE_EXTERNAL_STORAGE)
 
     @get:Rule
     val testRules: RuleChain by lazy {
-        @SuppressLint("UnsafeOptInUsageError")
-        val grantPermissionRule = SdkAwareGrantPermissionRule.grant(
-            WRITE_EXTERNAL_STORAGE
-        )
         RuleChain
             .outerRule(hiltAndroidRule)
             .around(DisableAnimationsRule())
