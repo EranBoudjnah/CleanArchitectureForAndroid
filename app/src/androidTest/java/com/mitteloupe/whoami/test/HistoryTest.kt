@@ -2,11 +2,12 @@ package com.mitteloupe.whoami.test
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import com.mitteloupe.whoami.launcher.FromScreen
+import com.mitteloupe.whoami.launcher.fromScreen
 import com.mitteloupe.whoami.localstore.KEY_VALUE_NO_HISTORY
 import com.mitteloupe.whoami.localstore.KEY_VALUE_SAVED_HISTORY
 import com.mitteloupe.whoami.screen.HistoryScreen
 import com.mitteloupe.whoami.test.annotation.LocalStore
+import com.mitteloupe.whoami.test.launcher.AppLauncher
 import com.mitteloupe.whoami.test.test.BaseTest
 import com.mitteloupe.whoami.test.test.doesNot
 import com.mitteloupe.whoami.test.test.retry
@@ -22,7 +23,7 @@ class HistoryTest : BaseTest() {
     override val composeTestRule = createAndroidComposeRule<MainActivity>()
 
     override val startActivityLauncher: AppLauncher by lazy {
-        FromScreen(composeTestRule, History(highlightedIpAddress = null))
+        fromScreen(composeTestRule, History(highlightedIpAddress = null))
     }
 
     @Inject
