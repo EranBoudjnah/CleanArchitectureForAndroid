@@ -87,11 +87,10 @@ abstract class BaseTest {
             .around(grantPermissionRule)
     }
 
-    abstract val startActivityLauncher: AppLauncher
+    protected abstract val startActivityLauncher: AppLauncher
 
     @Before
-    @CallSuper
-    open fun setUp() {
+    fun setUp() {
         val deviceUi = UiDevice.getInstance(getInstrumentation())
         deviceUi.findAndCloseAppNotRespondingDialog()
         registerIdlingResources()
