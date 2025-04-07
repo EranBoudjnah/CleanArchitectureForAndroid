@@ -24,7 +24,7 @@ class DisableAnimationsRule : TestRule {
         object : Statement() {
             @Throws(Throwable::class)
             override fun evaluate() {
-                disableAnimations()
+                saveAndDisableAnimations()
                 try {
                     base.evaluate()
                 } finally {
@@ -34,21 +34,19 @@ class DisableAnimationsRule : TestRule {
         }
 
     @Throws(IOException::class)
-    private fun disableAnimations() {
-        device.apply {
-            animationKeys.forEach { key ->
-                savedScaleValues[key] = executeShellCommand("settings get global $key").orDefault()
-                executeShellCommand("settings put global $key 0")
-            }
+    private fun saveAndDisableAnimations() {
+        animationKeys.forEach { key ->
+            savedScaleValues[key] =
+                device.executeShellCommand("settings get global $key").orDefault()
+            device.executeShellCommand("settings put global $key 0")
         }
     }
 
     @Throws(IOException::class)
     private fun restoreAnimations() {
         animationKeys.forEach { key ->
-            device.executeShellCommand(
-                "settings put global $key ${savedScaleValues[key] ?: DEFAULT_SCALE}"
-            )
+            val savedValue = savedScaleValues[key] ?: DEFAULT_SCALE
+            device.executeShellCommand("settings put global $key $savedValue")
         }
     }
 
