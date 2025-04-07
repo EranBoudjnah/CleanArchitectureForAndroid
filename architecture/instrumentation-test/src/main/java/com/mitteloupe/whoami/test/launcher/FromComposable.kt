@@ -9,14 +9,13 @@ import kotlinx.coroutines.runBlocking
 
 fun <ACTIVITY : ComponentActivity> fromComposable(
     composeContentTestRule: TypedAndroidComposeTestRule<ACTIVITY>,
-    composable: @Composable () -> Unit
+    composable: @Composable (ACTIVITY) -> Unit
 ) = AppLauncher {
     val activity = composeContentTestRule.activity
-    val root = activity.findViewById<ViewGroup>(android.R.id.content)
-    if (root != null) {
+    activity.findViewById<ViewGroup>(android.R.id.content)?.let { root ->
         runBlocking(Dispatchers.Main) {
             root.removeAllViews()
         }
     }
-    composeContentTestRule.setContent(composable)
+    composeContentTestRule.setContent { composable(activity) }
 }
