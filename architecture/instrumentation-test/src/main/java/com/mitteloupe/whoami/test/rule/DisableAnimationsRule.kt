@@ -7,58 +7,52 @@ import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
+private val animationKeys = setOf(
+    "transition_animation_scale",
+    "window_animation_scale",
+    "animator_duration_scale"
+)
+
+private const val DEFAULT_SCALE = 1f
+
 class DisableAnimationsRule : TestRule {
-    private var transitionAnimationScale: Float = 0f
-    private var windowAnimationScale: Float = 0f
-    private var animatorDurationScale: Float = 0f
+    private val savedScaleValues = mutableMapOf<String, Float>()
+    private val device: UiDevice
+        get() = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
     override fun apply(base: Statement, description: Description): Statement =
         object : Statement() {
             @Throws(Throwable::class)
             override fun evaluate() {
-                disableAnimations()
+                saveAndDisableAnimations()
                 try {
                     base.evaluate()
                 } finally {
-                    enableAnimations()
+                    restoreAnimations()
                 }
             }
         }
 
     @Throws(IOException::class)
-    private fun disableAnimations() {
-        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).apply {
-            transitionAnimationScale =
-                executeShellCommand("settings get global transition_animation_scale")
-                    .orDefault().toFloat()
-            windowAnimationScale =
-                executeShellCommand("settings get global window_animation_scale")
-                    .orDefault().toFloat()
-            animatorDurationScale =
-                executeShellCommand("settings get global animator_duration_scale")
-                    .orDefault().toFloat()
-            executeShellCommand("settings put global transition_animation_scale 0")
-            executeShellCommand("settings put global window_animation_scale 0")
-            executeShellCommand("settings put global animator_duration_scale 0")
+    private fun saveAndDisableAnimations() {
+        animationKeys.forEach { key ->
+            savedScaleValues[key] =
+                device.executeShellCommand("settings get global $key").orDefault()
+            device.executeShellCommand("settings put global $key 0")
         }
     }
 
     @Throws(IOException::class)
-    private fun enableAnimations() {
-        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation()).apply {
-            executeShellCommand(
-                "settings put global transition_animation_scale $transitionAnimationScale"
-            )
-            executeShellCommand("settings put global window_animation_scale $windowAnimationScale")
-            executeShellCommand(
-                "settings put global animator_duration_scale $animatorDurationScale"
-            )
+    private fun restoreAnimations() {
+        animationKeys.forEach { key ->
+            val savedValue = savedScaleValues[key] ?: DEFAULT_SCALE
+            device.executeShellCommand("settings put global $key $savedValue")
         }
     }
 
-    private fun String.orDefault() = if (isEmpty() || trim() == "null") {
-        "1"
+    private fun String?.orDefault() = if (isNullOrEmpty() || trim() == "null") {
+        DEFAULT_SCALE
     } else {
-        this
+        toFloat()
     }
 }
