@@ -5,7 +5,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 
 class OpenSourceNoticesScreen {
-    fun seesScreen() {
+    fun seeScreen() {
         intended(hasComponent(OssLicensesMenuActivity::class.java.name))
     }
 }

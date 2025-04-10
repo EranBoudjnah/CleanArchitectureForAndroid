@@ -37,8 +37,8 @@ class HomeTest : BaseTest() {
     fun givenConnectedWhenStartingAppThenIpAddressPresented() {
         with(composeTestRule) {
             with(homeScreen) {
-                seesIpAddressLabel()
-                seesIpAddressSubtitleLabel()
+                seeIpAddressLabel()
+                seeIpAddressSubtitleLabel()
             }
         }
     }
@@ -48,13 +48,13 @@ class HomeTest : BaseTest() {
     fun givenConnectedWhenStartingAppThenIpAddressDetailsPresented() {
         with(composeTestRule) {
             with(homeScreen) {
-                seesCityLabel()
-                seesRegionLabel()
-                seesCountryLabel()
-                seesGeolocationLabel()
-                seesPostCodeLabel()
-                seesTimeZoneLabel()
-                seesInternetServiceProviderLabel()
+                seeCityLabel()
+                seeRegionLabel()
+                seeCountryLabel()
+                seeGeolocationLabel()
+                seePostCodeLabel()
+                seeTimeZoneLabel()
+                seeInternetServiceProviderLabel()
             }
         }
     }
@@ -68,7 +68,7 @@ class HomeTest : BaseTest() {
             }
 
             with(openSourceNoticesScreen) {
-                seesScreen()
+                seeScreen()
             }
         }
         Intents.release()
