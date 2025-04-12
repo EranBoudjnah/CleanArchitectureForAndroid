@@ -17,7 +17,7 @@ class ConnectionDetailsDomainMapperTest(
     companion object {
         @JvmStatic
         @Parameters(name = "Given {0} then returns {1}")
-        fun data(): Collection<Array<*>> = listOf(
+        fun data(): Iterable<Array<*>> = setOf(
             connectedTestCase(
                 ipAddress = "1.1.1.1",
                 city = null,

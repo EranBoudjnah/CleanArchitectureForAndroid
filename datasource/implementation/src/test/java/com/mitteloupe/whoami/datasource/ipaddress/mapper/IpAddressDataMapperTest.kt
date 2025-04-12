@@ -16,7 +16,7 @@ class IpAddressDataMapperTest(
     companion object {
         @JvmStatic
         @Parameters(name = "Given {0}")
-        fun data(): Collection<Array<*>> = listOf(
+        fun data(): Iterable<Array<*>> = setOf(
             testCase("1.1.1.1"),
             testCase("2.3.4.5")
         )

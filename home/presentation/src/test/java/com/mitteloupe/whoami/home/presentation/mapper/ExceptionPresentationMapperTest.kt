@@ -21,7 +21,7 @@ class ExceptionPresentationMapperTest(
     companion object {
         @JvmStatic
         @Parameters(name = "Given {0} then returns {1}")
-        fun data(): Collection<Array<*>> = listOf(
+        fun data(): Iterable<Array<*>> = setOf(
             testCase(ReadFailedDomainException(Throwable()), ErrorPresentationModel.RequestTimeout),
             testCase(NoIpAddressDomainException(), ErrorPresentationModel.NoIpAddress),
             noIpAddressInformationTestCase("1.2.3.4"),

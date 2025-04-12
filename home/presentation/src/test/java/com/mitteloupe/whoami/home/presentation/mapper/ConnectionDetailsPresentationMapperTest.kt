@@ -30,26 +30,26 @@ class ConnectionDetailsPresentationMapperTest(
     companion object {
         @JvmStatic
         @Parameters(name = "Given {0} then returns {1}")
-        fun data(): Collection<Array<*>> = listOf(
+        fun data(): Iterable<Array<*>> = setOf(
             connectedTestCase(
-                "1.2.3.4",
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+                ipAddress = "1.2.3.4",
+                city = null,
+                region = null,
+                country = null,
+                geolocation = null,
+                internetServiceProviderName = null,
+                postCode = null,
+                timeZone = null
             ),
             connectedTestCase(
-                "1.2.3.4",
-                "New York",
-                "New York",
-                "United States",
-                "1.0,1.0",
-                "Whistle",
-                "A123456",
-                "EST"
+                ipAddress = "4.3.2.1",
+                city = "New York",
+                region = "New York",
+                country = "United States",
+                geolocation = "1.0,1.0",
+                internetServiceProviderName = "Whistle",
+                postCode = "A123456",
+                timeZone = "EST"
             ),
             testCase(Disconnected, HomeViewState.Disconnected),
             testCase(Unset, HomeViewState.Loading),
@@ -112,7 +112,7 @@ class ConnectionDetailsPresentationMapperTest(
     private lateinit var classUnderTest: ConnectionDetailsPresentationMapper
 
     @Mock
-    lateinit var exceptionPresentationMapper: ExceptionPresentationMapper
+    private lateinit var exceptionPresentationMapper: ExceptionPresentationMapper
 
     @Before
     fun setUp() {

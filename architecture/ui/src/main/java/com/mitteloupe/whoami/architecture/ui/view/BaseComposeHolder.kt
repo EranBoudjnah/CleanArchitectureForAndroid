@@ -17,14 +17,14 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
 ) {
     @Composable
     fun ViewModelObserver(navController: NavController) {
-        viewModel.navigationEvent.collectAsState(initial = null)
-            .value?.let { navigationValue ->
-                Navigator(navigationValue, navController)
-            }
-
         viewModel.notification.collectAsState(initial = null)
             .value?.let { notificationValue ->
                 Notifier(notification = notificationValue)
+            }
+
+        viewModel.navigationEvent.collectAsState(initial = null)
+            .value?.let { navigationValue ->
+                Navigator(navigationValue, navController)
             }
     }
 

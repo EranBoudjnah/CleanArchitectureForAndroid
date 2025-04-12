@@ -122,7 +122,7 @@ class ConnectionDetailsRepositoryTest {
     }
 
     @Test
-    fun `Given throwable, disconnected when connectionDetails then returns error, disconnected`() =
+    fun `Given throwable, connected when connectionDetails then returns error, connected`() =
         runBlocking {
             // Given
             val givenState = ConnectionStateDataModel.Connected
@@ -134,12 +134,20 @@ class ConnectionDetailsRepositoryTest {
                 ipAddressInformationDataSource.ipAddressInformation(givenIpAddress)
             } throws throwable andThen defaultIpAddressInformation
 
-            val expectedState2 = ConnectionDetailsDomainModel.Disconnected
-            givenConnectionDetailsDomainResolverMaps(givenState, expectedState2)
-
             val expectedDomainException = UnknownDomainException(throwable)
             every { throwableDomainMapper.toDomain(throwable) } returns expectedDomainException
             val expectedState1 = ConnectionDetailsDomainModel.Error(expectedDomainException)
+            val expectedState2 = ConnectionDetailsDomainModel.Connected(
+                ipAddress = givenIpAddress,
+                city = "Paris",
+                region = "Paris",
+                countryCode = "France",
+                geolocation = "0.0,0.0",
+                internetServiceProviderName = "Le ISP",
+                postCode = "12345",
+                timeZone = "GMT +1"
+            )
+            givenConnectionDetailsDomainResolverMaps(givenState, expectedState2)
 
             // When
             val actualValue = classUnderTest.connectionDetails().toList()
