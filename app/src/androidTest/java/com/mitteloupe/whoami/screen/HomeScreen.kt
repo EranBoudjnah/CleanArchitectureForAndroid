@@ -22,39 +22,39 @@ class HomeScreen {
     private val internetServiceProviderLabel = hasText("TalkTalk Limited")
     private val openSourceNoticesButton = hasText("Open Source Notices")
 
-    fun ComposeContentTestRule.seesIpAddressLabel() {
+    fun ComposeContentTestRule.seeIpAddressLabel() {
         assertIsDisplayed(ipAddressLabel)
     }
 
-    fun ComposeContentTestRule.seesIpAddressSubtitleLabel() {
+    fun ComposeContentTestRule.seeIpAddressSubtitleLabel() {
         assertIsDisplayed(ipAddressSubtitleLabel)
     }
 
-    fun ComposeContentTestRule.seesCityLabel() {
+    fun ComposeContentTestRule.seeCityLabel() {
         assertIsDisplayed(cityLabel)
     }
 
-    fun ComposeContentTestRule.seesRegionLabel() {
+    fun ComposeContentTestRule.seeRegionLabel() {
         assertIsDisplayed(regionLabel)
     }
 
-    fun ComposeContentTestRule.seesCountryLabel() {
+    fun ComposeContentTestRule.seeCountryLabel() {
         assertIsDisplayed(countryLabel)
     }
 
-    fun ComposeContentTestRule.seesGeolocationLabel() {
+    fun ComposeContentTestRule.seeGeolocationLabel() {
         assertIsDisplayed(geolocationLabel)
     }
 
-    fun ComposeContentTestRule.seesPostCodeLabel() {
+    fun ComposeContentTestRule.seePostCodeLabel() {
         assertIsDisplayed(postCodeLabel)
     }
 
-    fun ComposeContentTestRule.seesTimeZoneLabel() {
+    fun ComposeContentTestRule.seeTimeZoneLabel() {
         assertIsDisplayed(timeZoneLabel)
     }
 
-    fun ComposeContentTestRule.seesInternetServiceProviderLabel() {
+    fun ComposeContentTestRule.seeInternetServiceProviderLabel() {
         assertIsDisplayed(internetServiceProviderLabel)
     }
 
