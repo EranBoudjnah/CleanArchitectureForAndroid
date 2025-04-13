@@ -1,7 +1,7 @@
 package com.mitteloupe.whoami.test.server.response
 
 import com.mitteloupe.whoami.test.asset.assetReader
-import com.mitteloupe.whoami.test.server.ResponseDispatcher
+import com.mitteloupe.whoami.test.server.ResponseBinder
 import com.mitteloupe.whoami.test.server.ServerResponse
 
 data class SimpleResponse(
@@ -18,7 +18,7 @@ data class SimpleResponse(
         }
     }
 
-    override fun mockResponse(responseDispatcher: ResponseDispatcher) = ServerResponse(
+    override fun mockResponse(responseBinder: ResponseBinder) = ServerResponse(
         code = responseCode,
         headers = headers,
         body = responseBody
