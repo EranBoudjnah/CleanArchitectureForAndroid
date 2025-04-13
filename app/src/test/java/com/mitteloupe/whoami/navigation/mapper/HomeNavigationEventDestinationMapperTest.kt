@@ -120,7 +120,7 @@ class HomeNavigationEventDestinationMapperTest {
         assertThat(
             actualException.message,
             matchesPattern(
-                "^Navigation to PresentationNavigationEvent\\\$MockitoMock\\\$\\w+ " +
+                "^Navigation event PresentationNavigationEvent\\\$MockitoMock\\\$\\w+ " +
                     "was not handled.$"
             )
         )
