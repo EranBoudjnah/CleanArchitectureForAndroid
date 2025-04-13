@@ -9,7 +9,7 @@ import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
 
-class MockBinder :
+class MockDispatcher :
     Dispatcher(),
     ResponseBinder {
     override val usedEndpoints: Set<String>
@@ -38,15 +38,15 @@ class MockBinder :
             MockResponse().withWebSocketUpgrade(
                 object : WebSocketListener() {
                     override fun onOpen(webSocket: WebSocket, response: Response) {
-                        this@MockBinder.webSocket = webSocket
+                        this@MockDispatcher.webSocket = webSocket
                     }
 
                     override fun onMessage(webSocket: WebSocket, text: String) {
-                        this@MockBinder.onWebSocketMessage(text)
+                        this@MockDispatcher.onWebSocketMessage(text)
                     }
 
                     override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-                        this@MockBinder.webSocket = null
+                        this@MockDispatcher.webSocket = null
                     }
                 }
             )

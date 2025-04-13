@@ -22,7 +22,7 @@ import com.mitteloupe.whoami.test.rule.LocalStoreRule
 import com.mitteloupe.whoami.test.rule.ScreenshotFailureRule
 import com.mitteloupe.whoami.test.rule.SdkAwareGrantPermissionRule
 import com.mitteloupe.whoami.test.rule.WebServerRule
-import com.mitteloupe.whoami.test.server.MockBinder
+import com.mitteloupe.whoami.test.server.MockDispatcher
 import com.mitteloupe.whoami.test.server.MockWebServerProvider
 import com.mitteloupe.whoami.test.server.ResponseStore
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -39,7 +39,7 @@ abstract class BaseTest {
     private val hiltAndroidRule by lazy { HiltAndroidRule(this) }
 
     @Inject
-    lateinit var mockDispatcher: MockBinder
+    lateinit var mockDispatcher: MockDispatcher
 
     @Inject
     lateinit var responseStore: ResponseStore

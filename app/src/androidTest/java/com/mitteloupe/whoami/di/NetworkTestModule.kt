@@ -1,7 +1,7 @@
 package com.mitteloupe.whoami.di
 
 import com.mitteloupe.whoami.server.AppResponseStore
-import com.mitteloupe.whoami.test.server.MockBinder
+import com.mitteloupe.whoami.test.server.MockDispatcher
 import com.mitteloupe.whoami.test.server.MockWebServerProvider
 import com.mitteloupe.whoami.test.server.ResponseStore
 import dagger.Module
@@ -16,10 +16,10 @@ import okhttp3.mockwebserver.Dispatcher
 object NetworkTestModule {
     @Provides
     @Singleton
-    fun providesMockDispatcher() = MockBinder()
+    fun providesMockDispatcher() = MockDispatcher()
 
     @Provides
-    fun providesDispatcher(mockDispatcher: MockBinder): Dispatcher = mockDispatcher
+    fun providesDispatcher(mockDispatcher: MockDispatcher): Dispatcher = mockDispatcher
 
     @Provides
     fun providesResponseStore(): ResponseStore = AppResponseStore()
