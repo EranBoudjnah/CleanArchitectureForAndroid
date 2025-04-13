@@ -11,8 +11,8 @@ import okhttp3.mockwebserver.RecordedRequest
 
 class MockDispatcher :
     Dispatcher(),
-    ResponseDispatcher {
-    override val usedResponseKeys: Set<String>
+    ResponseBinder {
+    override val usedEndpoints: Set<String>
         field = mutableSetOf<String>()
 
     private val responses = mutableMapOf<String, MockResponseContents>()
@@ -21,18 +21,18 @@ class MockDispatcher :
 
     override var onWebSocketMessage: (String) -> Unit = {}
 
-    override fun reset() {
-        responses.clear()
-        usedResponseKeys.clear()
+    override fun bindResponse(request: MockRequest, response: MockResponseContents) {
+        responses[request.url] = response
     }
 
-    override fun addResponse(request: MockRequest, response: MockResponseContents) {
-        responses[request.url] = response
+    override fun reset() {
+        responses.clear()
+        usedEndpoints.clear()
     }
 
     override fun dispatch(request: RecordedRequest): MockResponse {
         val endPoint = request.path!!.substringBefore("?")
-        usedResponseKeys.add(endPoint)
+        usedEndpoints.add(endPoint)
         val response = responses[endPoint]?.mockResponse(this) ?: ServerResponse(code = 404)
         return if (response.upgradeToWebSocket) {
             MockResponse().withWebSocketUpgrade(
@@ -51,7 +51,7 @@ class MockDispatcher :
                 }
             )
         } else {
-            return MockResponse().apply {
+            MockResponse().apply {
                 headers = Headers.headersOf(*response.headers.toArray())
             }.setResponseCode(response.code)
                 .setBody(response.body)

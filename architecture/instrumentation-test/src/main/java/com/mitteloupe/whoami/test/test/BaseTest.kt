@@ -62,7 +62,7 @@ abstract class BaseTest {
     private val webServerRule = WebServerRule(
         lazy { listOf(mockDispatcher) },
         lazy { responseStore }
-    ) { mockWebServerProvider.serverUrl }
+    )
 
     private val localStoreRule = LocalStoreRule(
         lazy { sharedPreferences },
