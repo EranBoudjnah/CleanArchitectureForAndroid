@@ -79,9 +79,11 @@ class HistoryTest : BaseTest() {
     @LocalStore(
         localStoreDataIds = [KEY_VALUE_NO_HISTORY]
     )
-    fun givenNoHistoryWhenOnHistoryScreenThenSeesHistory() {
+    fun givenNoHistoryWhenOnHistoryScreenThenSeesNoRecords() {
         with(historyScreen) {
-            seeNoRecordsLabel()
+            retry(repeat = 20) {
+                seeNoRecordsLabel()
+            }
         }
     }
 

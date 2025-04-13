@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
-import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledDestinationException
+import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledNavigationException
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSavedDetails
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewHistory
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewOpenSourceNotices
@@ -115,12 +115,12 @@ class HomeNavigationEventDestinationMapperTest {
         val actualException = requireNotNull(caughtException)
         assertThat(
             actualException,
-            isA(UnhandledDestinationException::class.java)
+            isA(UnhandledNavigationException::class.java)
         )
         assertThat(
             actualException.message,
             matchesPattern(
-                "^Navigation to PresentationNavigationEvent\\\$MockitoMock\\\$\\w+ " +
+                "^Navigation event PresentationNavigationEvent\\\$MockitoMock\\\$\\w+ " +
                     "was not handled.$"
             )
         )
