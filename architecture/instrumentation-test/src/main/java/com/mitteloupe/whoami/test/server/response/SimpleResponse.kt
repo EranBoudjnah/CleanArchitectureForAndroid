@@ -1,8 +1,7 @@
 package com.mitteloupe.whoami.test.server.response
 
 import com.mitteloupe.whoami.test.asset.assetReader
-import com.mitteloupe.whoami.test.server.ResponseBinder
-import com.mitteloupe.whoami.test.server.ServerResponse
+import com.mitteloupe.whoami.test.server.MockResponse
 
 data class SimpleResponse(
     private val code: Int = 200,
@@ -17,6 +16,5 @@ data class SimpleResponse(
         }
     }
 
-    override fun mockResponse(responseBinder: ResponseBinder) =
-        ServerResponse(code = code, headers = headers, body = body)
+    override fun mockResponse() = MockResponse(code = code, headers = headers, body = body)
 }

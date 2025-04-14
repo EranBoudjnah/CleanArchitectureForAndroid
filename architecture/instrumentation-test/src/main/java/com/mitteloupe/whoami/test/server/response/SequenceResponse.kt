@@ -1,16 +1,15 @@
 package com.mitteloupe.whoami.test.server.response
 
-import com.mitteloupe.whoami.test.server.ResponseBinder
-import com.mitteloupe.whoami.test.server.ServerResponse
+import com.mitteloupe.whoami.test.server.MockResponse
 
 class SequenceResponse(private vararg val responses: MockResponseContents) : MockResponseContents {
     private var responseIndex = 0
-    override fun mockResponse(responseBinder: ResponseBinder): ServerResponse {
+    override fun mockResponse(): MockResponse {
         val mockResponse = responses[responseIndex]
         responseIndex++
         if (responseIndex == responses.size) {
             responseIndex = 0
         }
-        return mockResponse.mockResponse(responseBinder)
+        return mockResponse.mockResponse()
     }
 }

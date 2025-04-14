@@ -33,7 +33,7 @@ class MockDispatcher :
     override fun dispatch(request: RecordedRequest): MockResponse {
         val endPoint = request.path!!.substringBefore("?")
         usedEndpoints.add(endPoint)
-        val response = responses[endPoint]?.mockResponse(this) ?: ServerResponse(code = 404)
+        val response = responses[endPoint]?.mockResponse() ?: MockResponse(code = 404)
         return if (response.upgradeToWebSocket) {
             MockResponse().withWebSocketUpgrade(
                 object : WebSocketListener() {
