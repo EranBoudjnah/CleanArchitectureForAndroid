@@ -4,7 +4,7 @@ import com.mitteloupe.whoami.constant.IP_ADDRESS
 import com.mitteloupe.whoami.test.server.MockRequest
 import com.mitteloupe.whoami.test.server.MockRequestResponse
 import com.mitteloupe.whoami.test.server.ResponseStore
-import com.mitteloupe.whoami.test.server.response.SimpleResponse
+import com.mitteloupe.whoami.test.server.response.SimpleResponseFactory
 
 const val IPIFY_ENDPOINT = "/ipify/"
 const val IPINFO_ENDPOINT = "/ipinfo/"
@@ -16,11 +16,11 @@ class AppResponseStore : ResponseStore() {
     override val internalResponses = listOf(
         REQUEST_RESPONSE_GET_IP to MockRequestResponse(
             request = MockRequest(IPIFY_ENDPOINT),
-            response = SimpleResponse(200, "api/get_ip.json")
+            response = SimpleResponseFactory(200, "api/get_ip.json")
         ),
         REQUEST_RESPONSE_GET_IP_DETAILS to MockRequestResponse(
             request = MockRequest("${IPINFO_ENDPOINT}$IP_ADDRESS/geo"),
-            response = SimpleResponse(200, "api/get_ip_details.json")
+            response = SimpleResponseFactory(200, "api/get_ip_details.json")
         )
     )
 }

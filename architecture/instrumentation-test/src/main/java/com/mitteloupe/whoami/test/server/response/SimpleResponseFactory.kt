@@ -3,11 +3,11 @@ package com.mitteloupe.whoami.test.server.response
 import com.mitteloupe.whoami.test.asset.assetReader
 import com.mitteloupe.whoami.test.server.MockResponse
 
-data class SimpleResponse(
+data class SimpleResponseFactory(
     private val code: Int = 200,
     private val bodyFileName: String = "",
     private val headers: List<Pair<String, String>> = emptyList()
-) : MockResponseContents {
+) : MockResponseFactory {
     private val body by lazy {
         if (bodyFileName.isEmpty()) {
             ""
