@@ -1,7 +1,7 @@
 package com.mitteloupe.whoami.localstore
 
 import com.mitteloupe.whoami.datasource.local.LocalStoreKey.KEY_HISTORY_RECORDS
-import com.mitteloupe.whoami.test.asset.assetReader
+import com.mitteloupe.whoami.test.asset.AssetReader
 import com.mitteloupe.whoami.test.localstore.KeyValueStore
 
 const val KEY_VALUE_SAVED_HISTORY = "Saved history"
@@ -15,5 +15,5 @@ class AppKeyValueStore : KeyValueStore() {
             (KEY_HISTORY_RECORDS to assetAsString("localstore/history_no_records.json"))
     )
 
-    private fun assetAsString(assetName: String) = assetReader.getAssetAsString(assetName)
+    private fun assetAsString(assetName: String) = AssetReader.getAssetAsString(assetName)
 }

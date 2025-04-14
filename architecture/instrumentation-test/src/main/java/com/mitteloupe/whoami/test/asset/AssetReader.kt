@@ -4,9 +4,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import java.io.InputStream
 import java.io.InputStreamReader
 
-val assetReader = AssetReader()
-
-class AssetReader {
+object AssetReader {
     fun getAssetAsString(name: String): String =
         javaClass.classLoader!!.getResourceAsStream("assets/$name").use { stream ->
             InputStreamReader(stream).use { reader ->

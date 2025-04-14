@@ -1,6 +1,6 @@
 package com.mitteloupe.whoami.test.server.response
 
-import com.mitteloupe.whoami.test.asset.assetReader
+import com.mitteloupe.whoami.test.asset.AssetReader
 import com.mitteloupe.whoami.test.server.MockResponse
 
 data class SimpleResponseFactory(
@@ -12,7 +12,7 @@ data class SimpleResponseFactory(
         if (bodyFileName == null) {
             ""
         } else {
-            assetReader.getAssetAsString(bodyFileName)
+            AssetReader.getAssetAsString(bodyFileName)
         }
     }
 
