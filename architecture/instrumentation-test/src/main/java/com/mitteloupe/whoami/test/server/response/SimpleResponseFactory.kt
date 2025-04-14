@@ -6,10 +6,10 @@ import com.mitteloupe.whoami.test.server.MockResponse
 data class SimpleResponseFactory(
     private val code: Int = 200,
     private val headers: List<Pair<String, String>> = emptyList(),
-    private val bodyFileName: String = ""
+    private val bodyFileName: String? = null
 ) : MockResponseFactory {
     private val body by lazy {
-        if (bodyFileName.isEmpty()) {
+        if (bodyFileName == null) {
             ""
         } else {
             assetReader.getAssetAsString(bodyFileName)
