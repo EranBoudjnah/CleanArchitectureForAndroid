@@ -1,14 +1,14 @@
 package com.mitteloupe.whoami.test.server
 
-private typealias MockRequestResponsePairList = List<Pair<String, MockRequestResponse>>
-private typealias MockRequestResponseMap = Map<String, MockRequestResponse>
+private typealias MockRequestResponsePairList = List<Pair<String, MockRequestResponseFactory>>
+private typealias MockRequestResponseMap = Map<String, MockRequestResponseFactory>
 
 abstract class ResponseStore {
-    val responses by lazy {
-        internalResponses.toValidatedMap()
+    val responseFactories by lazy {
+        internalResponseFactories.toValidatedMap()
     }
 
-    protected abstract val internalResponses: List<Pair<String, MockRequestResponse>>
+    protected abstract val internalResponseFactories: List<Pair<String, MockRequestResponseFactory>>
 
     private fun MockRequestResponsePairList.toValidatedMap(): MockRequestResponseMap {
         val responses = toMap()

@@ -31,7 +31,7 @@ class WebServerRule(
         override fun evaluate() {
             val requestResponses = description.requestResponseIds()
                 .map { requestResponseId ->
-                    responseStore.responses[requestResponseId]
+                    responseStore.responseFactories[requestResponseId]
                         ?: throw IllegalArgumentException(
                             "Request/Response ID $requestResponseId not found."
                         )
@@ -39,18 +39,19 @@ class WebServerRule(
 
             mockDispatchers.forEach { dispatcher ->
                 requestResponses.forEach { requestResponse ->
-                    dispatcher.bindResponse(requestResponse.request, requestResponse.response)
+                    dispatcher
+                        .bindResponse(requestResponse.request, requestResponse.responseFactory)
                 }
             }
-            val stubbedResponseKeys = requestResponses.map { requestResponse ->
-                requestResponse.request.url
-            }.toSet()
+            val stubbedResponseKeys = requestResponses
+                .map { requestResponse -> requestResponse.request.url }
+                .toSet()
 
             base.evaluate()
 
-            val usedResponseKeys = mockDispatchers.flatMap { dispatcher ->
-                dispatcher.usedEndpoints
-            }.toSet()
+            val usedResponseKeys = mockDispatchers
+                .flatMap { dispatcher -> dispatcher.usedEndpoints }
+                .toSet()
 
             val unusedResponseKeys = stubbedResponseKeys - usedResponseKeys
             check(unusedResponseKeys.isEmpty()) {

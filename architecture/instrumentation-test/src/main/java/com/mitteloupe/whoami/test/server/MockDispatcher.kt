@@ -1,6 +1,6 @@
 package com.mitteloupe.whoami.test.server
 
-import com.mitteloupe.whoami.test.server.response.MockResponseContents
+import com.mitteloupe.whoami.test.server.response.MockResponseFactory
 import okhttp3.Headers
 import okhttp3.Response
 import okhttp3.WebSocket
@@ -15,13 +15,13 @@ class MockDispatcher :
     override val usedEndpoints: Set<String>
         field = mutableSetOf<String>()
 
-    private val responses = mutableMapOf<String, MockResponseContents>()
+    private val responses = mutableMapOf<String, MockResponseFactory>()
 
     var webSocket: WebSocket? = null
 
     override var onWebSocketMessage: (String) -> Unit = {}
 
-    override fun bindResponse(request: MockRequest, response: MockResponseContents) {
+    override fun bindResponse(request: MockRequest, response: MockResponseFactory) {
         responses[request.url] = response
     }
 
@@ -33,7 +33,7 @@ class MockDispatcher :
     override fun dispatch(request: RecordedRequest): MockResponse {
         val endPoint = request.path!!.substringBefore("?")
         usedEndpoints.add(endPoint)
-        val response = responses[endPoint]?.mockResponse(this) ?: ServerResponse(code = 404)
+        val response = responses[endPoint]?.mockResponse() ?: MockResponse(code = 404)
         return if (response.upgradeToWebSocket) {
             MockResponse().withWebSocketUpgrade(
                 object : WebSocketListener() {
