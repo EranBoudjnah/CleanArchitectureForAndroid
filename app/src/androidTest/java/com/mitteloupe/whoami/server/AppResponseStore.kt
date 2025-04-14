@@ -16,11 +16,14 @@ class AppResponseStore : ResponseStore() {
     override val internalResponseFactories = listOf(
         REQUEST_RESPONSE_GET_IP to MockRequestResponseFactory(
             request = MockRequest(IPIFY_ENDPOINT),
-            responseFactory = SimpleResponseFactory(200, "api/get_ip.json")
+            responseFactory = SimpleResponseFactory(code = 200, bodyFileName = "api/get_ip.json")
         ),
         REQUEST_RESPONSE_GET_IP_DETAILS to MockRequestResponseFactory(
             request = MockRequest("${IPINFO_ENDPOINT}$IP_ADDRESS/geo"),
-            responseFactory = SimpleResponseFactory(200, "api/get_ip_details.json")
+            responseFactory = SimpleResponseFactory(
+                code = 200,
+                bodyFileName = "api/get_ip_details.json"
+            )
         )
     )
 }
