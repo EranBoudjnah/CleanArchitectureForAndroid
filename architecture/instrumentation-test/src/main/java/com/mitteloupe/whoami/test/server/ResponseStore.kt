@@ -8,7 +8,7 @@ abstract class ResponseStore {
         internalResponseFactories.toValidatedMap()
     }
 
-    protected abstract val internalResponseFactories: List<Pair<String, MockRequestResponseFactory>>
+    protected abstract val internalResponseFactories: MockRequestResponsePairList
 
     private fun MockRequestResponsePairList.toValidatedMap(): MockRequestResponseMap {
         val responses = toMap()
