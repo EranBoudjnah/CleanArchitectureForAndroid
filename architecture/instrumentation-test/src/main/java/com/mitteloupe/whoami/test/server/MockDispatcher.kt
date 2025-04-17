@@ -21,8 +21,8 @@ class MockDispatcher :
 
     override var onWebSocketMessage: (String) -> Unit = {}
 
-    override fun bindResponse(request: MockRequest, response: MockResponseFactory) {
-        responses[request.url] = response
+    override fun bindResponse(requestResponseFactory: MockRequestResponseFactory) {
+        responses[requestResponseFactory.request.url] = requestResponseFactory.responseFactory
     }
 
     override fun reset() {

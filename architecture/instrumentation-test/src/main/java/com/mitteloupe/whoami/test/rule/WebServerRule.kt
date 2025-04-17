@@ -8,25 +8,25 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
 class WebServerRule(
-    private val lazyMockDispatchers: Lazy<Collection<ResponseBinder>>,
+    private val lazyMockDispatcher: Lazy<ResponseBinder>,
     private val lazyResponseStore: Lazy<ResponseStore>
 ) : TestRule {
     override fun apply(base: Statement, description: Description): Statement =
         WebServerInitializationStatement(
-            lazyMockDispatchers,
+            lazyMockDispatcher,
             lazyResponseStore,
             base,
             description
         )
 
     private class WebServerInitializationStatement(
-        private val lazyMockDispatchers: Lazy<Collection<ResponseBinder>>,
+        private val lazyMockDispatcher: Lazy<ResponseBinder>,
         private val lazyResponseStore: Lazy<ResponseStore>,
         private val base: Statement,
         private val description: Description
     ) : Statement() {
         val responseStore by lazy { lazyResponseStore.value }
-        val mockDispatchers by lazy { lazyMockDispatchers.value }
+        val mockDispatcher by lazy { lazyMockDispatcher.value }
 
         override fun evaluate() {
             val requestResponses = description.requestResponseIds()
@@ -37,11 +37,8 @@ class WebServerRule(
                         )
                 }
 
-            mockDispatchers.forEach { dispatcher ->
-                requestResponses.forEach { requestResponse ->
-                    dispatcher
-                        .bindResponse(requestResponse.request, requestResponse.responseFactory)
-                }
+            requestResponses.forEach { requestResponse ->
+                mockDispatcher.bindResponse(requestResponse)
             }
             val stubbedResponseKeys = requestResponses
                 .map { requestResponse -> requestResponse.request.url }
@@ -49,9 +46,7 @@ class WebServerRule(
 
             base.evaluate()
 
-            val usedResponseKeys = mockDispatchers
-                .flatMap { dispatcher -> dispatcher.usedEndpoints }
-                .toSet()
+            val usedResponseKeys = mockDispatcher.usedEndpoints.toSet()
 
             val unusedResponseKeys = stubbedResponseKeys - usedResponseKeys
             check(unusedResponseKeys.isEmpty()) {
@@ -59,7 +54,7 @@ class WebServerRule(
                     unusedResponseKeys.joinToString("]\n[") + "]"
             }
 
-            mockDispatchers.forEach(ResponseBinder::reset)
+            mockDispatcher.reset()
         }
 
         private fun Description.requestResponseIds() =

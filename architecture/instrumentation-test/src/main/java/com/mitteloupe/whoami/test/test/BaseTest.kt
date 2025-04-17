@@ -60,7 +60,7 @@ abstract class BaseTest {
     lateinit var composeIdlingResources: @JvmSuppressWildcards Collection<ComposeIdlingResource>
 
     private val webServerRule = WebServerRule(
-        lazy { listOf(mockDispatcher) },
+        lazy { mockDispatcher },
         lazy { responseStore }
     )
 
