@@ -16,7 +16,6 @@ import com.mitteloupe.whoami.test.idlingresource.findAndCloseAppNotRespondingDia
 import com.mitteloupe.whoami.test.idlingresource.registerAppNotRespondingWatcher
 import com.mitteloupe.whoami.test.launcher.AppLauncher
 import com.mitteloupe.whoami.test.localstore.KeyValueStore
-import com.mitteloupe.whoami.test.rule.DisableAnimationsRule
 import com.mitteloupe.whoami.test.rule.HiltInjectorRule
 import com.mitteloupe.whoami.test.rule.LocalStoreRule
 import com.mitteloupe.whoami.test.rule.ScreenshotFailureRule
@@ -78,7 +77,6 @@ abstract class BaseTest {
     val testRules: RuleChain by lazy {
         RuleChain
             .outerRule(hiltAndroidRule)
-            .around(DisableAnimationsRule())
             .around(HiltInjectorRule(hiltAndroidRule))
             .around(ScreenshotFailureRule())
             .around(webServerRule)
