@@ -1,5 +1,6 @@
 package com.mitteloupe.whoami.test.server
 
+import android.util.Log
 import com.mitteloupe.whoami.test.server.response.MockResponseFactory
 import okhttp3.Headers
 import okhttp3.Response
@@ -12,17 +13,19 @@ import okhttp3.mockwebserver.RecordedRequest
 class MockDispatcher :
     Dispatcher(),
     ResponseBinder {
-    override val usedEndpoints: Set<String>
-        field = mutableSetOf<String>()
+    override var testName: String = ""
 
-    private val responses = mutableMapOf<String, MockResponseFactory>()
+    override val usedEndpoints: Set<MockRequest>
+        field = mutableSetOf()
+
+    private val responses = mutableMapOf<MockRequest, MockResponseFactory>()
 
     var webSocket: WebSocket? = null
 
     override var onWebSocketMessage: (String) -> Unit = {}
 
     override fun bindResponse(requestResponseFactory: MockRequestResponseFactory) {
-        responses[requestResponseFactory.request.url] = requestResponseFactory.responseFactory
+        responses[requestResponseFactory.request] = requestResponseFactory.responseFactory
     }
 
     override fun reset() {
@@ -32,8 +35,14 @@ class MockDispatcher :
 
     override fun dispatch(request: RecordedRequest): MockResponse {
         val endPoint = request.path!!.substringBefore("?")
-        usedEndpoints.add(endPoint)
-        val response = responses[endPoint]?.mockResponse() ?: MockResponse(code = 404)
+        val matchingRequest = responses.entries.firstOrNull { requestResponse ->
+            requestResponse.key.url == endPoint
+        }?.also { requestResponse ->
+            usedEndpoints.add(requestResponse.key)
+        }
+        val response = matchingRequest?.value?.mockResponse() ?: MockResponse(code = 404).also {
+            Log.w(TAG, "$testName: ${request.path} not stubbed!")
+        }
         return if (response.upgradeToWebSocket) {
             MockResponse().withWebSocketUpgrade(
                 object : WebSocketListener() {
@@ -60,4 +69,8 @@ class MockDispatcher :
 
     private fun Collection<Pair<String, String>>.toArray(): Array<String> =
         flatMap { listOf(it.first, it.second) }.toTypedArray()
+
+    companion object {
+        const val TAG = "MockDispatcher"
+    }
 }

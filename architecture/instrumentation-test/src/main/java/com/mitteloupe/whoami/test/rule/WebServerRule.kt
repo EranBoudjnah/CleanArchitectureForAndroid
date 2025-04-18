@@ -37,11 +37,12 @@ class WebServerRule(
                         )
                 }
 
+            mockDispatcher.testName = description.displayName
             requestResponses.forEach { requestResponse ->
                 mockDispatcher.bindResponse(requestResponse)
             }
             val stubbedResponseKeys = requestResponses
-                .map { requestResponse -> requestResponse.request.url }
+                .map { requestResponse -> requestResponse.request }
                 .toSet()
 
             base.evaluate()
