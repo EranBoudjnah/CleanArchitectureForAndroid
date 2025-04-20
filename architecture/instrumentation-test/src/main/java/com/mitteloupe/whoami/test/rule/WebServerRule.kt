@@ -1,6 +1,7 @@
 package com.mitteloupe.whoami.test.rule
 
 import com.mitteloupe.whoami.test.annotation.ServerRequestResponse
+import com.mitteloupe.whoami.test.server.MockRequest
 import com.mitteloupe.whoami.test.server.ResponseBinder
 import com.mitteloupe.whoami.test.server.ResponseStore
 import org.junit.rules.TestRule
@@ -25,6 +26,14 @@ private class WebServerStatement(
     val mockDispatcher by lazy { lazyMockDispatcher.value }
 
     override fun evaluate() {
+        mockDispatcher.testName = description.displayName
+        val stubbedResponseKeys = bindRequestResponseFactories()
+        base.evaluate()
+        assertAllStubsUsed(stubbedResponseKeys)
+        mockDispatcher.reset()
+    }
+
+    private fun bindRequestResponseFactories(): Set<MockRequest> {
         val requestResponses = description.requestResponseIds()
             .map { requestResponseId ->
                 requireNotNull(
@@ -32,16 +41,16 @@ private class WebServerStatement(
                 ) { "Request/Response ID $requestResponseId not found." }
             }
 
-        mockDispatcher.testName = description.displayName
         requestResponses.forEach { requestResponse ->
             mockDispatcher.bindResponse(requestResponse)
         }
         val stubbedResponseKeys = requestResponses
             .map { requestResponse -> requestResponse.request }
             .toSet()
+        return stubbedResponseKeys
+    }
 
-        base.evaluate()
-
+    private fun assertAllStubsUsed(stubbedResponseKeys: Set<MockRequest>) {
         val usedResponseKeys = mockDispatcher.usedEndpoints.toSet()
 
         val unusedResponseKeys = stubbedResponseKeys - usedResponseKeys
@@ -49,8 +58,6 @@ private class WebServerStatement(
             "${unusedResponseKeys.size} unused stubbed URLs:\n[" +
                 unusedResponseKeys.joinToString("]\n[") + "]"
         }
-
-        mockDispatcher.reset()
     }
 
     private fun Description.requestResponseIds() =
