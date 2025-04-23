@@ -4,6 +4,7 @@ import com.mitteloupe.whoami.architecture.domain.UseCaseExecutor
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent.Back
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
+import com.mitteloupe.whoami.history.domain.model.SavedIpAddressRecordDomainModel
 import com.mitteloupe.whoami.history.domain.usecase.DeleteHistoryRecordUseCase
 import com.mitteloupe.whoami.history.domain.usecase.GetHistoryUseCase
 import com.mitteloupe.whoami.history.presentation.mapper.DeleteHistoryRecordRequestDomainMapper
@@ -22,25 +23,51 @@ class HistoryViewModel(
 ) : BaseViewModel<HistoryViewState, PresentationNotification>(useCaseExecutor) {
     fun onEnter(highlightedIpAddress: String?) {
         updateViewState(Loading)
+        fetchRecordHistory(highlightedIpAddress)
+    }
+
+    fun onDeleteAction(deletionRequest: HistoryRecordDeletionPresentationModel) {
+        deleteHistoryRecord(deletionRequest)
+    }
+
+    fun onBackAction() {
+        emitNavigationEvent(Back)
+    }
+
+    private fun fetchRecordHistory(highlightedIpAddress: String?) {
         getHistoryUseCase(
             onResult = { result ->
-                updateViewState(
-                    HistoryRecords(
-                        highlightedIpAddress = highlightedIpAddress,
-                        historyRecords = result
-                            .map(savedIpAddressRecordPresentationMapper::toPresentation)
-                    )
+                presentRecordHistory(
+                    highlightedIpAddress = highlightedIpAddress,
+                    domainHistoryRecords = result
                 )
             },
             onException = { exception ->
+                presentRecordHistory(
+                    highlightedIpAddress = null,
+                    domainHistoryRecords = emptySet()
+                )
                 println("UNEXPECTED: $exception")
             }
         )
     }
 
-    fun onDeleteAction(deletionRequest: HistoryRecordDeletionPresentationModel) {
-        val domainDeletionRequest =
-            deleteHistoryRecordRequestDomainMapper.toDomain(deletionRequest)
+    private fun presentRecordHistory(
+        highlightedIpAddress: String?,
+        domainHistoryRecords: Collection<SavedIpAddressRecordDomainModel>
+    ) {
+        val presentationHistoryRecords = domainHistoryRecords
+            .map(savedIpAddressRecordPresentationMapper::toPresentation)
+        updateViewState(
+            HistoryRecords(
+                highlightedIpAddress = highlightedIpAddress,
+                historyRecords = presentationHistoryRecords
+            )
+        )
+    }
+
+    private fun deleteHistoryRecord(deletionRequest: HistoryRecordDeletionPresentationModel) {
+        val domainDeletionRequest = deleteHistoryRecordRequestDomainMapper.toDomain(deletionRequest)
         deleteHistoryRecordUseCase(
             value = domainDeletionRequest,
             onResult = {},
@@ -48,9 +75,5 @@ class HistoryViewModel(
                 println("UNEXPECTED: $exception")
             }
         )
-    }
-
-    fun onBackAction() {
-        emitNavigationEvent(Back)
     }
 }

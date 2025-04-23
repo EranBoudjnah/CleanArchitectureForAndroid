@@ -1,5 +1,6 @@
 package com.mitteloupe.whoami.history.presentation.viewmodel
 
+import com.mitteloupe.whoami.architecture.domain.exception.UnknownDomainException
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModelTest
 import com.mitteloupe.whoami.history.domain.model.HistoryRecordDeletionDomainModel
@@ -20,7 +21,9 @@ import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
+import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.empty
 import org.hamcrest.collection.IsCollectionWithSize.hasSize
 import org.hamcrest.core.IsIterableContaining.hasItem
 import org.junit.Assert.assertEquals
@@ -124,6 +127,24 @@ class HistoryViewModelTest :
             highlightedIpAddress,
             (actualValue[1] as HistoryRecords).highlightedIpAddress
         )
+    }
+
+    @Test
+    fun `Given history error when onEnter then presents empty history`() = runTest {
+        // Given
+        getHistoryUseCase.givenFailedExecution(UnknownDomainException())
+        val highlightedIpAddress = "0.0.0.0"
+        val deferredViewState = async(start = UNDISPATCHED) {
+            classUnderTest.viewState.take(2).toList()
+        }
+
+        // When
+        classUnderTest.onEnter(highlightedIpAddress)
+        val actualValue = deferredViewState.await()
+
+        // Then
+        assertEquals(Loading, actualValue[0])
+        assertThat((actualValue[1] as HistoryRecords).historyRecords, `is`(empty()))
     }
 
     @Test
