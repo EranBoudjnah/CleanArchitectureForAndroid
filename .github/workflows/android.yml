@@ -99,7 +99,7 @@ jobs:
           ram-size: 2G
           disk-size: 10G
           force-avd-creation: false
-          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -disk-size 10G
+          emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
             chmod +x .github/workflows/script/run_tests.sh
