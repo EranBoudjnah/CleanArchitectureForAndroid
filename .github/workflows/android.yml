@@ -96,7 +96,8 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: Nexus 6
-          ram-size: 2048MB
+          ram-size: 2G
+          disk-size: 10G
           force-avd-creation: false
           emulator-options: -no-snapshot -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true

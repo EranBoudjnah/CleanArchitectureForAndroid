@@ -26,6 +26,7 @@ import com.mitteloupe.whoami.test.server.MockWebServerProvider
 import com.mitteloupe.whoami.test.server.ResponseStore
 import dagger.hilt.android.testing.HiltAndroidRule
 import javax.inject.Inject
+import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Rule
@@ -68,6 +69,8 @@ abstract class BaseTest {
         lazy { keyValueStore }
     )
 
+    private val idlingRegistry by lazy { IdlingRegistry.getInstance() }
+
     protected abstract val composeTestRule: ComposeContentTestRule
 
     @SuppressLint("UnsafeOptInUsageError")
@@ -95,10 +98,19 @@ abstract class BaseTest {
         startActivityLauncher.launch()
     }
 
+    @After
+    fun cleanUp() {
+        unregisterIdlingResources()
+    }
+
     private fun registerIdlingResources() {
-        val idlingRegistry = IdlingRegistry.getInstance()
         idlingRegistry.register(*(espressoIdlingResources).toTypedArray())
         composeIdlingResources.forEach(composeTestRule::registerIdlingResource)
+    }
+
+    private fun unregisterIdlingResources() {
+        idlingRegistry.unregister(*(espressoIdlingResources).toTypedArray())
+        composeIdlingResources.forEach(composeTestRule::unregisterIdlingResource)
     }
 
     companion object {
