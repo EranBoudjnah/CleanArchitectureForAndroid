@@ -32,8 +32,7 @@ class HomeViewModel(
     }
 
     fun onSaveDetailsAction(connectionDetails: HomeViewState.Connected) {
-        val domainConnectionDetails = connectionDetailsDomainMapper.toDomain(connectionDetails)
-        saveConnectionDetails(domainConnectionDetails)
+        saveConnectionDetails(connectionDetails)
     }
 
     fun onViewHistoryAction() {
@@ -55,9 +54,10 @@ class HomeViewModel(
         updateViewState(connectionDetailsPresentationMapper.toPresentation(connectionDetails))
     }
 
-    private fun saveConnectionDetails(connectionDetails: ConnectionDetailsDomainModel.Connected) {
+    private fun saveConnectionDetails(connectionDetails: HomeViewState.Connected) {
+        val domainConnectionDetails = connectionDetailsDomainMapper.toDomain(connectionDetails)
         saveConnectionDetailsUseCase(
-            value = connectionDetails,
+            value = domainConnectionDetails,
             onResult = { presentSaveDetailsResult(connectionDetails.ipAddress) },
             onException = ::presentError
         )

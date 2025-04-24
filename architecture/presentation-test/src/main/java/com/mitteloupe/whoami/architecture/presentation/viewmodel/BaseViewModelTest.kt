@@ -6,7 +6,6 @@ import com.mitteloupe.whoami.architecture.domain.usecase.UseCase
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineScheduler
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -17,7 +16,11 @@ import org.mockito.BDDMockito.willAnswer
 import org.mockito.Mock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
+import org.mockito.stubbing.Answer
 
+private const val NO_INPUT_ON_RESULT_ARGUMENT_INDEX = 1
+private const val NO_INPUT_ON_EXCEPTION_ARGUMENT_INDEX = 2
+private const val ON_RESULT_ARGUMENT_INDEX = 2
 private const val ON_EXCEPTION_ARGUMENT_INDEX = 3
 
 abstract class BaseViewModelTest<
@@ -47,22 +50,22 @@ abstract class BaseViewModelTest<
         Dispatchers.resetMain()
     }
 
+    protected fun UseCase<Unit, *>.givenFailedExecution(domainException: DomainException) {
+        givenExecutionWillAnswer { invocation ->
+            val onException: (DomainException) -> Unit =
+                invocation.getArgument(NO_INPUT_ON_EXCEPTION_ARGUMENT_INDEX)
+            onException(domainException)
+        }
+    }
+
     protected fun <REQUEST> UseCase<REQUEST, *>.givenFailedExecution(
         input: REQUEST,
         domainException: DomainException
     ) {
-        runBlocking {
-            willAnswer { invocation ->
-                val onException: (DomainException) -> Unit =
-                    invocation.getArgument(ON_EXCEPTION_ARGUMENT_INDEX)
-                onException(domainException)
-            }.given(useCaseExecutor)
-                .execute(
-                    useCase = eq(this@givenFailedExecution),
-                    value = eq(input),
-                    onResult = any(),
-                    onException = any()
-                )
+        givenExecutionWillAnswer(input) { invocation ->
+            val onException: (DomainException) -> Unit =
+                invocation.getArgument(ON_EXCEPTION_ARGUMENT_INDEX)
+            onException(domainException)
         }
     }
 
@@ -70,15 +73,10 @@ abstract class BaseViewModelTest<
         input: REQUEST,
         result: RESULT
     ) {
-        willAnswer { invocationOnMock ->
-            val onResult: (RESULT) -> Unit = invocationOnMock.getArgument(2)
+        givenExecutionWillAnswer(input) { invocation ->
+            val onResult: (RESULT) -> Unit = invocation.getArgument(ON_RESULT_ARGUMENT_INDEX)
             onResult(result)
-        }.given(useCaseExecutor).execute(
-            useCase = eq(this@givenSuccessfulExecution),
-            value = eq(input),
-            onResult = any(),
-            onException = any()
-        )
+        }
     }
 
     protected fun <REQUEST> UseCase<REQUEST, Unit>.givenSuccessfulNoResultExecution(
@@ -88,22 +86,35 @@ abstract class BaseViewModelTest<
     }
 
     protected fun <RESULT> UseCase<Unit, RESULT>.givenSuccessfulExecution(result: RESULT) {
-        willAnswer { invocationOnMock ->
-            val onResult: (RESULT) -> Unit = invocationOnMock.getArgument(1)
+        givenExecutionWillAnswer { invocationOnMock ->
+            val onResult: (RESULT) -> Unit =
+                invocationOnMock.getArgument(NO_INPUT_ON_RESULT_ARGUMENT_INDEX)
             onResult(result)
-        }.given(useCaseExecutor).execute(
-            useCase = eq(this@givenSuccessfulExecution),
+        }
+    }
+
+    protected fun UseCase<Unit, Unit>.givenSuccessfulNoArgumentNoResultExecution() {
+        givenExecutionWillAnswer { invocationOnMock ->
+            val onResult: (Unit) -> Unit = invocationOnMock.getArgument(ON_RESULT_ARGUMENT_INDEX)
+            onResult(Unit)
+        }
+    }
+
+    private fun <RESULT> UseCase<Unit, RESULT>.givenExecutionWillAnswer(answer: Answer<*>) {
+        willAnswer(answer).given(useCaseExecutor).execute(
+            useCase = eq(this@givenExecutionWillAnswer),
             onResult = any(),
             onException = any()
         )
     }
 
-    protected fun UseCase<Unit, Unit>.givenSuccessfulNoArgumentNoResultExecution() {
-        willAnswer { invocationOnMock ->
-            val onResult: (Unit) -> Unit = invocationOnMock.getArgument(2)
-            onResult(Unit)
-        }.given(useCaseExecutor).execute(
-            useCase = eq(this@givenSuccessfulNoArgumentNoResultExecution),
+    private fun <REQUEST, RESULT> UseCase<REQUEST, RESULT>.givenExecutionWillAnswer(
+        input: REQUEST,
+        answer: Answer<*>
+    ) {
+        willAnswer(answer).given(useCaseExecutor).execute(
+            useCase = eq(this@givenExecutionWillAnswer),
+            value = eq(input),
             onResult = any(),
             onException = any()
         )
