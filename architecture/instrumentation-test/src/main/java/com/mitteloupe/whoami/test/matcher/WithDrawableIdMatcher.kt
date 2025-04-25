@@ -1,7 +1,6 @@
 package com.mitteloupe.whoami.test.matcher
 
 import android.graphics.Bitmap
-import android.graphics.Bitmap.Config.ARGB_8888
 import android.graphics.Canvas
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -10,12 +9,11 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.StateListDrawable
 import android.os.Build
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.createBitmap
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlin.reflect.KClass
 import kotlin.reflect.full.memberProperties
@@ -38,7 +36,7 @@ class WithDrawableIdMatcher(@param:DrawableRes private val expectedId: Int) :
             }
 
             target is ImageView -> {
-                target.drawable?.extractStateIfStateful(target.getDrawableState())
+                target.drawable?.extractStateIfStateful(target.drawableState)
             }
 
             else -> null
@@ -53,7 +51,7 @@ class WithDrawableIdMatcher(@param:DrawableRes private val expectedId: Int) :
 
         val bitmapHolder = getBitmap(drawable)
         val expectedBitmapHolder = expectedDrawable?.let(::getBitmap)
-        val result = expectedBitmapHolder?.bitmap?.sameAs(bitmapHolder?.bitmap) ?: false
+        val result = expectedBitmapHolder?.bitmap?.sameAs(bitmapHolder?.bitmap) == true
         bitmapHolder?.recycleIfRecyclable()
         expectedBitmapHolder?.recycleIfRecyclable()
         return result
@@ -68,7 +66,7 @@ class WithDrawableIdMatcher(@param:DrawableRes private val expectedId: Int) :
             if (width < 1 || height < 1) {
                 return null
             }
-            val result = Bitmap.createBitmap(width, height, ARGB_8888)
+            val result = createBitmap(width, height)
             val canvas = Canvas(result)
 
             with(drawable) {
@@ -98,17 +96,6 @@ class WithDrawableIdMatcher(@param:DrawableRes private val expectedId: Int) :
             null
         }
     }
-
-    private val ActionMenuItemView.icon: Drawable?
-        get() {
-            val itemData = this::class.members.first {
-                it.name == "getItemData"
-            }.call() as MenuItem
-
-            return itemData::class.members.first {
-                it.name == "getIcon"
-            }.call() as Drawable?
-        }
 
     private class BitmapHolder(val bitmap: Bitmap, private val recyclable: Boolean) {
         fun recycleIfRecyclable() {
