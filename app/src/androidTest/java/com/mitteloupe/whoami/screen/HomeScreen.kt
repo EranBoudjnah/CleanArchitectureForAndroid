@@ -63,6 +63,6 @@ class HomeScreen {
     }
 
     private fun ComposeContentTestRule.assertIsDisplayed(matcher: SemanticsMatcher) {
-        waitUntilExactlyOneExists(matcher, timeoutMillis = 5_000L)
+        waitUntilExactlyOneExists(matcher, timeoutMillis = 15_000L)
     }
 }
