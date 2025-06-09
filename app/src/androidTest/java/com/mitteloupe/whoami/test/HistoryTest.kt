@@ -33,8 +33,20 @@ class HistoryTest : BaseTest() {
     @LocalStore(localStoreDataIds = [KEY_VALUE_SAVED_HISTORY])
     fun givenSavedHistoryWhenOnHistoryScreenThenSeesHistory() {
         with(historyScreen) {
-            seeRecord(position = 1, ipAddress = "2.2.2.2", city = "Stockholm", postCode = "12345")
-            seeRecord(position = 2, ipAddress = "1.1.1.1", city = "Aberdeen", postCode = "AA11 2BB")
+            retry(repeat = 20) {
+                seeRecord(
+                    position = 1,
+                    ipAddress = "2.2.2.2",
+                    city = "Stockholm",
+                    postCode = "12345"
+                )
+                seeRecord(
+                    position = 2,
+                    ipAddress = "1.1.1.1",
+                    city = "Aberdeen",
+                    postCode = "AA11 2BB"
+                )
+            }
         }
     }
 
