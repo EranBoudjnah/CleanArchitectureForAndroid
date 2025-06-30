@@ -12,10 +12,10 @@ import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
 
 @RunWith(Parameterized::class)
-class ConnectionDetailsUiMapperTest(
+class ConnectionDetailsPresentationMapperTest(
     @Suppress("unused") private val testTitle: String,
-    private val presentationConnectionDetails: HomeViewState.Connected,
-    private val expectedUiConnectionDetails: ConnectionDetailsUiModel
+    private val uiConnectionDetails: ConnectionDetailsUiModel,
+    private val expectedConnectionDetails: HomeViewState.Connected
 ) {
     companion object {
         @JvmStatic
@@ -65,16 +65,6 @@ class ConnectionDetailsUiMapperTest(
             timeZone: String
         ) = arrayOf(
             testTitle,
-            HomeViewState.Connected(
-                ipAddress = ipAddress,
-                city = city,
-                region = region,
-                countryCode = countryCode,
-                geolocation = geolocation,
-                internetServiceProviderName = internetServiceProviderName,
-                postCode = postCode,
-                timeZone = timeZone
-            ),
             ConnectionDetailsUiModel(
                 ipAddress = ipAddress,
                 cityIconLabel = IconLabelUiModel(R.drawable.icon_city, city),
@@ -90,21 +80,21 @@ class ConnectionDetailsUiMapperTest(
                     R.drawable.icon_internet_service_provider,
                     internetServiceProviderName
                 )
+            ),
+            HomeViewState.Connected(
+                ipAddress = ipAddress,
+                city = city,
+                region = region,
+                countryCode = countryCode,
+                geolocation = geolocation,
+                internetServiceProviderName = internetServiceProviderName,
+                postCode = postCode,
+                timeZone = timeZone
             )
         )
 
         private fun nullsTestCase(ipAddress: String) = arrayOf(
             "all nulls",
-            HomeViewState.Connected(
-                ipAddress = ipAddress,
-                city = null,
-                region = null,
-                countryCode = null,
-                geolocation = null,
-                internetServiceProviderName = null,
-                postCode = null,
-                timeZone = null
-            ),
             ConnectionDetailsUiModel(
                 ipAddress = ipAddress,
                 cityIconLabel = null,
@@ -114,23 +104,33 @@ class ConnectionDetailsUiMapperTest(
                 postCode = null,
                 timeZone = null,
                 internetServiceProviderName = null
+            ),
+            HomeViewState.Connected(
+                ipAddress = ipAddress,
+                city = null,
+                region = null,
+                countryCode = null,
+                geolocation = null,
+                internetServiceProviderName = null,
+                postCode = null,
+                timeZone = null
             )
         )
     }
 
-    private lateinit var classUnderTest: ConnectionDetailsUiMapper
+    private lateinit var classUnderTest: ConnectionDetailsPresentationMapper
 
     @Before
     fun setUp() {
-        classUnderTest = ConnectionDetailsUiMapper()
+        classUnderTest = ConnectionDetailsPresentationMapper()
     }
 
     @Test
-    fun `When toUi then returns expected UI connection state`() {
+    fun `When toPresentation then returns expected UI connection state`() {
         // When
-        val actualValue = classUnderTest.toUi(presentationConnectionDetails)
+        val actualValue = classUnderTest.toPresentation(uiConnectionDetails)
 
         // Then
-        assertEquals(expectedUiConnectionDetails, actualValue)
+        assertEquals(expectedConnectionDetails, actualValue)
     }
 }

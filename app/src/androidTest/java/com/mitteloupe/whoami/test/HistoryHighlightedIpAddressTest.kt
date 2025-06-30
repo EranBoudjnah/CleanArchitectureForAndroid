@@ -52,14 +52,4 @@ class HistoryHighlightedIpAddressTest : BaseTest() {
             seeNonHighlightedRecord(ipAddress = ipAddress2, position = 2)
         }
     }
-
-    private fun HistoryScreen.seeRecord(
-        position: Int,
-        ipAddress: String,
-        city: String,
-        postCode: String
-    ) {
-        seeIpRecord(ipAddress = ipAddress, position = position)
-        seeLocation(city = city, postCode = postCode, position = position)
-    }
 }

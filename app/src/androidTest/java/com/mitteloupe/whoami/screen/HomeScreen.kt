@@ -20,6 +20,7 @@ class HomeScreen {
     private val postCodeLabel = hasText("CM14")
     private val timeZoneLabel = hasText("Europe/London")
     private val internetServiceProviderLabel = hasText("TalkTalk Limited")
+    private val saveDetailsButton = hasText("Save Details")
     private val openSourceNoticesButton = hasText("Open Source Notices")
 
     fun ComposeContentTestRule.seeIpAddressLabel() {
@@ -58,7 +59,11 @@ class HomeScreen {
         assertIsDisplayed(internetServiceProviderLabel)
     }
 
-    fun ComposeContentTestRule.tapOpenSourceNotices() {
+    fun ComposeContentTestRule.tapSaveDetailsButton() {
+        onNode(saveDetailsButton).performTouchInput { click() }
+    }
+
+    fun ComposeContentTestRule.tapOpenSourceNoticesButton() {
         onNode(openSourceNoticesButton).performTouchInput { click() }
     }
 
