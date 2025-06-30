@@ -48,6 +48,9 @@ class IpAddressHistoryDataSourceImpl(
 
     override fun delete(deletionIdentifier: HistoryRecordDeletionIdentifierDataModel) {
         historyRecords.remove(deletionIdentifier.ipAddress)
+        sharedPreferences.edit {
+            putString(KEY_HISTORY_RECORDS, jsonEncoder.encode(historyRecords))
+        }
         mutableHistoryRecordsFlow.emitRecords()
     }
 
