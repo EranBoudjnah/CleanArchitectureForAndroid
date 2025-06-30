@@ -26,6 +26,7 @@ import org.mockito.kotlin.anyOrNull
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 private typealias SavedIpAddressHistoryRecordLocalMap =
     Map<String, SavedIpAddressHistoryRecordLocalModel>
@@ -40,6 +41,9 @@ class IpAddressHistoryDataSourceImplTest {
     @Mock
     private lateinit var savedIpAddressRecordDataMapper: SavedIpAddressRecordDataMapper
 
+    @Mock
+    private lateinit var preferencesEditor: SharedPreferences.Editor
+
     private lateinit var sharedPreferences: SharedPreferences
 
     @Mock
@@ -50,7 +54,6 @@ class IpAddressHistoryDataSourceImplTest {
 
     @Before
     fun setUp() {
-        val preferencesEditor: SharedPreferences.Editor = mock()
         sharedPreferences = mock {
             on { edit() } doReturn preferencesEditor
         }
@@ -104,7 +107,7 @@ class IpAddressHistoryDataSourceImplTest {
     }
 
     @Test
-    fun `Given records,delete identifier when delete then deletes identified record`() = runTest {
+    fun `Given records,delete identifier when delete then emits remaining records`() = runTest {
         // Given
         val ipAddressToDelete = "1.1.1.1"
         val recordsString = "{JSON}"
@@ -138,6 +141,46 @@ class IpAddressHistoryDataSourceImplTest {
             hasItems(dataSavedIpAddressHistoryRecord1, dataSavedIpAddressHistoryRecord3)
         )
         assertEquals(2, actualRecords.size)
+    }
+
+    @Test
+    fun `Given records,delete identifier when delete then deletes identified record`() = runTest {
+        // Given
+        val ipAddressToDelete = "1.1.1.1"
+        val recordsString = "{JSON}"
+        given(sharedPreferences.getString(eq(KEY_HISTORY_RECORDS), anyOrNull()))
+            .willReturn(recordsString)
+        val localSavedIpAddressHistoryRecord1 =
+            localSavedIpAddressHistoryRecord(ipAddress = "0.0.0.0")
+        val localSavedIpAddressHistoryRecordToDelete =
+            localSavedIpAddressHistoryRecord(ipAddress = ipAddressToDelete)
+        val localSavedIpAddressHistoryRecord3 =
+            localSavedIpAddressHistoryRecord(ipAddress = "2.2.2.2")
+        val decodedRecords = mapOf(
+            localSavedIpAddressHistoryRecord1.ipAddress to localSavedIpAddressHistoryRecord1,
+            ipAddressToDelete to localSavedIpAddressHistoryRecordToDelete,
+            localSavedIpAddressHistoryRecord3.ipAddress to localSavedIpAddressHistoryRecord3
+        )
+        given(jsonDecoder.decode(recordsString)).willReturn(decodedRecords)
+        val deletionIdentifier = HistoryRecordDeletionIdentifierDataModel(ipAddressToDelete)
+        val dataSavedIpAddressHistoryRecord1 = dataSavedIpAddressHistoryRecord("0.0.0.0")
+        givenMappedToData(localSavedIpAddressHistoryRecord1, dataSavedIpAddressHistoryRecord1)
+        val dataSavedIpAddressHistoryRecord3 = dataSavedIpAddressHistoryRecord("2.2.2.2")
+        givenMappedToData(localSavedIpAddressHistoryRecord3, dataSavedIpAddressHistoryRecord3)
+
+        val recordsAfterDeletion = mapOf(
+            localSavedIpAddressHistoryRecord1.ipAddress to localSavedIpAddressHistoryRecord1,
+            localSavedIpAddressHistoryRecord3.ipAddress to localSavedIpAddressHistoryRecord3
+        )
+        val recordsAfterDeletionString = "{JSON2}"
+        given(jsonEncoder.encode(recordsAfterDeletion))
+            .willReturn(recordsAfterDeletionString)
+
+        // When
+        classUnderTest.delete(deletionIdentifier)
+
+        // Then
+        verify(preferencesEditor).putString(KEY_HISTORY_RECORDS, recordsAfterDeletionString)
     }
 
     private fun givenMappedToData(
