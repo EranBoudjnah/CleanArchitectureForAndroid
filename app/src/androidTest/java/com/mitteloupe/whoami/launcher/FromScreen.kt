@@ -14,12 +14,10 @@ fun <ACTIVITY : AppCompatActivity> fromScreen(
 ) = AppLauncher {
     fromComposable(composeContentTestRule) { activity ->
         WhoAmITheme {
-            with(testAppDependenciesEntryPoint(activity).appNavHostDependencies) {
-                AppNavHost(
-                    supportFragmentManager = activity.supportFragmentManager,
-                    startDestination = startDestination
-                )
-            }
+            testAppDependenciesEntryPoint(activity).appNavHostDependencies.AppNavHost(
+                supportFragmentManager = activity.supportFragmentManager,
+                startDestination = startDestination
+            )
         }
     }.launch()
 }
