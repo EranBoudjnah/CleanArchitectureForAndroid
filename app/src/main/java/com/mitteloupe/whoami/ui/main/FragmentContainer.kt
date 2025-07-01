@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
+import androidx.fragment.app.commitNow
 
 @Composable
 fun FragmentContainer(
@@ -33,7 +34,7 @@ fun FragmentContainer(
                 fragmentManager.onContainerAvailable(view)
                 onFragmentViewCreated(view.id)
             } else {
-                fragmentManager.commit { commit(view.id) }
+                fragmentManager.commitNow { commit(view.id) }
                 initialized = true
             }
         }
