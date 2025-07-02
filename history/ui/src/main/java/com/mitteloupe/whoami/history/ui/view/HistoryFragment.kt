@@ -1,7 +1,6 @@
 package com.mitteloupe.whoami.history.ui.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,7 +65,6 @@ class HistoryFragment :
         get() = arguments?.getString(ARGUMENT_HIGHLIGHTED_IP)
 
     override fun View.bindViews() {
-        Log.d("FragmentContainer", "HistoryFragment bindViews")
         noRecordsView = findViewById(R.id.history_no_records_view)
         recordsListView = findViewById(R.id.history_records_list)
         val toolbar = findViewById<MaterialToolbar>(R.id.history_toolbar)
@@ -81,7 +79,6 @@ class HistoryFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.d("FragmentContainer", "HistoryFragment#onCreate")
         if (savedInstanceState == null) {
             viewModel.onEnter(highlightedIpAddress)
         }
@@ -92,7 +89,6 @@ class HistoryFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("FragmentContainer", "HistoryFragment#onCreateView")
         val view = super.onCreateView(inflater, container, savedInstanceState)
         with(viewStateStore) {
             savedInstanceState?.restoreState(this@HistoryFragment)
