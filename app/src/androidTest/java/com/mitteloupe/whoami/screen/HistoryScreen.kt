@@ -2,6 +2,7 @@ package com.mitteloupe.whoami.screen
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
@@ -72,12 +73,21 @@ class HistoryScreen {
         )
     }
 
-    fun tapDeleteForRecord(position: Int) {
+    fun seeRecord(position: Int, ipAddress: String, city: String, postCode: String) {
+        seeIpRecord(ipAddress = ipAddress, position = position)
+        seeLocation(city = city, postCode = postCode, position = position)
+    }
+
+    fun tapDeleteButtonForRecord(position: Int) {
         onView(recordsList)
             .perform(scrollToPosition<ViewHolder>(position.zeroBased))
             .perform(
                 actionOnItemAtPosition<ViewHolder>(position.zeroBased, clickChildView(deleteButton))
             )
+    }
+
+    fun tapBackButton() {
+        Espresso.pressBack()
     }
 
     private val Int.zeroBased

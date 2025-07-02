@@ -63,7 +63,7 @@ class HistoryTest : BaseTest() {
                 )
             }
             seeRecord(position = 2, ipAddress = "1.1.1.1", city = "Aberdeen", postCode = "AA11 2BB")
-            tapDeleteForRecord(position = 1)
+            tapDeleteButtonForRecord(position = 1)
             retry(repeat = 20) {
                 seeRecord(
                     position = 1,
@@ -91,15 +91,5 @@ class HistoryTest : BaseTest() {
                 seeNoRecordsLabel()
             }
         }
-    }
-
-    private fun HistoryScreen.seeRecord(
-        position: Int,
-        ipAddress: String,
-        city: String,
-        postCode: String
-    ) {
-        seeIpRecord(ipAddress = ipAddress, position = position)
-        seeLocation(city = city, postCode = postCode, position = position)
     }
 }

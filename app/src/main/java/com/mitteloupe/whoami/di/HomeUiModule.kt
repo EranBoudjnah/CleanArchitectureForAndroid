@@ -7,6 +7,7 @@ import com.mitteloupe.whoami.architecture.ui.navigation.mapper.NavigationEventDe
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent
 import com.mitteloupe.whoami.home.presentation.viewmodel.HomeViewModel
 import com.mitteloupe.whoami.home.ui.di.HomeDependencies
+import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsPresentationMapper
 import com.mitteloupe.whoami.home.ui.mapper.ConnectionDetailsUiMapper
 import com.mitteloupe.whoami.home.ui.mapper.ErrorUiMapper
 import com.mitteloupe.whoami.home.ui.mapper.HomeNotificationUiMapper
@@ -40,12 +41,16 @@ object HomeUiModule {
     fun providesErrorUiMapper(resources: Resources) = ErrorUiMapper(resources)
 
     @Provides
+    fun providesConnectionDetailsPresentationMapper() = ConnectionDetailsPresentationMapper()
+
+    @Provides
     fun providesConnectionDetailsUiMapper() = ConnectionDetailsUiMapper()
 
     @Provides
     fun providesHomeDependencies(
         homeViewModel: HomeViewModel,
         homeViewStateUiMapper: HomeViewStateUiMapper,
+        connectionDetailsPresentationMapper: ConnectionDetailsPresentationMapper,
         connectionDetailsUiMapper: ConnectionDetailsUiMapper,
         homeNavigationMapper: @JvmSuppressWildcards
         NavigationEventDestinationMapper<HomePresentationNavigationEvent>,
@@ -55,6 +60,7 @@ object HomeUiModule {
     ) = HomeDependencies(
         homeViewModel,
         homeViewStateUiMapper,
+        connectionDetailsPresentationMapper,
         connectionDetailsUiMapper,
         homeNavigationMapper,
         homeNotificationMapper,

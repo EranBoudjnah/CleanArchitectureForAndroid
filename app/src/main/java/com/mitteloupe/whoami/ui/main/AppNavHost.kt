@@ -1,7 +1,10 @@
 package com.mitteloupe.whoami.ui.main
 
 import android.view.View
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -39,7 +42,9 @@ fun AppNavHostDependencies.AppNavHost(
             val history: History = backStackEntry.toRoute()
             FragmentContainer(
                 containerId = containerId,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .windowInsetsPadding(WindowInsets.statusBars),
                 fragmentManager = supportFragmentManager,
                 commit = { containerId ->
                     replace(containerId, HistoryFragment.newInstance(history.highlightedIpAddress))

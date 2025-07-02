@@ -2,16 +2,18 @@ package com.mitteloupe.whoami.test
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.test.espresso.intent.Intents
 import com.mitteloupe.whoami.di.TestActivity
 import com.mitteloupe.whoami.launcher.fromScreen
+import com.mitteloupe.whoami.localstore.KEY_VALUE_NO_HISTORY
+import com.mitteloupe.whoami.screen.HistoryScreen
 import com.mitteloupe.whoami.screen.HomeScreen
-import com.mitteloupe.whoami.screen.OpenSourceNoticesScreen
 import com.mitteloupe.whoami.server.REQUEST_RESPONSE_GET_IP
 import com.mitteloupe.whoami.server.REQUEST_RESPONSE_GET_IP_DETAILS
+import com.mitteloupe.whoami.test.annotation.LocalStore
 import com.mitteloupe.whoami.test.annotation.ServerRequestResponse
 import com.mitteloupe.whoami.test.launcher.AppLauncher
 import com.mitteloupe.whoami.test.test.BaseTest
+import com.mitteloupe.whoami.test.test.retry
 import com.mitteloupe.whoami.ui.main.route.Home
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
@@ -19,7 +21,7 @@ import org.junit.Test
 
 @HiltAndroidTest
 @ExperimentalTestApi
-class HomeTest : BaseTest() {
+class HomeSaveRecordTest : BaseTest() {
     override val composeTestRule = createAndroidComposeRule<TestActivity>()
 
     override val startActivityLauncher: AppLauncher by lazy {
@@ -30,48 +32,45 @@ class HomeTest : BaseTest() {
     lateinit var homeScreen: HomeScreen
 
     @Inject
-    lateinit var openSourceNoticesScreen: OpenSourceNoticesScreen
+    lateinit var historyScreen: HistoryScreen
 
     @Test
     @ServerRequestResponse([REQUEST_RESPONSE_GET_IP, REQUEST_RESPONSE_GET_IP_DETAILS])
-    fun givenConnectedWhenStartingAppThenIpAddressPresented() {
-        with(composeTestRule) {
-            with(homeScreen) {
-                seeIpAddressLabel()
-                seeIpAddressSubtitleLabel()
-            }
-        }
-    }
-
-    @Test
-    @ServerRequestResponse([REQUEST_RESPONSE_GET_IP, REQUEST_RESPONSE_GET_IP_DETAILS])
-    fun givenConnectedWhenStartingAppThenIpAddressDetailsPresented() {
+    @LocalStore(localStoreDataIds = [KEY_VALUE_NO_HISTORY])
+    fun givenConnectedWhenNavigatingAwayAndBackThenSavesRecord() {
         with(composeTestRule) {
             with(homeScreen) {
                 seeCityLabel()
-                seeRegionLabel()
-                seeCountryLabel()
-                seeGeolocationLabel()
-                seePostCodeLabel()
-                seeTimeZoneLabel()
-                seeInternetServiceProviderLabel()
+                tapSaveDetailsButton()
             }
-        }
-    }
 
-    @Test
-    @ServerRequestResponse([REQUEST_RESPONSE_GET_IP, REQUEST_RESPONSE_GET_IP_DETAILS])
-    fun whenTappingOnOpenSourceNoticesLaunchesActivity() {
-        Intents.init()
-        with(composeTestRule) {
+            with(historyScreen) {
+                retry(repeat = 20) {
+                    seeRecord(
+                        position = 1,
+                        ipAddress = "1.2.3.4",
+                        city = "Brentwood",
+                        postCode = "CM14"
+                    )
+                }
+                tapBackButton()
+            }
+
             with(homeScreen) {
-                tapOpenSourceNoticesButton()
+                seeCityLabel()
+                tapSaveDetailsButton()
             }
 
-            with(openSourceNoticesScreen) {
-                seeScreen()
+            with(historyScreen) {
+                retry(repeat = 20) {
+                    seeRecord(
+                        position = 1,
+                        ipAddress = "1.2.3.4",
+                        city = "Brentwood",
+                        postCode = "CM14"
+                    )
+                }
             }
         }
-        Intents.release()
     }
 }

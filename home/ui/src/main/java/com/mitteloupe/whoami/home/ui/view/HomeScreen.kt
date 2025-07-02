@@ -35,11 +35,10 @@ import com.mitteloupe.whoami.home.ui.view.widget.LoadingAnimationContainer
 
 @Composable
 fun HomeDependencies.Home(navController: NavController, modifier: Modifier = Modifier) {
-    fun relaySavingToViewModel(connectionDetails: HomeViewState) {
-        require(connectionDetails is HomeViewState.Connected) {
-            "Unexpected click, not connected."
-        }
-        homeViewModel.onSaveDetailsAction(connectionDetails)
+    fun relaySavingToViewModel(connectionDetails: ConnectionDetailsUiModel) {
+        val presentationConnection = connectionDetailsPresentationMapper
+            .toPresentation(connectionDetails)
+        homeViewModel.onSaveDetailsAction(presentationConnection)
     }
 
     ScreenEnterObserver {
@@ -68,7 +67,11 @@ fun HomeDependencies.Home(navController: NavController, modifier: Modifier = Mod
         connectionDetails = connectionDetails,
         errorMessage = errorMessage,
         analytics = analytics,
-        onSaveDetailsClick = { relaySavingToViewModel(viewState) },
+        onSaveDetailsClick = {
+            val latestConnectionDetails = connectionDetails
+            requireNotNull(latestConnectionDetails)
+            relaySavingToViewModel(latestConnectionDetails)
+        },
         onViewHistoryClick = { homeViewModel.onViewHistoryAction() },
         onOpenSourceNoticesClick = { homeViewModel.onOpenSourceNoticesAction() },
         modifier = modifier
