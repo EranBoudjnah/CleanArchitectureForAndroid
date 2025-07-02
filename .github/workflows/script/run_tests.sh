@@ -1,10 +1,9 @@
 #!/bin/bash
 
 set +e
-./gradlew assembleDebug assembleDebugAndroidTest --no-daemon
-pwd
-adb install ../../app/build/outputs/apk/espresso/app-espresso.apk
-adb install ../../app/build/outputs/apk/androidTest/espresso/app-espresso-androidTest.apk
+./gradlew assembleEspresso assembleEspressoAndroidTest --no-daemon
+adb install app/build/outputs/apk/espresso/app-espresso.apk
+adb install app/build/outputs/apk/androidTest/espresso/app-espresso-androidTest.apk
 adb shell am instrument -w -m -e debug false \\n -e class 'com.mitteloupe.whoami.suite.SmokeTests' \\ncom.mitteloupe.whoami.test/com.mitteloupe.whoami.di.HiltTestRunner
 GRADLE_EXIT_CODE=$?
 set -e
