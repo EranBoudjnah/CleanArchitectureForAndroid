@@ -59,16 +59,16 @@ dependencies {
     implementation(projects.analytics)
 
     implementation(platform(libs.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.material3)
 
     implementation(libs.androidx.navigation.fragment.ktx)
 
     implementation(libs.opensource.licenses)
 
-    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.debug.compose.ui.tooling)
 
     testImplementation(libs.test.junit)
     testImplementation(libs.test.hamcrest)
