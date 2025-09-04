@@ -2,10 +2,12 @@ package com.mitteloupe.whoami.home.ui.mapper
 
 import com.mitteloupe.whoami.home.presentation.model.HomeViewState
 import com.mitteloupe.whoami.home.ui.model.ConnectionDetailsUiModel
-import java.util.*
+import java.util.Locale
 
 private val locales by lazy {
-    Locale.getISOCountries().map { country -> Locale("en", country) }
+    Locale.getISOCountries().map { country ->
+        Locale.Builder().setLanguage("en").setRegion(country).build()
+    }
 }
 
 class ConnectionDetailsPresentationMapper {
