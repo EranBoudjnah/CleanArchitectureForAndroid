@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -25,6 +26,7 @@ buildscript {
 subprojects {
     tasks.withType<KotlinCompile> {
         compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
             freeCompilerArgs.add("-Xskip-prerelease-check")
         }
     }
