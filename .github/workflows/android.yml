@@ -11,7 +11,7 @@ on:
 
 jobs:
   setup:
-    runs-on: macos-15
+    runs-on: macos-15-intel
 
     steps:
       - name: Checkout
@@ -38,7 +38,7 @@ jobs:
   unit-tests:
     needs: setup
 
-    runs-on: macos-15
+    runs-on: macos-15-intel
 
     steps:
       - name: Checkout
@@ -65,7 +65,7 @@ jobs:
   connected-tests:
     needs: setup
 
-    runs-on: macos-15
+    runs-on: macos-15-intel
 
     steps:
       - name: Checkout
