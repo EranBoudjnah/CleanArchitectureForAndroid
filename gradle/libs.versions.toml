@@ -34,7 +34,7 @@ plugin-oss-licenses = "0.10.9"
 ktlint = "13.1.0"
 detekt = "1.23.8"
 kotlinx-serialization-json = "1.9.0"
-minSdk = "22"
+minSdk = "23"
 targetSdk = "36"
 compileSdk = "36"
 
