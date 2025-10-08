@@ -5,7 +5,7 @@ on:
 
 jobs:
   ktlint:
-    runs-on: macos-13
+    runs-on: ubuntu-24.04
     steps:
       - name: Get changed files
         id: changes
