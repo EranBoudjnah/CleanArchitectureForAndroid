@@ -5,7 +5,7 @@
 
 This project is a loose implementation of Clean Architecture as presented in my book,
 [Clean Architecture for Android](
-https://amzn.to/43cUuhb). It is a native Android project written in Kotlin. It demonstrates
+https://amzn.to/47hrZTD). It is a native Android project written in Kotlin. It demonstrates
 the key principles presented in the book and how they apply to a real life project.
 
 I will endeavour to keep this project up to date and use it to demonstrate the strengths of the
