@@ -107,14 +107,14 @@ jobs:
 
       - name: Upload failed tests screenshots
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: screenshots
           path: Screenshots
 
       - name: Upload logcat output
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: logcat
           path: logcat.txt
