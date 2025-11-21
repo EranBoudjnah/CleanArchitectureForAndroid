@@ -62,9 +62,6 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
-    implementation(platform(libs.compose.bom))
-    implementation(libs.compose.ui)
-
     testImplementation(libs.test.junit)
     testImplementation(libs.test.hamcrest)
     testImplementation(libs.test.mockito.kotlin)
