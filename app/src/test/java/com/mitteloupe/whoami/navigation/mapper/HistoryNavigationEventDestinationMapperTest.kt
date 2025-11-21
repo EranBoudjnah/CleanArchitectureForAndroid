@@ -1,33 +1,33 @@
 package com.mitteloupe.whoami.navigation.mapper
 
-import androidx.navigation.NavController
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent.Back
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.collection.IsEmptyCollection.empty
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.junit.runners.Parameterized.Parameters
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
 
 @RunWith(Parameterized::class)
 class HistoryNavigationEventDestinationMapperTest(
     private val givenNavigationEvent: PresentationNavigationEvent,
-    private val assertExpectation: (NavController) -> Unit
+    private val assertExpectation: (MutableList<Any>) -> Unit
 ) {
     companion object {
         @JvmStatic
         @Parameters(name = "Given {0}")
         fun data(): Iterable<Array<*>> = setOf(
-            testCase(Back) { navController ->
-                verify(navController).navigateUp()
+            testCase(Back) { backStack ->
+                assertThat(backStack, `is`(empty()))
             }
         )
 
         private fun testCase(
             navigationEvent: PresentationNavigationEvent,
-            assertExpectation: (NavController) -> Unit
+            assertExpectation: (MutableList<Any>) -> Unit
         ) = arrayOf(navigationEvent, assertExpectation)
     }
 
@@ -41,13 +41,13 @@ class HistoryNavigationEventDestinationMapperTest(
     @Test
     fun `When toUi then returns expected destination`() {
         // Given
-        val navController: NavController = mock()
+        val backStack = mutableListOf<Any>()
 
         // When
         val destination = classUnderTest.toUi(givenNavigationEvent)
-        destination.navigate(navController)
+        destination.navigate(backStack)
 
         // Then
-        assertExpectation(navController)
+        assertExpectation(backStack)
     }
 }

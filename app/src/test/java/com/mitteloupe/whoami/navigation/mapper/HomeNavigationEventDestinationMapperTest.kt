@@ -2,7 +2,6 @@ package com.mitteloupe.whoami.navigation.mapper
 
 import android.content.Context
 import android.content.Intent
-import androidx.navigation.NavController
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
@@ -14,6 +13,7 @@ import com.mitteloupe.whoami.ui.main.route.History
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.isA
 import org.hamcrest.Matchers.matchesPattern
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -50,15 +50,16 @@ class HomeNavigationEventDestinationMapperTest {
     fun `Given OnViewHistory when toUi then returns history navigation with no highlight`() {
         // Given
         val presentationDestination = OnViewHistory
-        val navController: NavController = mock()
+        val backStack = mutableListOf<Any>()
         val uiDestination = classUnderTest.toUi(presentationDestination)
         val expectedDestination = History(null)
+        val expectedBackStack = listOf(expectedDestination)
 
         // When
-        uiDestination.navigate(navController)
+        uiDestination.navigate(backStack)
 
         // Then
-        verify(navController).navigate(expectedDestination)
+        assertEquals(expectedBackStack, backStack)
     }
 
     @Test
@@ -66,15 +67,16 @@ class HomeNavigationEventDestinationMapperTest {
         // Given
         val ipAddress = "1.2.3.4"
         val presentationDestination = OnSavedDetails(ipAddress)
-        val navController: NavController = mock()
+        val backStack = mutableListOf<Any>()
         val uiDestination = classUnderTest.toUi(presentationDestination)
         val expectedDestination = History(ipAddress)
+        val expectedBackStack = listOf(expectedDestination)
 
         // When
-        uiDestination.navigate(navController)
+        uiDestination.navigate(backStack)
 
         // Then
-        verify(navController).navigate(expectedDestination)
+        assertEquals(expectedBackStack, backStack)
     }
 
     @Test
@@ -83,7 +85,7 @@ class HomeNavigationEventDestinationMapperTest {
         val presentationDestination = OnViewOpenSourceNotices
         val uiDestination = classUnderTest.toUi(presentationDestination)
         val expectedIntent: Intent = mock()
-        val navController: NavController = mock()
+        val backStack = mutableListOf<Any>()
         given(
             ossLicensesMenuIntentProvider.invoke(
                 eq(activityContext),
@@ -92,7 +94,7 @@ class HomeNavigationEventDestinationMapperTest {
         ).willReturn(expectedIntent)
 
         // When
-        uiDestination.navigate(navController)
+        uiDestination.navigate(backStack)
 
         // Then
         verify(activityContext).startActivity(expectedIntent)
