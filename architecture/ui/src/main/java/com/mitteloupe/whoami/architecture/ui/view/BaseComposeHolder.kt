@@ -3,7 +3,6 @@ package com.mitteloupe.whoami.architecture.ui.view
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.navigation.NavController
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.presentation.notification.PresentationNotification
 import com.mitteloupe.whoami.architecture.presentation.viewmodel.BaseViewModel
@@ -16,7 +15,7 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
     private val notificationMapper: NotificationUiMapper<NOTIFICATION>
 ) {
     @Composable
-    fun ViewModelObserver(navController: NavController) {
+    fun ViewModelObserver(backStack: MutableList<Any>) {
         viewModel.notification.collectAsState(initial = null)
             .value?.let { notificationValue ->
                 Notifier(notification = notificationValue)
@@ -24,7 +23,7 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
 
         viewModel.navigationEvent.collectAsState(initial = null)
             .value?.let { navigationValue ->
-                Navigator(navigationValue, navController)
+                Navigator(navigationValue, backStack)
             }
     }
 
@@ -36,9 +35,9 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
     }
 
     @Composable
-    private fun Navigator(navigation: PresentationNavigationEvent, navController: NavController) {
+    private fun Navigator(navigation: PresentationNavigationEvent, backStack: MutableList<Any>) {
         LaunchedEffect(navigation) {
-            navigationMapper.toUi(navigation).navigate(navController)
+            navigationMapper.toUi(navigation).navigate(backStack)
         }
     }
 }

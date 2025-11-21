@@ -48,7 +48,6 @@ dependencies {
     implementation(projects.coroutine)
 
     implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
 
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)

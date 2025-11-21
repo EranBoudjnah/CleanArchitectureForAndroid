@@ -64,8 +64,6 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
 
-    implementation(libs.androidx.navigation.fragment.ktx)
-
     implementation(libs.opensource.licenses)
 
     debugImplementation(libs.debug.compose.ui.tooling)

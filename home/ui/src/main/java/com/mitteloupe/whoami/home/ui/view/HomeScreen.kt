@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.analytics.AnalyticsEvent
 import com.mitteloupe.whoami.architecture.ui.view.ScreenEnterObserver
@@ -34,7 +33,7 @@ import com.mitteloupe.whoami.home.ui.view.widget.HomeFooter
 import com.mitteloupe.whoami.home.ui.view.widget.LoadingAnimationContainer
 
 @Composable
-fun HomeDependencies.Home(navController: NavController, modifier: Modifier = Modifier) {
+fun HomeDependencies.Home(backStack: MutableList<Any>, modifier: Modifier = Modifier) {
     fun relaySavingToViewModel(connectionDetails: ConnectionDetailsUiModel) {
         val presentationConnection = connectionDetailsPresentationMapper
             .toPresentation(connectionDetails)
@@ -46,7 +45,7 @@ fun HomeDependencies.Home(navController: NavController, modifier: Modifier = Mod
         homeViewModel.onEnter()
     }
 
-    ViewModelObserver(navController)
+    ViewModelObserver(backStack)
 
     val viewState by homeViewModel.viewState.collectAsState(HomeViewState.Loading)
 

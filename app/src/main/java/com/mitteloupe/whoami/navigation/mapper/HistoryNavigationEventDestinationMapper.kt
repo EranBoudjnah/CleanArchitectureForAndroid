@@ -16,7 +16,7 @@ class HistoryNavigationEventDestinationMapper :
             else -> throw UnhandledNavigationException(navigationEvent)
         }
 
-    private fun backUiDestination() = UiDestination { navController ->
-        navController.navigateUp()
+    private fun backUiDestination() = UiDestination { backStack ->
+        backStack.removeLastOrNull()
     }
 }
