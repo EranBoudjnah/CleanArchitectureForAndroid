@@ -57,11 +57,13 @@ dependencies {
 
     implementation(libs.material)
     implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.recyclerview)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
 
     testImplementation(libs.test.junit)
     testImplementation(libs.test.hamcrest)

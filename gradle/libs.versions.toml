@@ -7,7 +7,7 @@ androidx-core-ktx = "1.17.0"
 androidx-fragment-ktx = "1.8.9"
 androidx-recyclerview = "1.4.0"
 androidx-lifecycle-runtime-ktx = "2.9.4"
-android-navigation = "2.9.6"
+android-navigation3 = "1.0.0"
 compose-bom = "2025.11.01"
 compose-activity = "1.12.0"
 hilt = "2.57.2"
@@ -52,7 +52,8 @@ compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
-compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "android-navigation" }
+compose-navigation3 = { module = "androidx.navigation3:navigation3-runtime", version.ref = "android-navigation3" }
+androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "android-navigation3" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
@@ -81,12 +82,11 @@ test-androidx-rules = { module = "androidx.test:rules", version.ref = "test-andr
 test-compose-ui-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 debug-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 debug-compose-ui-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
-androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "android-navigation" }
 plugin-oss-licenses = { module = "com.google.android.gms:oss-licenses-plugin", version.ref = "plugin-oss-licenses" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 
 [bundles]
-compose = ["compose-ui", "compose-ui-graphics", "compose-ui-tooling-preview", "compose-material3", "compose-activity", "compose-navigation"]
+compose = ["compose-ui", "compose-ui-graphics", "compose-ui-tooling-preview", "compose-material3", "compose-activity", "compose-navigation3"]
 retrofit = ["retrofit", "retrofit-converter-moshi", "retrofit-interceptor-logging"]
 
 [plugins]

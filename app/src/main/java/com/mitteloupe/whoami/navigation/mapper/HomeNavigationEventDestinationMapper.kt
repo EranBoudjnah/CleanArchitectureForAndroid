@@ -28,7 +28,7 @@ class HomeNavigationEventDestinationMapper(
         }
 
     private fun history(highlightedIpAddress: String?): UiDestination =
-        UiDestination { navController -> navController.navigate(History(highlightedIpAddress)) }
+        UiDestination { backStack -> backStack.add(History(highlightedIpAddress)) }
 
     private fun openSourceNotices(): UiDestination = UiDestination {
         analytics.logScreen("Open Source Licenses")

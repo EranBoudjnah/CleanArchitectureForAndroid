@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.mitteloupe.whoami.analytics.Analytics
@@ -34,7 +33,7 @@ class HistoryFragment :
     BaseFragment<HistoryViewState, PresentationNotification>(R.layout.fragment_history),
     HistoryViewsProvider,
     HistoryAdapter.UserEventListener {
-    override lateinit var navController: NavController
+    override lateinit var backStack: MutableList<Any>
 
     @Inject
     override lateinit var viewModel: HistoryViewModel

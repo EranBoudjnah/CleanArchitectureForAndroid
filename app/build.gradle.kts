@@ -131,8 +131,8 @@ dependencies {
     implementation(libs.opensource.licenses)
 
     implementation(libs.hilt.android)
-    implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.navigation3.ui)
     ksp(libs.hilt.android.compiler)
 
     implementation(projects.analytics)
