@@ -1,9 +1,10 @@
 package com.mitteloupe.whoami.ui.main.route
 
-import kotlinx.serialization.Serializable
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-@Serializable
-object Home
+@Parcelize
+object Home : Parcelable
 
-@Serializable
-data class History(val highlightedIpAddress: String?)
+@Parcelize
+data class History(val highlightedIpAddress: String?) : Parcelable

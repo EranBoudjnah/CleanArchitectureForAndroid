@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.FragmentManager
@@ -28,7 +27,7 @@ fun AppNavHostDependencies.AppNavHost(
 ) {
     val containerId by rememberSaveable { mutableIntStateOf(View.generateViewId()) }
 
-    val backStack = remember { mutableStateListOf(startDestination) }
+    val backStack = rememberSaveable { mutableStateListOf(startDestination) }
 
     NavDisplay(
         backStack = backStack,
