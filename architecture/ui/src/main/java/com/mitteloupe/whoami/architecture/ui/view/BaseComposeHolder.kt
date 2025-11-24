@@ -21,10 +21,11 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
                 Notifier(notification = notificationValue)
             }
 
-        viewModel.navigationEvent.collectAsState(initial = null)
-            .value?.let { navigationValue ->
-                Navigator(navigationValue, backStack)
+        LaunchedEffect(Unit) {
+            viewModel.navigationEvent.collect { navigationValue ->
+                navigate(navigationValue, backStack)
             }
+        }
     }
 
     @Composable
@@ -34,10 +35,7 @@ abstract class BaseComposeHolder<VIEW_STATE : Any, NOTIFICATION : PresentationNo
         }
     }
 
-    @Composable
-    private fun Navigator(navigation: PresentationNavigationEvent, backStack: MutableList<Any>) {
-        LaunchedEffect(navigation) {
-            navigationMapper.toUi(navigation).navigate(backStack)
-        }
+    private fun navigate(navigation: PresentationNavigationEvent, backStack: MutableList<Any>) {
+        navigationMapper.toUi(navigation).navigate(backStack)
     }
 }
