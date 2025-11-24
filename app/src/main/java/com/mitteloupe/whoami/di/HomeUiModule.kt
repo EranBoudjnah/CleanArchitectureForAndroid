@@ -19,6 +19,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
 
+private typealias LicensesNavigationMapper =
+    NavigationEventDestinationMapper<HomePresentationNavigationEvent>
+
 @Module
 @InstallIn(ActivityComponent::class)
 object HomeUiModule {
@@ -27,11 +30,8 @@ object HomeUiModule {
 
     @Provides
     @JvmSuppressWildcards
-    fun providesHomeNavigationEventDestinationMapper(
-        analytics: Analytics,
-        @ActivityContext context: Context
-    ): NavigationEventDestinationMapper<HomePresentationNavigationEvent> =
-        HomeNavigationEventDestinationMapper(analytics, context)
+    fun providesHomeNavigationEventDestinationMapper(): LicensesNavigationMapper =
+        HomeNavigationEventDestinationMapper()
 
     @Provides
     fun providesHomeNotificationUiMapper(@ActivityContext context: Context) =
@@ -52,8 +52,7 @@ object HomeUiModule {
         homeViewStateUiMapper: HomeViewStateUiMapper,
         connectionDetailsPresentationMapper: ConnectionDetailsPresentationMapper,
         connectionDetailsUiMapper: ConnectionDetailsUiMapper,
-        homeNavigationMapper: @JvmSuppressWildcards
-        NavigationEventDestinationMapper<HomePresentationNavigationEvent>,
+        homeNavigationMapper: @JvmSuppressWildcards LicensesNavigationMapper,
         homeNotificationMapper: HomeNotificationUiMapper,
         errorUiMapper: ErrorUiMapper,
         analytics: Analytics

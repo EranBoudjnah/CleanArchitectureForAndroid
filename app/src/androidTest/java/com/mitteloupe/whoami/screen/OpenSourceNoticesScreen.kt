@@ -1,11 +1,13 @@
 package com.mitteloupe.whoami.screen
 
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
 
-class OpenSourceNoticesScreen {
-    fun seeScreen() {
-        intended(hasComponent(OssLicensesMenuActivity::class.java.name))
+class OpenSourceNoticesScreen : ComposeScreen() {
+    private val titleLabel =
+        hasText("Open Source Licenses")
+
+    fun ComposeContentTestRule.seeScreen() {
+        assertIsDisplayed(titleLabel)
     }
 }

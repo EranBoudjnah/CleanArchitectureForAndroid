@@ -5,4 +5,10 @@ import androidx.annotation.DrawableRes
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class IconLabelUiModel(@DrawableRes val iconResourceId: Int, val label: String) : Parcelable
+data class IconLabelUiModel(
+    @param:DrawableRes
+    @field:DrawableRes
+    @get:DrawableRes
+    val iconResourceId: Int,
+    val label: String
+) : Parcelable

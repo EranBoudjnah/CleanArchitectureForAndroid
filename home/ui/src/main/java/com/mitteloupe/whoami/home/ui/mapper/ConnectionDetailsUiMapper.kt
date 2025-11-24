@@ -26,5 +26,5 @@ class ConnectionDetailsUiMapper {
         IconLabelUiModel(iconResourceId, this)
     }
 
-    private fun String.toCountryName() = Locale("", this).displayCountry
+    private fun String.toCountryName() = Locale.Builder().setRegion(this).build().displayCountry
 }

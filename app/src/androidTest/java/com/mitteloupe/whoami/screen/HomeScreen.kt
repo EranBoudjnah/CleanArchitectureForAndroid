@@ -1,7 +1,6 @@
 package com.mitteloupe.whoami.screen
 
 import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.click
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
@@ -9,7 +8,7 @@ import androidx.compose.ui.test.performTouchInput
 import com.mitteloupe.whoami.constant.IP_ADDRESS
 
 @ExperimentalTestApi
-class HomeScreen {
+class HomeScreen : ComposeScreen() {
     private val ipAddressLabel = hasText(IP_ADDRESS)
     private val ipAddressSubtitleLabel =
         hasText("This is the address from which you are sending network requests.")
@@ -65,9 +64,5 @@ class HomeScreen {
 
     fun ComposeContentTestRule.tapOpenSourceNoticesButton() {
         onNode(openSourceNoticesButton).performTouchInput { click() }
-    }
-
-    private fun ComposeContentTestRule.assertIsDisplayed(matcher: SemanticsMatcher) {
-        waitUntilExactlyOneExists(matcher, timeoutMillis = 15_000L)
     }
 }

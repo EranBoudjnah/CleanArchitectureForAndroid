@@ -1,15 +1,14 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.detekt)
-    id("kotlin-parcelize")
 }
 
 android {
-    namespace = "com.mitteloupe.whoami.history.ui"
+    namespace = "com.mitteloupe.whoami.opensourcenotices.ui"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -30,9 +29,14 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        compose = true
     }
 }
 
@@ -46,26 +50,16 @@ detekt {
 }
 
 dependencies {
-    implementation(projects.history.presentation)
     implementation(projects.architecture.ui)
-    implementation(projects.architecture.presentation)
-
-    implementation(projects.coroutine)
-    implementation(projects.widget)
-
     implementation(projects.analytics)
 
-    implementation(libs.material)
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.recyclerview)
+    implementation(libs.aboutlibraries.core)
+    implementation(libs.aboutlibraries.compose)
 
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
-
-    testImplementation(libs.test.junit)
-    testImplementation(libs.test.hamcrest)
-    testImplementation(libs.test.mockito.kotlin)
-
-    androidTestImplementation(libs.test.androidx.junit)
-    androidTestImplementation(libs.test.androidx.espresso.core)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.debug.compose.ui.tooling)
+    implementation(libs.compose.ui.tooling.preview)
 }

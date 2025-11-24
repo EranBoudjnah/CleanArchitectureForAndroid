@@ -16,9 +16,11 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.mitteloupe.whoami.history.ui.view.HistoryFragment
 import com.mitteloupe.whoami.home.ui.view.Home
+import com.mitteloupe.whoami.opensourcenotices.ui.view.OpenSourceNoticesScreen
 import com.mitteloupe.whoami.ui.main.di.AppNavHostDependencies
 import com.mitteloupe.whoami.ui.main.route.History
 import com.mitteloupe.whoami.ui.main.route.Home
+import com.mitteloupe.whoami.ui.main.route.OpenSourceNotices
 
 @Composable
 fun AppNavHostDependencies.AppNavHost(
@@ -56,6 +58,9 @@ fun AppNavHostDependencies.AppNavHost(
                         fragment?.backStack = backStack
                     }
                 )
+            }
+            entry<OpenSourceNotices> {
+                lazyOpenSourceNoticesDependencies.value.OpenSourceNoticesScreen()
             }
         }
     )

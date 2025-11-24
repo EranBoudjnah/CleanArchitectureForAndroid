@@ -1,15 +1,12 @@
 package com.mitteloupe.whoami.navigation.mapper
 
-import android.content.Context
-import android.content.Intent
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
-import com.mitteloupe.whoami.analytics.Analytics
 import com.mitteloupe.whoami.architecture.presentation.navigation.PresentationNavigationEvent
 import com.mitteloupe.whoami.architecture.ui.navigation.exception.UnhandledNavigationException
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnSavedDetails
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewHistory
 import com.mitteloupe.whoami.home.presentation.navigation.HomePresentationNavigationEvent.OnViewOpenSourceNotices
 import com.mitteloupe.whoami.ui.main.route.History
+import com.mitteloupe.whoami.ui.main.route.OpenSourceNotices
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.isA
 import org.hamcrest.Matchers.matchesPattern
@@ -17,33 +14,16 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.kotlin.eq
-import org.mockito.kotlin.given
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
 
 @RunWith(MockitoJUnitRunner::class)
 class HomeNavigationEventDestinationMapperTest {
     private lateinit var classUnderTest: HomeNavigationEventDestinationMapper
 
-    @Mock
-    private lateinit var analytics: Analytics
-
-    @Mock
-    private lateinit var activityContext: Context
-
-    @Mock
-    private lateinit var ossLicensesMenuIntentProvider: Context.(Class<out Any>) -> Intent
-
     @Before
     fun setUp() {
-        classUnderTest = HomeNavigationEventDestinationMapper(
-            analytics,
-            activityContext,
-            ossLicensesMenuIntentProvider
-        )
+        classUnderTest = HomeNavigationEventDestinationMapper()
     }
 
     @Test
@@ -84,20 +64,15 @@ class HomeNavigationEventDestinationMapperTest {
         // Given
         val presentationDestination = OnViewOpenSourceNotices
         val uiDestination = classUnderTest.toUi(presentationDestination)
-        val expectedIntent: Intent = mock()
         val backStack = mutableListOf<Any>()
-        given(
-            ossLicensesMenuIntentProvider.invoke(
-                eq(activityContext),
-                eq(OssLicensesMenuActivity::class.java)
-            )
-        ).willReturn(expectedIntent)
+        val expectedDestination = OpenSourceNotices
+        val expectedBackStack = listOf(expectedDestination)
 
         // When
         uiDestination.navigate(backStack)
 
         // Then
-        verify(activityContext).startActivity(expectedIntent)
+        assertEquals(expectedBackStack, backStack)
     }
 
     @Test

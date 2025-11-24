@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="17">
+      <module name="WhoAmI.aboutlicenses.ui" target="21" />
+      <module name="WhoAmI.features.aboutlicenses.ui" target="21" />
+      <module name="WhoAmI.features.newtestfeature.ui" target="21" />
+      <module name="WhoAmI.features.testcorefixfeature.ui" target="21" />
+      <module name="WhoAmI.features.testfixedviewmodel.ui" target="21" />
+      <module name="WhoAmI.features.testpresentationfix.ui" target="21" />
+      <module name="WhoAmI.features.testviewmodelfeature.ui" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -8,3 +8,6 @@ object Home : Parcelable
 
 @Parcelize
 data class History(val highlightedIpAddress: String?) : Parcelable
+
+@Parcelize
+object OpenSourceNotices : Parcelable

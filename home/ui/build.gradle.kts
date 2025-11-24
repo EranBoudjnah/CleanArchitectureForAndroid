@@ -39,7 +39,7 @@ android {
 }
 
 ktlint {
-    version.set("0.49.1")
+    version.set("1.7.1")
     android.set(true)
 }
 
@@ -63,8 +63,6 @@ dependencies {
     implementation(libs.compose.ui.graphics)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
-
-    implementation(libs.opensource.licenses)
 
     debugImplementation(libs.debug.compose.ui.tooling)
 
