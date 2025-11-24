@@ -118,6 +118,8 @@ dependencies {
     implementation(projects.history.domain)
     implementation(projects.history.data)
 
+    implementation(projects.opensourcenotices.ui)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(platform(libs.compose.bom))
@@ -129,7 +131,8 @@ dependencies {
     implementation(libs.bundles.retrofit)
     implementation(libs.moshi.kotlin)
 
-    implementation(libs.opensource.licenses)
+    implementation(libs.aboutlibraries.core)
+    implementation(libs.aboutlibraries.compose)
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.recyclerview)

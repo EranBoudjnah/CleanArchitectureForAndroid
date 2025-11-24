@@ -37,7 +37,7 @@ android {
 }
 
 ktlint {
-    version.set("0.49.1")
+    version.set("1.7.1")
     android.set(true)
 }
 

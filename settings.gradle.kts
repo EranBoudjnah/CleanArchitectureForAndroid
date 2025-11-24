@@ -49,3 +49,5 @@ setOf("ui", "presentation", "domain", "data").forEach { layer ->
 }
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+include(":opensourcenotices:ui")
