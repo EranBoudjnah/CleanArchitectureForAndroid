@@ -42,6 +42,7 @@ object HomeModule {
     fun providesExceptionPresentationMapper() = ExceptionPresentationMapper()
 
     @Provides
+    @Suppress("LongParameterList")
     fun providesHomeViewModel(
         getConnectionDetailsUseCase: GetConnectionDetailsUseCase,
         connectionDetailsPresentationMapper: ConnectionDetailsPresentationMapper,

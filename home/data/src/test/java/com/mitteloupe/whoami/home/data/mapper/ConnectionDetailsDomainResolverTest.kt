@@ -58,6 +58,7 @@ class ConnectionDetailsDomainResolverTest(
             )
         )
 
+        @Suppress("LongParameterList")
         private fun connectedWithTestCase(
             testTitle: String,
             city: String?,

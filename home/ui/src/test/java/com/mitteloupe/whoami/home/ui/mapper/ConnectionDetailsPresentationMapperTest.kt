@@ -51,6 +51,7 @@ class ConnectionDetailsPresentationMapperTest(
             nullsTestCase(ipAddress = "4.3.2.1")
         )
 
+        @Suppress("LongParameterList")
         private fun testCase(
             testTitle: String,
             ipAddress: String,
