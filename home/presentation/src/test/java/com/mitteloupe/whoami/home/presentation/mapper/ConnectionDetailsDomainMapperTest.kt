@@ -40,6 +40,7 @@ class ConnectionDetailsDomainMapperTest(
             )
         )
 
+        @Suppress("LongParameterList")
         private fun connectedTestCase(
             ipAddress: String,
             city: String?,

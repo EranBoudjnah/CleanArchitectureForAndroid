@@ -47,6 +47,7 @@ object HomeUiModule {
     fun providesConnectionDetailsUiMapper() = ConnectionDetailsUiMapper()
 
     @Provides
+    @Suppress("LongParameterList")
     fun providesHomeDependencies(
         homeViewModel: HomeViewModel,
         homeViewStateUiMapper: HomeViewStateUiMapper,

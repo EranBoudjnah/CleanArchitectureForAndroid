@@ -62,6 +62,7 @@ class ConnectionDetailsPresentationMapperTest(
             stubMapper: ExceptionPresentationMapper.() -> Unit = {}
         ) = arrayOf(connectionDetails, viewState, stubMapper)
 
+        @Suppress("LongParameterList")
         private fun connectedTestCase(
             ipAddress: String,
             city: String?,

@@ -43,7 +43,7 @@ private fun UiDevice.closeAnrWithWait(appNotRespondingDialog: UiObject) {
         val dialogText = appNotRespondingDialog.text
         val appName = dialogText.take(dialogText.length - APP_NOT_RESPONDING_TEXT.length)
         Log.i(APP_NOT_RESPONDING_TAG, "App \"$appName\" is not responding. Pressed on wait.")
-    } catch (uiObjectNotFoundException: UiObjectNotFoundException) {
+    } catch (_: UiObjectNotFoundException) {
         Log.i(APP_NOT_RESPONDING_TAG, "Detected app not responding dialog, but window disappeared.")
     }
 }

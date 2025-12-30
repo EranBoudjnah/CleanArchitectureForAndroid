@@ -30,6 +30,7 @@ class HistoryRecordUiMapperTest(
     companion object {
         @JvmStatic
         @Parameters(name = "{0} then returns {2}")
+        @Suppress("LongMethod")
         fun data(): Iterable<Array<*>> = setOf(
             testCase(
                 testTitle = "All nulls",
@@ -109,6 +110,7 @@ class HistoryRecordUiMapperTest(
             )
         )
 
+        @Suppress("LongParameterList")
         private fun testCase(
             testTitle: String,
             ipAddress: String,

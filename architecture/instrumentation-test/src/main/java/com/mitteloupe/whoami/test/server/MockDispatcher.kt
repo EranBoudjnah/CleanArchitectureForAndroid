@@ -15,7 +15,7 @@ class MockDispatcher :
     ResponseBinder {
     override var testName: String = ""
 
-    override val usedEndpoints: Set<MockRequest>
+    final override val usedEndpoints: Set<MockRequest>
         field = mutableSetOf()
 
     private val responses = mutableMapOf<MockRequest, MockResponseFactory>()

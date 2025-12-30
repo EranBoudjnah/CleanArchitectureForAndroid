@@ -38,6 +38,7 @@ class IpAddressInformationDataMapperTest(
             )
         )
 
+        @Suppress("LongParameterList")
         private fun testCase(
             city: String?,
             region: String?,

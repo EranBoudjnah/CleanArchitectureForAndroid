@@ -22,6 +22,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
+@Suppress("TooManyFunctions")
 object HistoryModule {
     @Provides
     fun providesSavedIpAddressRecordDomainMapper() = SavedIpAddressRecordDomainMapper()

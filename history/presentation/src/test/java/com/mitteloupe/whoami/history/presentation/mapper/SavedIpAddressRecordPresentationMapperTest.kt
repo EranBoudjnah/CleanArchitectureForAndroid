@@ -45,6 +45,7 @@ class SavedIpAddressRecordPresentationMapperTest(
             )
         )
 
+        @Suppress("LongParameterList")
         private fun testCase(
             testTitle: String,
             ipAddress: String,
