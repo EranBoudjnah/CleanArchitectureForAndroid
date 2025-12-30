@@ -137,6 +137,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.navigation3.ui)
+    ksp(libs.kotlin.metadata.jvm)
     ksp(libs.hilt.android.compiler)
 
     implementation(projects.analytics)
