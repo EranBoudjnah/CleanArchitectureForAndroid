@@ -12,10 +12,10 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
+import org.mockito.ArgumentMatchers.any
+import org.mockito.ArgumentMatchers.eq
 import org.mockito.BDDMockito.willAnswer
 import org.mockito.Mock
-import org.mockito.kotlin.any
-import org.mockito.kotlin.eq
 import org.mockito.stubbing.Answer
 
 private const val NO_INPUT_ON_RESULT_ARGUMENT_INDEX = 1
@@ -79,7 +79,7 @@ abstract class BaseViewModelTest<
         }
     }
 
-    protected fun <REQUEST> UseCase<REQUEST, Unit>.givenSuccessfulNoResultExecution(
+    protected inline fun <reified REQUEST> UseCase<REQUEST, Unit>.givenSuccessfulNoResultExecution(
         input: REQUEST
     ) {
         givenSuccessfulExecution(input, Unit)
@@ -102,9 +102,9 @@ abstract class BaseViewModelTest<
 
     private fun <RESULT> UseCase<Unit, RESULT>.givenExecutionWillAnswer(answer: Answer<*>) {
         willAnswer(answer).given(useCaseExecutor).execute(
-            useCase = eq(this@givenExecutionWillAnswer),
-            onResult = any(),
-            onException = any()
+            useCase = eq(this@givenExecutionWillAnswer) ?: this@givenExecutionWillAnswer,
+            onResult = any() ?: {},
+            onException = any() ?: {}
         )
     }
 
@@ -113,10 +113,10 @@ abstract class BaseViewModelTest<
         answer: Answer<*>
     ) {
         willAnswer(answer).given(useCaseExecutor).execute(
-            useCase = eq(this@givenExecutionWillAnswer),
-            value = eq(input),
-            onResult = any(),
-            onException = any()
+            useCase = eq(this@givenExecutionWillAnswer) ?: this@givenExecutionWillAnswer,
+            value = eq(input) ?: input,
+            onResult = any() ?: {},
+            onException = any() ?: {}
         )
     }
 }
