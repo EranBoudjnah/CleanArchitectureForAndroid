@@ -1,6 +1,6 @@
 [versions]
 ksp = "2.3.4"
-android = "8.13.2"
+android = "9.0.0"
 material = "1.13.0"
 androidx-appcompat = "1.7.1"
 androidx-core-ktx = "1.17.0"
@@ -95,7 +95,6 @@ retrofit = ["retrofit", "retrofit-converter-moshi", "retrofit-interceptor-loggin
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 android-application = { id = "com.android.application", version.ref = "android" }
 android-library = { id = "com.android.library", version.ref = "android" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
