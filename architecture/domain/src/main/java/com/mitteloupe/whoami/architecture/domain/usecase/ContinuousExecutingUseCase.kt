@@ -5,8 +5,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 abstract class ContinuousExecutingUseCase<REQUEST, RESULT>(
     private val coroutineContextProvider: CoroutineContextProvider,
@@ -14,14 +14,12 @@ abstract class ContinuousExecutingUseCase<REQUEST, RESULT>(
 ) : UseCase<REQUEST, RESULT> {
     final override fun execute(input: REQUEST, onResult: (RESULT) -> Unit) {
         try {
-            coroutineScope.launch {
-                withContext(coroutineContextProvider.io) {
-                    executeInBackground(input).collect { result ->
-                        withContext(coroutineContextProvider.main) {
-                            onResult(result)
-                        }
+            coroutineScope.launch(coroutineContextProvider.main) {
+                executeInBackground(input)
+                    .flowOn(coroutineContextProvider.io)
+                    .collect { result ->
+                        onResult(result)
                     }
-                }
             }
         } catch (_: CancellationException) {
         }
