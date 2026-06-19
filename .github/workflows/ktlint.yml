@@ -18,7 +18,7 @@ jobs:
 
       - name: "checkout"
         if: env.changed_kotlin_files != ''
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install ktlint
         if: env.changed_kotlin_files != ''
