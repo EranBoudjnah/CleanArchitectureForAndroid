@@ -34,8 +34,8 @@ ktlint = "14.2.0"
 detekt = "1.23.8"
 kotlinx-serialization-json = "1.11.0"
 minSdk = "23"
-targetSdk = "36"
-compileSdk = "36"
+targetSdk = "37"
+compileSdk = "37"
 
 [libraries]
 aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose", version.ref = "aboutlibraries" }
