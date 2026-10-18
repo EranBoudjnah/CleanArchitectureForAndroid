@@ -5,6 +5,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class IpAddressApiModel(
-    @Json(name = "ip")
+    @get:Json(name = "ip")
     val ipAddress: String
 )

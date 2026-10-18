@@ -1,7 +1,7 @@
 package com.mitteloupe.whoami.test
 
 import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import androidx.test.espresso.intent.Intents
 import com.mitteloupe.whoami.di.TestActivity
 import com.mitteloupe.whoami.launcher.fromScreen

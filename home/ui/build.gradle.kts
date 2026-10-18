@@ -1,3 +1,6 @@
+import com.android.build.api.dsl.LibraryExtension
+import org.gradle.kotlin.dsl.configure
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.ktlint)
@@ -6,7 +9,7 @@ plugins {
     id("kotlin-parcelize")
 }
 
-android {
+extensions.configure<LibraryExtension> {
     namespace = "com.mitteloupe.whoami.home.ui"
     compileSdk = libs.versions.compileSdk.get().toInt()
 

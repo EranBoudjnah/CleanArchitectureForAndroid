@@ -1,3 +1,6 @@
+import com.android.build.api.dsl.LibraryExtension
+import org.gradle.kotlin.dsl.configure
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.ksp)
@@ -6,7 +9,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
-android {
+extensions.configure<LibraryExtension> {
     namespace = "com.mitteloupe.whoami.architecture.ui"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
