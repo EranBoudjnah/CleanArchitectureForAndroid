@@ -1,3 +1,6 @@
+import com.android.build.api.dsl.LibraryExtension
+import org.gradle.kotlin.dsl.configure
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.ktlint)
@@ -5,7 +8,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
-android {
+extensions.configure<LibraryExtension> {
     namespace = "com.mitteloupe.whoami.widget"
     compileSdk = libs.versions.compileSdk.get().toInt()
 

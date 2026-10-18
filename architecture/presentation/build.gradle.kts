@@ -1,14 +1,8 @@
 plugins {
-    id("project-java-library")
+    `java-library`
     alias(libs.plugins.kotlin.jvm)
-    id("org.jlleitschuh.gradle.ktlint")
-    id("io.gitlab.arturbosch.detekt")
-}
-
-kotlin {
-    sourceSets.all {
-        languageSettings.enableLanguageFeature("ExplicitBackingFields")
-    }
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.detekt)
 }
 
 ktlint {

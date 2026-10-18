@@ -1,3 +1,6 @@
+import com.android.build.api.dsl.LibraryExtension
+import org.gradle.kotlin.dsl.configure
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.compose.compiler)
@@ -6,7 +9,7 @@ plugins {
     alias(libs.plugins.detekt)
 }
 
-android {
+extensions.configure<LibraryExtension> {
     namespace = "com.mitteloupe.whoami.opensourcenotices.ui"
     compileSdk = libs.versions.compileSdk.get().toInt()
 

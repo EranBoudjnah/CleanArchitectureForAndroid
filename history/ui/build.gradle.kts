@@ -1,3 +1,6 @@
+import com.android.build.api.dsl.LibraryExtension
+import org.gradle.kotlin.dsl.configure
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.hilt)
@@ -7,7 +10,7 @@ plugins {
     id("kotlin-parcelize")
 }
 
-android {
+extensions.configure<LibraryExtension> {
     namespace = "com.mitteloupe.whoami.history.ui"
     compileSdk = libs.versions.compileSdk.get().toInt()
 

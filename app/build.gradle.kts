@@ -1,6 +1,7 @@
+import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.gradle.kotlin.dsl.configure
 
 plugins {
     alias(libs.plugins.android.application)
@@ -14,11 +15,7 @@ plugins {
     id("kotlin-parcelize")
 }
 
-kotlin {
-    compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
-}
-
-android {
+extensions.configure<ApplicationExtension> {
     namespace = "com.mitteloupe.whoami"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
@@ -34,8 +31,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "com.mitteloupe.whoami.di.HiltTestRunner"
-        javaCompileOptions.annotationProcessorOptions
-            .arguments["dagger.hilt.disableCrossCompilationRootValidation"] = "true"
 
         vectorDrawables {
             useSupportLibrary = true
@@ -55,6 +50,7 @@ android {
 
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -85,6 +81,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+
+hilt {
+    disableCrossCompilationRootValidation = true
 }
 
 ktlint {

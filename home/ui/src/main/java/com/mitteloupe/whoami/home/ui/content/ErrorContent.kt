@@ -36,7 +36,7 @@ fun ErrorContent(errorText: String, modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .height(200.dp)
                 .background(MaterialTheme.colorScheme.error)
-                .scale(0.8f),
+                .scale(DISCONNECTED_ICON_SCALE),
             contentScale = ContentScale.Fit
         )
         Column(

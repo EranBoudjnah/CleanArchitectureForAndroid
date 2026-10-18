@@ -1,4 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.android.build.api.dsl.LibraryExtension
+import org.gradle.kotlin.dsl.configure
 
 plugins {
     alias(libs.plugins.android.library)
@@ -7,7 +8,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
-android {
+extensions.configure<LibraryExtension> {
     namespace = "com.mitteloupe.whoami.test"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
@@ -30,12 +31,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions {
-        freeCompilerArgs.add("-Xexplicit-backing-fields")
     }
 }
 
@@ -63,7 +58,6 @@ dependencies {
     implementation(libs.test.compose.ui.junit4)
     implementation(libs.test.android.hilt)
     implementation(libs.test.android.uiautomator)
-    implementation(libs.test.androidx.espresso.core)
     implementation(libs.okhttp3)
     implementation(libs.test.android.mockwebserver)
     implementation(libs.androidx.appcompat)
